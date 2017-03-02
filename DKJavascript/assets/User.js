@@ -1,0 +1,1 @@
+DKCreate("Test.js", function(){});
