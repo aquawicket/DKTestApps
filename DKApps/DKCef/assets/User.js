@@ -2,9 +2,9 @@ var url = "http://www.google.com";
 var width = 800;
 var height = 600;
 DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
-var currentBrowser = DKCef_GetCurrentBrowser("Cef");
-DKCef_SetUrl("Cef", url, currentBrowser);
-DKCef_SetFocus("Cef");
+//var currentBrowser = DKCef_GetCurrentBrowser("Cef");
+//DKCef_SetUrl("Cef", url, currentBrowser);
+//DKCef_SetFocus("Cef");
 
 //DKCreate("DKDebug/DKDebug.js");
 //DKAddEvent("GLOBAL", "resize", User_OnEvent);
