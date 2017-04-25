@@ -6,7 +6,7 @@ DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
 //DKCef_SetUrl("Cef", url, currentBrowser);
 //DKCef_SetFocus("Cef");
 
-//DKCreate("DKDebug/DKDebug.js");
+DKCreate("DKDebug/DKDebug.js");
 //DKAddEvent("GLOBAL", "resize", User_OnEvent);
 
 
