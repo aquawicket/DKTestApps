@@ -4,6 +4,7 @@ var width = 800;
 var height = 600;
 DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
 DK_SetFramerate(4);
+
 //var currentBrowser = DKCef_GetCurrentBrowser("Cef");
 //DKCef_SetUrl("Cef", url, currentBrowser);
 //DKCef_SetFocus("Cef");
