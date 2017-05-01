@@ -12,7 +12,6 @@ DK_SetFramerate(5);
 DKCreate("DKDebug/DKDebug.js");
 //DKAddEvent("GLOBAL", "resize", User_OnEvent);
 
-
 ////////////////////////////
 function User_OnEvent(event)
 {	
