@@ -6,8 +6,6 @@ DKLog("DKWindow_TestString(\"test string\") = "+DKWindow_TestString("test string
 DKLog("DKWindow_TestReturnInt() = "+DKWindow_TestReturnInt()+"\n", DKINFO);
 DKLog("DKWindow_TestReturnString() = "+DKWindow_TestReturnString()+"\n", DKINFO);
 
-DKWindow_Fullscreen();
-
 /////////////////////////
 //ANDROID back key = exit
 DKAddEvent("GLOBAL", "keydown", User_OnEvent);
