@@ -1,4 +1,4 @@
-var url = "http://google.com";
+var url = "http://aqualinux:6080/vnc.html?host=AquaLinux&port=6080";
 //var url = "http://digitalknob.com";
 //var url = "chrome://gpu"; 
 var width = 800;
