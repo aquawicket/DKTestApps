@@ -20,14 +20,14 @@ DKCreate("DKDebug/DKDebug.js", function(){});
 DKAddEvent("GLOBAL", "keydown", User_OnEvent);
 function User_OnEvent(event)  //Duktape
 {
-	DKLog("User_OnEvent("+DK_GetId(event)+","+DK_GetType(event)+","+DKWidget_GetValue(event)+")\n", DKDEBUG);
+	DKLog("User_OnEvent("+DK_GetId(event)+","+DK_GetType(event)+","+DK_GetValue(event)+")\n", DKDEBUG);
 	
 	if(DK_Type(event, "DKCef_OnQueueNewBrowser")){
 		var currentBrowser = DKCef_GetCurrentBrowser("DKCef_frame");
-		DKCef_SetUrl("DKCef_frame", DKWidget_GetValue(event), currentBrowser);
+		DKCef_SetUrl("DKCef_frame", DK_GetValue(event), currentBrowser);
 	}
 	if(DK_Type(event, "keydown")){
-		if(DKWidget_GetValue(event) == "4"){ //Exit for ANDROID
+		if(DK_GetValue(event) == "4"){ //Exit for ANDROID
 		    DK_Exit();
 		}
 	}
