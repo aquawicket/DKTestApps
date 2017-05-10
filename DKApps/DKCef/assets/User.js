@@ -8,6 +8,8 @@ DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
 DK_SetFramerate(5);
 DKCreate("DKDebug/DKDebug.js");
 
+var dev_open = false;
+
 
 DKAddEvent("GLOBAL", "DKCef_OnLoadingStateChange", User_OnEvent);
 ////////////////////////////
@@ -37,5 +39,8 @@ function UpdateGoogle()
 	DKCef_RunJavascript("Cef", "myButton.innerHTML = 'MyButton';");
 	DKCef_RunJavascript("Cef", "myButton.onclick = function(){alert('myButton clicked.')};");
 	DKCef_RunJavascript("Cef", "document.body.appendChild(myButton);");
-	
+	if(dev_open == false){
+		dev_open = true;
+		DKCef_ShowDevTools("Cef", 0);
+	}
 }
