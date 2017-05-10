@@ -7,9 +7,7 @@ var height = 600;
 DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
 DK_SetFramerate(5);
 DKCreate("DKDebug/DKDebug.js");
-
-var dev_open = false;
-
+DKCreate("DKCef/DKDevTools.js");
 
 DKAddEvent("GLOBAL", "DKCef_OnLoadingStateChange", User_OnEvent);
 ////////////////////////////
@@ -17,7 +15,7 @@ function User_OnEvent(event)  //Duktape
 {
 	DKLog("User_OnEvent("+DK_GetId(event)+","+DK_GetType(event)+","+DK_GetValue(event)+")\n", DKINFO);
 
-	//Alter the google page logo
+	//Alter the google page logo and add button
 	if(DK_Type(event, "DKCef_OnLoadingStateChange")){
 		if(DKCef_GetUrl("Cef", 0) == "http://www.google.com/"){
 			UpdateGoogle();
@@ -39,8 +37,4 @@ function UpdateGoogle()
 	DKCef_RunJavascript("Cef", "myButton.innerHTML = 'MyButton';");
 	DKCef_RunJavascript("Cef", "myButton.onclick = function(){alert('myButton clicked.')};");
 	DKCef_RunJavascript("Cef", "document.body.appendChild(myButton);");
-	if(dev_open == false){
-		dev_open = true;
-		DKCef_ShowDevTools("Cef", 0);
-	}
 }
