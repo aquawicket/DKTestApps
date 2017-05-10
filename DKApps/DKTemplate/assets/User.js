@@ -77,6 +77,7 @@ if(DK_GetJavascript() == "Duktape"){
 	
 	DKCreate("DKTray/DKTray.js", function(){});
 	DKCreate("DKDebug/DKDebug.js", function(){});
+	DKCreate("DKCef/DKDevTools.js", function(){});
 }
 else{  //V8 or WEBVIEW
 	LoadPage();
