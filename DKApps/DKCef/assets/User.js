@@ -18,7 +18,24 @@ function User_OnEvent(event)  //Duktape
 	//Alter the google page logo
 	if(DK_Type(event, "DKCef_OnLoadingStateChange")){
 		if(DKCef_GetUrl("Cef", 0) == "http://www.google.com/"){
-			DKCef_RunJavascript("Cef", "document.getElementById('hplogo').setAttribute('src','http://digitalknob.com/DKSearch/DKSearch/logo.png');");
+			UpdateGoogle();
 		}
 	}
+}
+
+///////////////////////
+function UpdateGoogle()
+{
+	DKCef_RunJavascript("Cef", "document.getElementById('hplogo').setAttribute('src','http://digitalknob.com/DKSearch/DKSearch/logo.png');");
+	DKCef_RunJavascript("Cef", "var myButton = document.createElement('button');");
+	DKCef_RunJavascript("Cef", "myButton.id = 'myButton';");
+	DKCef_RunJavascript("Cef", "myButton.style.position = 'absolute';");
+	DKCef_RunJavascript("Cef", "myButton.style.top = '313px';");
+	DKCef_RunJavascript("Cef", "myButton.style.left = '489px';");
+	DKCef_RunJavascript("Cef", "myButton.style.width = '90px';");
+	DKCef_RunJavascript("Cef", "myButton.style.height = '32px';");
+	DKCef_RunJavascript("Cef", "myButton.innerHTML = 'MyButton';");
+	DKCef_RunJavascript("Cef", "myButton.onclick = function(){alert('myButton clicked.')};");
+	DKCef_RunJavascript("Cef", "document.body.appendChild(myButton);");
+	
 }
