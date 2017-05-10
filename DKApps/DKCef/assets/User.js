@@ -1,5 +1,5 @@
 var USE_CEF = 1;
-var url = "google.com";
+var url = "http://www.google.com/";
 //var url = "http://digitalknob.com";
 //var url = "chrome://gpu";
 var width = 800;
