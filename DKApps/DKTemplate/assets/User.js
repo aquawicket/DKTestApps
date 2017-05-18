@@ -93,5 +93,6 @@ function LoadPage()
 	DKCreate("DKScale/DKScale.js", function(){});
 	DKCreate("DKFrame/DKFrame.js", function(){});
 	DKCreate("DKDebug/DKDebug.js", function(){});
+	DKCreate("DKEditor/DKEditor.js", function(){});
 	DKCreate("Template.js", function(){});
 }
