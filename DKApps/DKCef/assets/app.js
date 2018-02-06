@@ -5,7 +5,6 @@ var url = "http://www.google.com/";
 var width = 800;
 var height = 600;
 DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
-DK_SetFramerate(5);
 DKCreate("DKDebug/DKDebug.js");
 DKCreate("DKCef/DKDevTools.js");
 
