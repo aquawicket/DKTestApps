@@ -1,10 +1,10 @@
 DKCreate("DKSFMLWindow");
 DKCreate("DKWindow");
 
-//DKLog("DKWindow_TestInt(1234) = "+DKWindow_TestInt(1234)+"\n", DKINFO);
-//DKLog("DKWindow_TestString(\"test string\") = "+DKWindow_TestString("test string")+"\n", DKINFO);
-//DKLog("DKWindow_TestReturnInt() = "+DKWindow_TestReturnInt()+"\n", DKINFO);
-//DKLog("DKWindow_TestReturnString() = "+DKWindow_TestReturnString()+"\n", DKINFO);
+DKLog("DKWindow_TestInt(1234) = "+DKWindow_TestInt(1234)+"\n", DKINFO);
+DKLog("DKWindow_TestString(\"test string\") = "+DKWindow_TestString("test string")+"\n", DKINFO);
+DKLog("DKWindow_TestReturnInt() = "+DKWindow_TestReturnInt()+"\n", DKINFO);
+DKLog("DKWindow_TestReturnString() = "+DKWindow_TestReturnString()+"\n", DKINFO);
 
 /////////////////////////
 //ANDROID back key = exit
