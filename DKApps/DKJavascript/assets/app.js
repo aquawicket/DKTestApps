@@ -1,1 +1,1 @@
-DKCreate("Test.js", function(){});
+DKDuktape_Create("Test.js", function(){});
