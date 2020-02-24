@@ -6,9 +6,9 @@ var width = 800;
 var height = 600;
 DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
 DKCreate("DKDebug/DKDebug.js");
-DKCreate("DKCef/DKDevTools.js");
+//DKCreate("DKCef/DKDevTools.js");
 
-DKAddEvent("GLOBAL", "DKCef_OnLoadingStateChange", User_OnEvent);
+DKDuktape_AddEvent("GLOBAL", "DKCef_OnLoadingStateChange", User_OnEvent);
 ////////////////////////////
 function User_OnEvent(event)  //Duktape
 {

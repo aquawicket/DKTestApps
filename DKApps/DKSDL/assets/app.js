@@ -8,7 +8,7 @@ console.log("DKWindow_TestReturnString() = "+DKWindow_TestReturnString()+"\n");
 
 /////////////////////////
 //ANDROID back key = exit
-DKDuktape_AddEvent("GLOBAL", "keydown", User_OnEvent);
+DKAddEvent("GLOBAL", "keydown", User_OnEvent);
 function User_OnEvent(event)  //Duktape
 {
 	if(DK_Type(event, "keydown")){
