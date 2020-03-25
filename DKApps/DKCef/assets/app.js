@@ -5,35 +5,37 @@ var url = "http://www.google.com/";
 var width = 800;
 var height = 600;
 DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
-DKCreate("DKDebug/DKDebug.js");
+DKCef_NewBrowser("Cef",0,0,width,height,url);
+
+//DKCreate("DKDebug/DKDebug.js");
 //DKCreate("DKCef/DKDevTools.js");
 
-DKAddEvent("GLOBAL", "DKCef_OnLoadingStateChange", User_OnEvent);
+DKAddEvent("window", "DKCef_OnLoadingStateChange", User_OnEvent);
 ////////////////////////////
 function User_OnEvent(event)  //Duktape
 {
-	DKLog("User_OnEvent("+DK_GetId(event)+","+DK_GetType(event)+","+DK_GetValue(event)+")\n", DKINFO);
+	//console.log("User_OnEvent("+DK_GetId(event)+","+DK_GetType(event)+","+DK_GetValue(event)+")\n");
 
 	//Alter the google page logo and add button
-	if(DK_Type(event, "DKCef_OnLoadingStateChange")){
-		if(DKCef_GetUrl("Cef", 0) == "http://www.google.com/"){
+	//if(DK_Type(event, "DKCef_OnLoadingStateChange")){
+	//	if(DKCef_GetUrl("Cef", 0) == "http://www.google.com/"){
 			UpdateGoogle();
-		}
-	}
+	//	}
+	//}
 }
 
 ///////////////////////
 function UpdateGoogle()
 {
-	DKCef_RunJavascript("Cef", "document.getElementById('hplogo').setAttribute('src','http://digitalknob.com/DKSearch/DKSearch/logo.png');");
-	DKCef_RunJavascript("Cef", "var myButton = document.createElement('button');");
-	DKCef_RunJavascript("Cef", "myButton.id = 'myButton';");
-	DKCef_RunJavascript("Cef", "myButton.style.position = 'absolute';");
-	DKCef_RunJavascript("Cef", "myButton.style.top = '313px';");
-	DKCef_RunJavascript("Cef", "myButton.style.left = '489px';");
-	DKCef_RunJavascript("Cef", "myButton.style.width = '90px';");
-	DKCef_RunJavascript("Cef", "myButton.style.height = '32px';");
-	DKCef_RunJavascript("Cef", "myButton.innerHTML = 'MyButton';");
-	DKCef_RunJavascript("Cef", "myButton.onclick = function(){alert('myButton clicked.')};");
-	DKCef_RunJavascript("Cef", "document.body.appendChild(myButton);");
+	DKCef_RunJavascript("document.getElementById('hplogo').setAttribute('src','http://digitalknob.com/DKSearch/DKSearch/logo.png');", 0);
+	DKCef_RunJavascript("var myButton = document.createElement('button');", 0);
+	DKCef_RunJavascript("myButton.id = 'myButton';", 0);
+	DKCef_RunJavascript("myButton.style.position = 'absolute';", 0);
+	DKCef_RunJavascript("myButton.style.top = '313px';", 0);
+	DKCef_RunJavascript("myButton.style.left = '489px';", 0);
+	DKCef_RunJavascript("myButton.style.width = '90px';", 0);
+	DKCef_RunJavascript("myButton.style.height = '32px';", 0);
+	DKCef_RunJavascript("myButton.innerHTML = 'MyButton';", 0);
+	DKCef_RunJavascript("myButton.onclick = function(){alert('myButton clicked.')};", 0);
+	DKCef_RunJavascript("document.body.appendChild(myButton);", 0);
 }
