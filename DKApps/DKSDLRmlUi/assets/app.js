@@ -2,8 +2,8 @@ DKCreate("DKWindow");
 DKCreate("DKRml");
 DKRml_ToggleDebugger();
 
-//location.href = "C:/Users/aquaw/Desktop/test.html";
-//document.getElementById("rml").innerHTML = "<div>rml</div>";
+location.href = "C:/Users/aquaw/Desktop/test.html";
+document.getElementById("html").innerHTML = "<div>html</div>";
 //console.log("window = "+window);
 //console.log("location = "+location);
 //console.log("document = "+document);
