@@ -1,9 +1,15 @@
 DKCreate("DKWindow");
 DKCreate("DKRml");
-DKRml_ToggleDebugger();
+//DKRml_ToggleDebugger();
 
 location.href = "C:/Users/aquaw/Desktop/test.html";
-document.getElementById("html").innerHTML = "<div>html</div>";
+//console.log("***********  js file reports *****************");
+//console.log(document.getElementById("html").innerHTML);
+//console.log("**********************************************");
+//document.getElementById("html").innerHTML = "<body>html</body>";
+//console.log("***********  js file reports *****************");
+//console.log(document.getElementById("html").innerHTML);
+//console.log("**********************************************");
 //console.log("window = "+window);
 //console.log("location = "+location);
 //console.log("document = "+document);

@@ -4,7 +4,7 @@ DKCreate("DKRocket");
 location.href = "C:/Users/aquaw/Desktop/test.html";
 
 //console.log(document.getElementById("div3").getRootNode());
-document.getElementById("html").innerHTML = "<div>html</div>";
+//document.getElementById("html").innerHTML = "<div>html</div>";
 
 //DKCreate("DKGui/DKFrame.js");
 //DKCreate("DKDebug/DKDebug.js");
