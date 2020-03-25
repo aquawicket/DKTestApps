@@ -2,7 +2,7 @@ DKCreate("DKWindow");
 DKCreate("DKRml");
 //DKRml_ToggleDebugger();
 
-location.href = "C:/digitalknob/DKTestApps/DKApps/DKSDLRmlUi/assets/DKRml/blank.html";
+location.href = "C:/digitalknob/DKTestApps/DKApps/DKSDLRmlUi/assets/div.html";
 location.href = "C:/digitalknob/DKTestApps/DKApps/DKSDLRmlUi/assets/test.html";
 
 console.log("window = "+window);
