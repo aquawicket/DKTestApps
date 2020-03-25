@@ -1,13 +1,12 @@
 DKCreate("DKWindow");
 DKCreate("DKRml");
-//DKRml_ToggleDebugger();
+DKRml_ToggleDebugger();
 
-location.href = "C:/digitalknob/DKTestApps/DKApps/DKSDLRmlUi/assets/div.html";
-location.href = "C:/digitalknob/DKTestApps/DKApps/DKSDLRmlUi/assets/test.html";
-
-console.log("window = "+window);
-console.log("location = "+location);
-console.log("document = "+document);
+//location.href = "C:/Users/aquaw/Desktop/test.html";
+//document.getElementById("rml").innerHTML = "<div>rml</div>";
+//console.log("window = "+window);
+//console.log("location = "+location);
+//console.log("document = "+document);
 
 //console.log(document.getElementById("test.html").innerHTML);
 //document.getElementById("test.html").innerHTML = "<div id=\"text\">text</div>"
