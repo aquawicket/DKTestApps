@@ -2,8 +2,7 @@ DKCreate("DKWindow");
 DKCreate("DKRml");
 //DKRml_ToggleDebugger();
 
-location.href = "C:/Users/aquaw/Desktop/DKWebTest/blank.html";
-//location.href = "C:/Users/aquaw/Desktop/DKWebTest/test2.html";
+location.href = "C:/digitalknob/DKTestApps/DKApps/DKSDLRmlUi/assets/test.html";
 
 //console.log("***********  js file reports *****************");
 //console.log(document.getElementById("html").innerHTML);
