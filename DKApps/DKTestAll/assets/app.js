@@ -6,7 +6,7 @@ var welcome = "\n";
 welcome = "######################### \n";
 welcome += "####### DKTestAll ####### \n";
 welcome += "######################### \n";
-DKLog(welcome, DKINFO);
+console.log(welcome);
 
 //TestJavascript
 DKCreate("TestJavascript.js");
