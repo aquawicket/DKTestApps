@@ -60,7 +60,7 @@ DKDEPEND(DKStats)
 DKDEPEND(DKSvn)
 DKDEPEND(DKThread)
 DKDEPEND(DKTooltip)
-DKDEPEND(DKTorrent)
+## DKDEPEND(DKTorrent) ##FIXME: 3rdParty libraries not compiling
 DKDEPEND(DKTray)
 DKDEPEND(DKTriggers)
 DKDEPEND(DKUpdate)
