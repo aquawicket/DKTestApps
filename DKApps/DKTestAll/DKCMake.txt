@@ -26,7 +26,7 @@ DKDEPEND(DKFpsTest)
 DKDEPEND(DKGit)
 DKDEPEND(DKGui)
 DKDEPEND(DKHandles)
-DKDEPEND(DKHook) #DEBUG
+DKDEPEND(DKHook)
 DKDEPEND(DKImageMagick)
 DKDEPEND(DKInputTest)
 DKDEPEND(DKLoading)
@@ -60,7 +60,7 @@ DKDEPEND(DKStats)
 DKDEPEND(DKSvn)
 DKDEPEND(DKThread)
 DKDEPEND(DKTooltip)
-DKDEPEND(DKTorrent) ##FIXME: 3rdParty libraries not compiling
+## DKDEPEND(DKTorrent) ##FIXME: 3rdParty libraries not compiling
 DKDEPEND(DKTray)
 DKDEPEND(DKTriggers)
 DKDEPEND(DKUpdate)
