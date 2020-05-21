@@ -55,7 +55,7 @@ DKDEPEND(DKSDLRml)
 ## DKDEPEND(DKSDLWav) ##FIXME: 3rdParty libraries not compiling
 DKDEPEND(DKSDLWindow)
 ## DKDEPEND(DKServer) ##Obsolete
-DKDEPEND(DKSFMLWindow)
+## DKDEPEND(DKSFMLWindow) ##FIXME: 3rdParty libraries not compiling
 DKDEPEND(DKStats)
 DKDEPEND(DKSvn)
 DKDEPEND(DKThread)
