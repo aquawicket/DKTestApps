@@ -52,7 +52,7 @@ DKDEPEND(DKSDLRml)
 ## DKDEPEND(DKSDLRocket) ##Deprecated
 ## DKDEPEND(DKSDLText) ##FIXME: 3rdParty libraries not compiling
 ## DKDEPEND(DKSDLVideo) ##FIXME: 3rdParty libraries not compiling
-DKDEPEND(DKSDLWav)
+## DKDEPEND(DKSDLWav) ##FIXME: 3rdParty libraries not compiling
 DKDEPEND(DKSDLWindow)
 ## DKDEPEND(DKServer) ##Obsolete
 DKDEPEND(DKSFMLWindow)
