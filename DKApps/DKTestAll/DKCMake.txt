@@ -36,7 +36,7 @@ DKDEPEND(DKMidi)
 DKDEPEND(DKMySql)
 DKDEPEND(DKNotepad)
 ## DKDEPEND(DKOcr) ##FIXME: 3rdParty libraries not compiling
-DKDEPEND(DKOFWindow)
+## DKDEPEND(DKOFWindow) ##FIXME: 3rdParty libraries not compiling
 DKDEPEND(DKPaint)
 DKDEPEND(DKPlugin1)
 DKDEPEND(DKPlugin2)
