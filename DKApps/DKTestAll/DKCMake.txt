@@ -39,7 +39,7 @@ DKDEPEND(DKNotepad)
 ## DKDEPEND(DKOFWindow) ##FIXME: 3rdParty libraries not compiling
 DKDEPEND(DKPaint)
 ## DKDEPEND(DKPlugin1) ##FIXME: Not compiling
-DKDEPEND(DKPlugin2)
+## DKDEPEND(DKPlugin2) ##FIXME: Not compiling
 DKDEPEND(DKRml)
 DKDEPEND(DKRocket)
 DKDEPEND(DKRocketIframe)
