@@ -1,4 +1,4 @@
-##TODO - create simple DKDEPEND_ALL() to add all plugins.
+## TODO - create simple DKDEPEND_ALL() to add all plugins.
 
 DKSET(USE_DKCef ON)
 
@@ -10,19 +10,19 @@ DKDEPEND(DKAudio)
 DKDEPEND(DKBuild)
 DKDEPEND(DKCef)
 DKDEPEND(DKCefChild)
-DKDEPEND(DKClient)
+## DKDEPEND(DKClient) ##Obsolete
 DKDEPEND(DKColorPicker)
 DKDEPEND(DKConsole)
 DKDEPEND(DKCrypto)
 DKDEPEND(DKCurl)
 DKDEPEND(DKDebug)
-DKDEPEND(DKDisplay))
+DKDEPEND(DKDisplay)
 DKDEPEND(DKDuktape)
-##DKDEPEND(FAR-2.0.2-win) #this seems to be a problem
+## DKDEPEND(FAR-2.0.2-win) ##FIXME: This breaks DKCmake
 DKDEPEND(DKEditor)
 DKDEPEND(DKEmscripten)
 DKDEPEND(DKFile)
-DKDEPEND(DKFtpTest)
+DKDEPEND(DKFpsTest)
 DKDEPEND(DKGit)
 DKDEPEND(DKGui)
 DKDEPEND(DKHandles)
@@ -54,7 +54,7 @@ DKDEPEND(DKSDLText)
 DKDEPEND(DKSDLVideo)
 DKDEPEND(DKSDLWav)
 DKDEPEND(DKSDLWindow)
-DKDEPEND(DKServer)
+## DKDEPEND(DKServer) ##Obsolete
 DKDEPEND(DKSFMLWindow)
 DKDEPEND(DKStats)
 DKDEPEND(DKSvn)
