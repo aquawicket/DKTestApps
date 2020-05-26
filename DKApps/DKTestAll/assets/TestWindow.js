@@ -1,9 +1,9 @@
-DKLog("Opening TestWindow.js... \n", DKINFO);
+console.log("Opening TestWindow.js...");
 
 //////////////////////////
 function TestWindow_Init()
 {
-	DKLog("Running TestWindow_Init() \n", DKINFO);
+	console.log("Running TestWindow_Init()");
 	DKCreate("DKWindow"); //create an sdl window
 	//DKWindow_MessageBox("Test Message Box");
 }
@@ -11,6 +11,6 @@ function TestWindow_Init()
 /////////////////////////////
 function TestJavascript_End()
 {
-	DKLog("Running TestWindow_End() \n", DKINFO);
-	DKLog("closing TestWindow.js... \n", DKINFO);
+	console.log("Running TestWindow_End()");
+	console.log("closing TestWindow.js...");
 }

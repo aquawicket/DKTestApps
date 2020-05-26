@@ -6,7 +6,7 @@ function New_Init()
 
 function New_OnEvent(event)
 {
-	//DKLog("SHIT!\n", DKERROR);
+	//console.log("SHIT!\n", DKERROR);
 	var safe = false;
 	if(document.getElementById("Checkbox").checked == true){
 		var safe = true;
@@ -21,5 +21,4 @@ function New_OnEvent(event)
 
 	DKWidget_SetProperty("Button", "background-color", "rgb(100,0,0)");
 	DKWidget_SetInnerHtml("Button", "BOOM!!!");
-
 }

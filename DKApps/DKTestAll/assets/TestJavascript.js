@@ -1,22 +1,22 @@
-DKLog("Opening TestJavascript.js... \n", DKINFO);
+console.log("Opening TestJavascript.js...");
 
 //////////////////////////////
 function TestJavascript_Init()
 {
-	DKLog("Running TestJavascript_Init() \n", DKINFO);
+	console.log("Running TestJavascript_Init()");
 	var a = 123;
 	var b = 456;
 	var c = a + b;
-	DKLog(a+" + "+b+" = "+c+" \n", DKINFO);
+	console.log(a+" + "+b+" = "+c);
 	
-	//DKLog("Press any key to test keyboard \n", DKINFO);
+	//console.log("Press any key to test keyboard");
 	//var key = DK_GetKey();
-	//DKLog("Key pressed = "+key+" \n", DKINFO);
+	//console.log("Key pressed = "+key);
 }
 
 /////////////////////////////
 function TestJavascript_End()
 {
-	DKLog("Running TestJavascript_End() \n", DKINFO);
-	DKLog("closing TestJavascript.js... \n", DKINFO);
+	console.log("Running TestJavascript_End()");
+	console.log("closing TestJavascript.js...");
 }

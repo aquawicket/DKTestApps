@@ -1,23 +1,24 @@
-DKLog("Opening TestRocket.js... \n", DKINFO);
+console.log("Opening TestRocket.js...");
 var info = "";
 
 //////////////////////////
 function TestRocket_Init()
 {
-	DKLog("Running TestRocket_Init() \n", DKINFO);
+	console.log("Running TestRocket_Init()");
 	DKCreate("DKRocket");
 	DKCreate("TestRocket.html");
 	
 	TestRocket_GetDKInfo();
 	TestRocket_GetWindowInfo();
-	DKWidget_SetInnerHtml("Info", info);
+	//DKWidget_SetInnerHtml("Info", info);
+	document.getElementById("Info").innerHTML = info;
 }
 
 /////////////////////////////
 function TestJavascript_End()
 {
-	DKLog("Running TestRocket_End() \n", DKINFO);
-	DKLog("closing TestRocket.js... \n", DKINFO);
+	console.log("Running TestRocket_End()");
+	console.log("closing TestRocket.js...");
 	DKClose("Rocket");
 	DKClose("TestRocket.html");
 }
@@ -33,7 +34,7 @@ function TestRocket_GetDKInfo()
 	info += "<br/>";
 	info += "Browser: "+DK_GetBrowser();
 	info += "<br/>";
-	info += "JS: "+DK_GetJavascript();
+	info += "JS: "+DK_GetJSEngine();
 	info += "<br/>";
 	info += "Framerate: "+DK_GetFramerate();
 	info += "<br/>";
@@ -45,7 +46,7 @@ function TestRocket_GetDKInfo()
 	info += "<br/>";
 }
 
-///////////////////////////////
+///////////////////////////////////
 function TestRocket_GetWindowInfo()
 {
 	info += "Window Position: "+DKWindow_GetX()+"x"+DKWindow_GetX();
