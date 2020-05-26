@@ -15,7 +15,7 @@ DKDEPEND(DKColorPicker)
 DKDEPEND(DKConsole)
 DKDEPEND(DKCrypto)
 DKDEPEND(DKCurl)
-DKDEPEND(DKDebug) ##Broken on linux
+DKDEPEND(DKDebug)
 DKDEPEND(DKDisplay)
 DKDEPEND(DKDuktape)
 ## DKDEPEND(FAR-2.0.2-win) ##FIXME: This breaks DKCmake
