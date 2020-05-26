@@ -49,7 +49,7 @@ DKDEPEND(DKScreenRecorder)
 DKDEPEND(DKSDLAudio)
 DKDEPEND(DKSDLCef)
 DKDEPEND(DKSDLRml)
-## DKDEPEND(DKSDLRocket) ##Deprecated
+DKDEPEND(DKSDLRocket) ##Deprecated
 DKDEPEND(DKSDLText)
 ## DKDEPEND(DKSDLVideo) ##FIXME: 3rdParty libraries not compiling
 ## DKDEPEND(DKSDLWav) ##FIXME: 3rdParty libraries not compiling

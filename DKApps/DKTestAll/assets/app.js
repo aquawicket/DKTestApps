@@ -8,6 +8,7 @@ welcome += "####### DKTestAll ####### \n";
 welcome += "######################### \n";
 console.log(welcome);
 
+
 //TestJavascript
 DKCreate("TestJavascript.js");
 DKClose("TestJavascript.js");
