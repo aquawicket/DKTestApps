@@ -66,7 +66,9 @@ DKDEPEND(DKTriggers)
 DKDEPEND(DKUpdate)
 DKDEPEND(DKVideo)
 ## DKDEPEND(DKVncClient) ##FIXME: 3rdParty libraries not compiling
-DKDEPEND(DKWebSockets) ##FIXME: 3rdParty libraries not compiling
+IF(NOT LINUX)
+	DKDEPEND(DKWebSockets) ##FIXME: 3rdParty libraries not compiling on linux
+ENDIF(NOT LINUX)
 DKDEPEND(DKWebTest)
 DKDEPEND(DKWebview)
 DKDEPEND(DKWidget)
