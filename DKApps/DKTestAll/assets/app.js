@@ -1,6 +1,4 @@
-DKCreate("DKDebug/DKDebug.js");
-
-var url = DKAssets_LocalAssets()+"DKWebTest/index.html";
+var url = DKAssets_LocalAssets()+"index.html";
 
 //// Create Cef window ////
 var USE_CEF = 1;
@@ -11,23 +9,7 @@ DKCef_ShowDevTools(0);
 //// Create SDL Rocket window ////
 DKCreate("DKWindow");
 DKCreate("DKRml");
-//location.href = url;
-window.moveTo(screen.width/2, 36);
-window.resizeTo(screen.width / 2 - 10, screen.height-84);
-//DKRocket_ToggleDebugger();
-
-/*
-//// Create SDL Rml window ////
-DKCreate("DKWindow");
-DKCreate("DKRml");
 location.href = url;
 window.moveTo(screen.width/2, 36);
 window.resizeTo(screen.width / 2 - 10, screen.height-84);
 //DKRml_ToggleDebugger();
-*/
-
-//// Create Widget ////
-DKCreate("DK/DK.js");
-DKCreate("DK/DK.css");
-DKCreate("DKWidget/DKWidget.js");
-DKCreate("DKColorPicker/DKColorPicker.js");
