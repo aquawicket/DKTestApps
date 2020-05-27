@@ -40,7 +40,7 @@ DKDEPEND(DKNotepad)
 DKDEPEND(DKPaint)
 ## DKDEPEND(DKPlugin1) ##FIXME: Not compiling
 ## DKDEPEND(DKPlugin2) ##FIXME: Not compiling
-DKDEPEND(DKRml)
+## DKDEPEND(DKRml)
 DKDEPEND(DKRocket) ##Deprecated
 ## DKDEPEND(DKRocketIframe) ##Deprecated
 ## DKDEPEND(DKRocketVideo) ##Deprecated
@@ -48,7 +48,7 @@ DKDEPEND(DKScale)
 DKDEPEND(DKScreenRecorder)
 DKDEPEND(DKSDLAudio)
 DKDEPEND(DKSDLCef)
-DKDEPEND(DKSDLRml)
+## DKDEPEND(DKSDLRml)
 DKDEPEND(DKSDLRocket) ##Deprecated
 DKDEPEND(DKSDLText)
 ## DKDEPEND(DKSDLVideo) ##FIXME: 3rdParty libraries not compiling
