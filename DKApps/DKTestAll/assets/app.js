@@ -1,12 +1,14 @@
 var url = DKAssets_LocalAssets()+"DKWebTest/index.html";
 
-//Create SDL Rml window
+//// Create SDL Rocket window
 DKCreate("DKWindow");
 DKCreate("DKRocket");
 location.href = url;
 window.moveTo(screen.width/2, 36);
 window.resizeTo(screen.width / 2 - 10, screen.height-84);
-//DKRml_ToggleDebugger();
+//DKRocket_ToggleDebugger();
+
+
 
 ////////////////// OLD CODE ///////////////////
 /*
