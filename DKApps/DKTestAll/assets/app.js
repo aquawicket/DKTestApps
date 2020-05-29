@@ -1,4 +1,4 @@
-var url = DKAssets_LocalAssets()+"index.html";
+var url = DKAssets_LocalAssets()+"DKWebTest/index.html";
 
 /*
 //// Create Cef window ////
