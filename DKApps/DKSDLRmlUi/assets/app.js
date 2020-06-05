@@ -1,3 +1,11 @@
+DKCreate("DKDomConsole");
+DKCreate("DKDomNavigator");
+DKCreate("DKDomEventTarget");
+DKCreate("DKDom/DKDomGlobalEventHandlers.js", function(){});
+DKCreate("DKDomXMLHttpRequest");
+DKCreate("DKDomScreen");
+DKCreate("DKDomWindow");
+
 DKCreate("DKWindow");
 DKCreate("DKRml");
 //DKRml_ToggleDebugger();
