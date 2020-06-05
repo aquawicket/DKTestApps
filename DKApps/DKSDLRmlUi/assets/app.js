@@ -8,9 +8,9 @@ DKCreate("DKDomWindow");
 
 DKCreate("DKWindow");
 DKCreate("DKRml");
-//DKRml_ToggleDebugger();
+DKRml_ToggleDebugger();
 
-location.href = DKAssets_LocalAssets()+"test.html";
+location.href = DKAssets_LocalAssets()+"DKWebTest/index.html";
 
 //console.log("***********  js file reports *****************");
 //console.log(document.getElementById("html").innerHTML);
