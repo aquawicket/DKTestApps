@@ -1,5 +1,5 @@
-CPP_DKDuktape_Create("DKSDLWindow");
-CPP_DKDuktape_Create("DKWindow");
+CPP_DK_Create("DKSDLWindow");
+CPP_DK_Create("DKWindow");
 
 console.log("CPP_DKWindow_TestInt(1234) = "+CPP_DKWindow_TestInt(1234)+"\n");
 console.log("CPP_DKWindow_TestString(\"test string\") = "+CPP_DKWindow_TestString("test string")+"\n");
@@ -14,7 +14,7 @@ function User_OnEvent(event){
 	if(event.type === "keydown"){
 		console.log("KEYDOWN: "+event.value);
 		if(event.value == "4"){ //FIXME: Exit for ANDROID button
-		    CPP_DKDuktape_Exit();
+		    CPP_DK_Exit();
 		}
 	}
 }

@@ -1,20 +1,21 @@
 var USE_CEF = 1;
-var url = "http://www.google.com/";
+var url = "file:///C:/digitalknob/DKTasmota/DKApps/DKTasmota/assets/index.html";
+//var url = "http://www.google.com/";
 //var url = "http://digitalknob.com";
 //var url = "chrome://gpu";
 var width = 800;
 var height = 600;
-CPP_DKDuktape_Create("DKCef,Cef,0,0,"+width+","+height+","+url);
+CPP_DK_Create("DKCef,Cef,0,0,"+width+","+height+","+url);
 CPP_DKCef_NewBrowser("Cef",0,0,width,height,url);
 
 //DKCreate("DKDebug/DKDebug.js");
 //DKCreate("DKCef/DKDevTools.js");
 
-CPP_DKDuktape_AddEvent("window", "DKCef_OnLoadingStateChange", User_OnEvent);
+CPP_DK_AddEvent("window", "DKCef_OnLoadingStateChange", User_OnEvent);
 ////////////////////////////
 function User_OnEvent(event)  //Duktape
 {
-	console.log("User_OnEvent("+CPP_DKDuktape_GetId(event)+","+DK_GetType(event)+","+DK_GetValue(event)+")\n");
+	console.log("User_OnEvent("+CPP_DK_GetId(event)+","+CPP_DK_GetType(event)+","+CPP_DK_GetValue(event)+")\n");
 
 	//Alter the google page logo and add button
 	//if(DK_Type(event, "DKCef_OnLoadingStateChange")){
