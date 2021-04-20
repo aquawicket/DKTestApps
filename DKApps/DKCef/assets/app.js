@@ -4,22 +4,22 @@ var url = "http://www.google.com/";
 //var url = "chrome://gpu";
 var width = 800;
 var height = 600;
-DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
-DKCef_NewBrowser("Cef",0,0,width,height,url);
+CPP_DKDuktape_Create("DKCef,Cef,0,0,"+width+","+height+","+url);
+CPP_DKCef_NewBrowser("Cef",0,0,width,height,url);
 
 //DKCreate("DKDebug/DKDebug.js");
 //DKCreate("DKCef/DKDevTools.js");
 
-DKAddEvent("window", "DKCef_OnLoadingStateChange", User_OnEvent);
+CPP_DKDuktape_AddEvent("window", "DKCef_OnLoadingStateChange", User_OnEvent);
 ////////////////////////////
 function User_OnEvent(event)  //Duktape
 {
-	//console.log("User_OnEvent("+DK_GetId(event)+","+DK_GetType(event)+","+DK_GetValue(event)+")\n");
+	console.log("User_OnEvent("+CPP_DKDuktape_GetId(event)+","+DK_GetType(event)+","+DK_GetValue(event)+")\n");
 
 	//Alter the google page logo and add button
 	//if(DK_Type(event, "DKCef_OnLoadingStateChange")){
 	//	if(DKCef_GetUrl("Cef", 0) == "http://www.google.com/"){
-			UpdateGoogle();
+			//UpdateGoogle();
 	//	}
 	//}
 }
@@ -27,15 +27,15 @@ function User_OnEvent(event)  //Duktape
 ///////////////////////
 function UpdateGoogle()
 {
-	DKCef_RunJavascript("document.getElementById('hplogo').setAttribute('src','http://digitalknob.com/DKSearch/DKSearch/logo.png');", 0);
-	DKCef_RunJavascript("var myButton = document.createElement('button');", 0);
-	DKCef_RunJavascript("myButton.id = 'myButton';", 0);
-	DKCef_RunJavascript("myButton.style.position = 'absolute';", 0);
-	DKCef_RunJavascript("myButton.style.top = '313px';", 0);
-	DKCef_RunJavascript("myButton.style.left = '489px';", 0);
-	DKCef_RunJavascript("myButton.style.width = '90px';", 0);
-	DKCef_RunJavascript("myButton.style.height = '32px';", 0);
-	DKCef_RunJavascript("myButton.innerHTML = 'MyButton';", 0);
-	DKCef_RunJavascript("myButton.onclick = function(){alert('myButton clicked.')};", 0);
-	DKCef_RunJavascript("document.body.appendChild(myButton);", 0);
+	CPP_DKCef_RunJavascript("document.getElementById('hplogo').setAttribute('src','http://digitalknob.com/DKSearch/DKSearch/logo.png');", 0);
+	CPP_DKCef_RunJavascript("var myButton = document.createElement('button');", 0);
+	CPP_DKCef_RunJavascript("myButton.id = 'myButton';", 0);
+	CPP_DKCef_RunJavascript("myButton.style.position = 'absolute';", 0);
+	CPP_DKCef_RunJavascript("myButton.style.top = '313px';", 0);
+	CPP_DKCef_RunJavascript("myButton.style.left = '489px';", 0);
+	CPP_DKCef_RunJavascript("myButton.style.width = '90px';", 0);
+	CPP_DKCef_RunJavascript("myButton.style.height = '32px';", 0);
+	CPP_DKCef_RunJavascript("myButton.innerHTML = 'MyButton';", 0);
+	CPP_DKCef_RunJavascript("myButton.onclick = function(){alert('myButton clicked.')};", 0);
+	CPP_DKCef_RunJavascript("document.body.appendChild(myButton);", 0);
 }
