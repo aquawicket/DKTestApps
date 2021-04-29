@@ -1,5 +1,5 @@
 var USE_CEF = 1;
-var url = "file:///C:/digitalknob/DKTasmota/DKApps/DKTasmota/assets/index.html";
+var url = "file:///C:/Users/aquawicket/digitalknob/DKTasmota/DKApps/DKTasmota/assets/index.html";
 //var url = "http://www.google.com/";
 //var url = "http://digitalknob.com";
 //var url = "chrome://gpu";
