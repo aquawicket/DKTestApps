@@ -1,7 +1,7 @@
 
-if(DK_GetBrowser() == "Rocket"){
+if(DK_GetBrowser() == "RML"){
 	DKCreate("DKWindow");
-	DKCreate("DKRocket");
+	DKCreate("DKRml");
 	DKCreate("DKWidget");
 }
 
