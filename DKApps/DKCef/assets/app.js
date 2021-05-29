@@ -1,8 +1,8 @@
 var USE_CEF = 1;
-var url = "file:///C:/Users/aquawicket/digitalknob/DKTasmota/DKApps/DKTasmota/assets/index.html";
-//var url = "http://www.google.com/";
-//var url = "http://digitalknob.com";
+var url = "http://www.google.com/";
 //var url = "chrome://gpu";
+//var url = "http://127.0.0.1:2393"
+
 var width = 800;
 var height = 600;
 CPP_DK_Create("DKCef,Cef,0,0,"+width+","+height+","+url);
@@ -25,6 +25,7 @@ function User_OnEvent(event)  //Duktape
 	//}
 }
 
+/*
 ///////////////////////
 function UpdateGoogle()
 {
@@ -40,3 +41,4 @@ function UpdateGoogle()
 	CPP_DKCef_RunJavascript("myButton.onclick = function(){alert('myButton clicked.')};", 0);
 	CPP_DKCef_RunJavascript("document.body.appendChild(myButton);", 0);
 }
+*/
