@@ -1,5 +1,5 @@
 
-if(DK_GetBrowser() == "RML"){
+if(DK_GetBrowser() == "Rml"){
 	DKCreate("DKWindow");
 	DKCreate("DKRml");
 	DKCreate("DKWidget");
