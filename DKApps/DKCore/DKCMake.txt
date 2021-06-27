@@ -1,3 +1,2 @@
-DKSET(USE_DKCef OFF)
-
+MESSAGE(STATUS "DKApp DKCMake.txt file")
 DKDEPEND(DK)
