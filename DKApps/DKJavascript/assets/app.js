@@ -1,1 +1,1 @@
-CPP_DK_Create("/Test.js");
+CPP_DK_Create("Test.js");
