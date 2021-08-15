@@ -13,7 +13,6 @@ rm -rf `find . -type d -name CMakeFiles`
 mkdir /home/"$USER"/digitalknob/DKTestApps/DKApps/$APP/$OS
 mkdir /home/"$USER"/digitalknob/DKTestApps/DKApps/$APP/$OS/$TYPE
 cd /home/"$USER"/digitalknob/DKTestApps/DKApps/$APP/$OS/$TYPE
-rm /home/"$USER"/digitalknob/DKTestApps/DKApps/$APP/$OS/$TYPE/CMakeCache.txt
 if [[ $TYPE -eq "Debug" ]]
 then
 	echo cmake -G "Unix Makefiles" -DDEBUG=ON -DREBUILDALL=ON -DSTATIC=ON /home/"$USER"/digitalknob/DK
