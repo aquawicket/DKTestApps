@@ -1,5 +1,5 @@
 //var USE_CEF = 1;
-DKCreate("DKWindow");
+CPP_DK_Create("DKWindow");
 //var url = "file:///C:/Users/aquawicket/digitalknob/DKApps/DKIDE/assets/index.html";
 var url = "http://google.com";
 var width = 800;//DKWindow_GetWidth();
