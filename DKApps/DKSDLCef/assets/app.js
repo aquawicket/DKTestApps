@@ -21,7 +21,7 @@ function User_OnEvent(event)
 {
 	/*
 	if(DK_Type(event, "resize")){
-		//DKLog("User_OnEvent(): resize\n", DKINFO);
+		//DKLog("User_OnEvent(): resize\n")
 		//CPP_DKCef_SetSize("CefSDL", 100, 100);
 		var width = CPP_DKWindow_GetWidth();
 		var height = CPP_DKWindow_GetHeight();
