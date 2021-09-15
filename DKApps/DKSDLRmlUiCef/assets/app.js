@@ -1,11 +1,11 @@
 
 if(DK_GetBrowser() == "Rml"){
-	DKCreate("DKWindow");
-	DKCreate("DKRml");
-	DKCreate("DKWidget");
+	CPP_DK_Create("DKWindow");
+	CPP_DK_Create("DKRml");
+	CPP_DK_Create("DKWidget");
 }
 
-DKCreate("DKDebug/DKDebug.js", function(){});
+CPP_DK_Create("DKDebug/DKDebug.js", function(){});
 DKWidget_SetProperty("body","background-color","blue");
 
 

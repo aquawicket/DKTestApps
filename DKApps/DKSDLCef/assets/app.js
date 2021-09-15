@@ -11,7 +11,7 @@ CPP_DKCef_NewBrowser("CefSDL",0,0,width,height,url);
 DKCef_SetUrl(0, url, currentBrowser);
 //DKCef_SetFocus("CefSDL");
 
-//DKCreate("DKDebug/DKDebug.js");
+//CPP_DK_Create("DKDebug/DKDebug.js");
 
 //DKAddEvent("window", "resize", User_OnEvent);
 

@@ -3,9 +3,9 @@ var url = "http://127.0.0.1:2393";
 var width = 800;
 var height = 600;
 
-DKCreate("DKCef,Cef,0,0,"+width+","+height+","+url);
+CPP_DK_Create("DKCef,Cef,0,0,"+width+","+height+","+url);
 DK_SetFramerate(5);
-DKCreate("DKDebug/DKDebug.js");
+CPP_DK_Create("DKDebug/DKDebug.js");
 
 DKAddEvent("GLOBAL", "keypress", User_OnEvent);
 ////////////////////////////

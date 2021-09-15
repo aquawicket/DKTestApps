@@ -7,13 +7,13 @@ if(DK_GetOS() == "Android"){
 
 /*
 if(DK_GetBrowser() == "Rocket"){
-	DKCreate("DKWindow");
-	DKCreate("DKRocket");
-	DKCreate("DKWidget");
+	CPP_DK_Create("DKWindow");
+	CPP_DK_Create("DKRocket");
+	CPP_DK_Create("DKWidget");
 }
 */
-DKCreate("DKWebview");
-DKCreate("DKDebug/DKDebug.js", function(){});
+CPP_DK_Create("DKWebview");
+CPP_DK_Create("DKDebug/DKDebug.js", function(){});
 
 
 ///////////////////////////////////////////////
@@ -57,6 +57,6 @@ else if(DK_GetBrowser() == "Rocket" && USE_Webview){ //Duktape
 }
 else{  //Duktape or V8 or Webview
 	DKWidget_SetProperty("body","background-color","grey");
-	DKCreate("DKScale/DKScale.js", function(){});
-	DKCreate("DKWebview/DKWebviewTest.js", function(){});
+	CPP_DK_Create("DKScale/DKScale.js", function(){});
+	CPP_DK_Create("DKWebview/DKWebviewTest.js", function(){});
 }
