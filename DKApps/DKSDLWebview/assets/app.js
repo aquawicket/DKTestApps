@@ -21,8 +21,8 @@ function User_OnEvent(event)  //Duktape
 	DKLog("User_OnEvent("+DK_GetId(event)+","+DK_GetType(event)+","+DK_GetValue(event)+")\n", DKDEBUG);
 	
 	if(DK_Type(event, "DKCef_OnQueueNewBrowser")){
-		var currentBrowser = DKCef_GetCurrentBrowser("DKCef_frame");
-		DKCef_SetUrl("DKCef_frame", DK_GetValue(event), currentBrowser);
+		var currentBrowser = CPP_DKCef_GetCurrentBrowser("DKCef_frame");
+		CPP_DKCef_SetUrl("DKCef_frame", DK_GetValue(event), currentBrowser);
 	}
 	if(DK_Type(event, "keydown")){
 		if(DK_GetValue(event) == "4"){ //Exit for ANDROID
@@ -42,9 +42,9 @@ if(DK_GetBrowser() == "Rocket" && USE_CEF){
 	DKWidget_SetProperty(iframe, "left", "0rem");
 	DKWidget_SetProperty(iframe, "width", "100%");
 	DKWidget_SetProperty(iframe, "bottom", "0rem");
-	var currentBrowser = DKCef_GetCurrentBrowser(iframe);
-	DKCef_SetUrl(iframe, url, currentBrowser);
-	DKCef_SetFocus(iframe);
+	var currentBrowser = CPP_DKCef_GetCurrentBrowser(iframe);
+	CPP_DKCef_SetUrl(iframe, url, currentBrowser);
+	CPP_DKCef_SetFocus(iframe);
 	
 	DKAddEvent("GLOBAL", "DKCef_OnQueueNewBrowser", User_OnEvent);
 }
