@@ -6,16 +6,13 @@ console.log("CPP_DKWindow_TestString(\"test string\") = "+CPP_DKWindow_TestStrin
 console.log("CPP_DKWindow_TestReturnInt() = "+CPP_DKWindow_TestReturnInt()+"\n");
 console.log("CPP_DKWindow_TestReturnString() = "+CPP_DKWindow_TestReturnString()+"\n");
 
-/////////////////////////
-//ANDROID back key = exit
-window.addEventListener("keydown", User_OnEvent);
+
+window.addEventListener("keydown", User_OnEvent); //ANDROID back key = exit
 
 function User_OnEvent(event){
 	if(event.type === "keydown"){
 		console.log("KEYDOWN: "+event.value);
-		if(event.value == "4"){ //FIXME: Exit for ANDROID button
+		if(event.value == "4") //FIXME: Exit for ANDROID button
 		    CPP_DK_Exit();
-		}
 	}
 }
-//////////////////////////
