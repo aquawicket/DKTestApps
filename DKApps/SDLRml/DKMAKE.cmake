@@ -1,0 +1,10 @@
+DKDEPEND(zlib)
+DKDEPEND(glew)
+DKDEPEND(sdl2)
+DKDEPEND(sdl2_image)
+DKDEPEND(rmlui)
+
+DKINCLUDE(${DKPROJECT})
+DKINCLUDE(${DKPROJECT}/shell/include)
+
+LIST(APPEND WIN_LIBS shlwapi.lib)
