@@ -3,11 +3,13 @@
 		<title>Image Test</title>
 	</head>
 	<body>
-		<img src="test.bmp" alt="bmp"></img>
-		<img src="test.gif" alt="gif"></img>
-		<img src="test.jpg" alt="jpeg"></img>
-		<img src="test.png" alt="png"></img>
-		<img src="test.tif" alt="tif"></img>
-		<img src="test.tga" alt="tga"></img>
+		<img src="test.bmp"></img>
+		<img src="test.gif"></img>
+		<img src="test.jpg"></img>
+		<img src="test.jpeg"></img>
+		<img src="test.png"></img>
+		<img src="test.tif"></img>
+		<img src="test.tga"></img>
+		<img src="test.svg"></img>
 	</body>
 </rml>

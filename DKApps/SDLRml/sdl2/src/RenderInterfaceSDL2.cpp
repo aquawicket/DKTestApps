@@ -80,8 +80,12 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
     glTexCoordPointer(2, GL_FLOAT, 0, &TexCoords[0]);
  
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    SDL_BlendMode bm;
+    SDL_GetTextureBlendMode(sdl_texture, &bm);
+    if(bm == SDL_BLENDMODE_BLEND){
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
     glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, indices);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
@@ -120,8 +124,7 @@ void RmlUiSDL2Renderer::SetScissorRegion(int x, int y, int width, int height)
 // Called by RmlUi when a texture is required by the library.		
 bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vector2i& texture_dimensions, const Rml::String& source)
 {
-
-    Rml::FileInterface* file_interface = Rml::GetFileInterface();
+	Rml::FileInterface* file_interface = Rml::GetFileInterface();
     Rml::FileHandle file_handle = file_interface->Open(source);
     if (!file_handle)
         return false;
@@ -147,7 +150,6 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
 
     if (surface) {
         SDL_Texture *texture = SDL_CreateTextureFromSurface(mRenderer, surface);
-
         if (texture) {
             texture_handle = (Rml::TextureHandle) texture;
             texture_dimensions = Rml::Vector2i(surface->w, surface->h);
