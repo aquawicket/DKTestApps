@@ -12,4 +12,6 @@ DKDEPEND(rmlui)
 DKINCLUDE(${DKPROJECT})
 DKINCLUDE(${DKPROJECT}/shell/include)
 
-LIST(APPEND WIN_LIBS shlwapi.lib)
+#LIST(APPEND WIN_LIBS shlwapi.lib)
+WIN_DEBUG_LIB(shlwapi.lib)
+WIN_RELEASE_LIB(shlwapi.lib)
