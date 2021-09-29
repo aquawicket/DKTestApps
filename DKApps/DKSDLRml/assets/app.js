@@ -1,19 +1,6 @@
 const url = CPP_DKAssets_LocalAssets()+"index.html"
 //const url = CPP_DKAssets_LocalAssets()+"DKWebTest/index.html"
 
-/*
-//// Create Cef window
-const cef_x = 0
-const cef_y = 0
-const cef_width = window.screen.width / 2
-const cef_height = window.screen.height / 2
-const cef_x_offset = -8
-const cef_y_offset = -1
-const cef_width_offset = +16
-const cef_height_offset = +9
-CPP_DK_Create("DKCef")
-CPP_DKCef_NewBrowser("Cef", cef_y+cef_y_offset, cef_x+cef_x_offset, cef_width+cef_width_offset, cef_height+cef_height_offset, url)
-*/
 
 //// Create SDLRml window
 const sdl_x = window.screen.width / 2
@@ -36,7 +23,6 @@ window.addEventListener("keydown", function(event){
 		CPP_DKRml_DebuggerToggle()
 	if(event.code === "F11")
 		CPP_DKWindow_IsFullscreen() ? CPP_DKWindow_Windowed() : dk.window.fullscreen()
-	
 })
 
 
