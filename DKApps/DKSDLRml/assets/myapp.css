@@ -1,20 +1,21 @@
-#idvalue1 {
-/*.classvalue1 {*/
+/* #idvalue1 { 8?
+/*.classvalue1 {*//*
 	background-color: blue;
 }
-
-/* #idvalue2 { */
+*/
+/* #idvalue2 { *//*
 .classvalue2 {
 	background-color: green;
 }
-
+*/
 /* #idvalue3 { */
 /* .classvalue3 { */
-div[test3] {
+div[test] {
 	background-color: yellow;
 }
-
+/*
 #idvalue4 {
-/* .classvalue4 { */
+ .classvalue4 { *//*
 	background-color: red;
 }
+*/
