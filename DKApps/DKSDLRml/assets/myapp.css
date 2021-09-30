@@ -1,21 +1,28 @@
-/* #idvalue1 { 8?
-/*.classvalue1 {*//*
+
+[test="testvalue1"] {  /* ALL elements with "test" attributes */
 	background-color: blue;
 }
-*/
-/* #idvalue2 { *//*
-.classvalue2 {
+
+[test="testvalue2"] { /* ALL elements with "test" equals "testvalue2" attributes */
 	background-color: green;
 }
-*/
-/* #idvalue3 { */
-/* .classvalue3 { */
-div[test] {
+
+[test="testvalue3"] { /* All elements with "test" that equals subtext attributes */ 
 	background-color: yellow;
 }
-/*
-#idvalue4 {
- .classvalue4 { *//*
+
+[test="testvalue4"] { /* All elements with "test" attributes that equal "test", or star with "test-" */
 	background-color: red;
 }
-*/
+
+[test="testvalue5"] { /* All elements with test attributes that equal beginning with "test" */
+	background-color: purple;
+}
+
+[test="testvalue6"] { /* All elements with test attributes that end with "value6" */
+	background-color: orange;
+}
+
+[test="testvalue7"] { /* All elements with test attributes the match substring partial word */
+	background-color: pink;
+}

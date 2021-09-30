@@ -7,7 +7,7 @@ DKDEPEND(tiff)
 DKDEPEND(glew)
 DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
-DKDEPEND(rmlui)
+DKDEPEND(rmlui rmlui_debugger)
 
 DKINCLUDE(${DKPROJECT})
 DKINCLUDE(${DKPROJECT}/shell/include)
