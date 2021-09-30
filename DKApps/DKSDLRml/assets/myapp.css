@@ -10,7 +10,7 @@
 
 /* #idvalue3 { */
 /* .classvalue3 { */
-[test3="testvalue3"] {
+div[test3] {
 	background-color: yellow;
 }
 
