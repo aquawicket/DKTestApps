@@ -1,0 +1,7 @@
+.classvalue {
+	background-color: blue;
+}
+
+[Test="TestValue"] {
+	background-color: yellow;
+}
