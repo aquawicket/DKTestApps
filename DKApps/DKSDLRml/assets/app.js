@@ -15,8 +15,8 @@ document.body.appendChild(ele)
 
 ele.ele2 = document.createElement("div")
 ele.ele2.id = "idvalue2"
-ele.ele2.setAttribute("class", "classvalue2")
-ele.ele2.setAttribute("test2", "testvalue2")
+//ele.ele2.setAttribute("class", "classvalue2")
+ele.ele2.setAttribute("myAttribute", "myAttributeValue")
 ele.ele2.style.position = "absolute"
 ele.ele2.style.display = "block"
 ele.ele2.style.width = "66px"
