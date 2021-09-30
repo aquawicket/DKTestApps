@@ -2,6 +2,13 @@
 	background-color: blue;
 }
 
-[Test="TestValue"] {
+/*
+#idvalue2 {
+	background-color: green;
+}
+*/
+
+
+[test2="testvalue2"] {
 	background-color: yellow;
 }
