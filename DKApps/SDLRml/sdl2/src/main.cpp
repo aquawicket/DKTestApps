@@ -108,7 +108,7 @@ int main(int /*argc*/, char** /*argv*/)
 
 	for (const FontFace& face : font_faces)
 	{
-		Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
+		Rml::LoadFontFace("../../assets/" + face.filename, face.fallback_face);
 	}
 
 	Rml::Context* Context = Rml::CreateContext("default",
@@ -116,7 +116,7 @@ int main(int /*argc*/, char** /*argv*/)
 
 	Rml::Debugger::Initialise(Context);
 
-	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
+	Rml::ElementDocument* Document = Context->LoadDocument("../../assets/imagetest/index.rml");
 
 	if (Document)
 	{

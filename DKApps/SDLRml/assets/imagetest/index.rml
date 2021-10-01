@@ -3,15 +3,15 @@
 		<title>Image Test</title>
 	</head>
 	<body>
-		<img src="test.bmp"></img>
-		<img src="test.gif"></img>
-		<img src="test.jpeg"></img>
-		<img src="test.jpg"></img>
-		<img src="test.pcx"></img>
-		<img src="test.png"></img>
-		<img src="test.rgb"></img>
-		<img src="test.svg"></img>
-		<img src="test.tga"></img>
-		<img src="test.tif"></img>
+		<img src="/../../assets/imagetest/test.bmp"></img>
+		<img src="/../../assets/imagetest/test.gif"></img>
+		<img src="/../../assets/imagetest/test.jpeg"></img>
+		<img src="/../../assets/imagetest/test.jpg"></img>
+		<img src="/../../assets/imagetest/test.pcx"></img>
+		<img src="/../../assets/imagetest/test.png"></img>
+		<img src="/../../assets/imagetest/test.rgb"></img>
+		<img src="/../../assets/imagetest/test.svg"></img>
+		<img src="/../../assets/imagetest/test.tga"></img>
+		<img src="/../../assets/imagetest/test.tif"></img>
 	</body>
 </rml>
