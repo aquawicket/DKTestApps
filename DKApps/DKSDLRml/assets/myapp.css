@@ -1,28 +1,4 @@
 
-[test="testvalue1"] {  /* ALL elements with "test" attributes */
+[test] {  /* ALL elements with "test" attributes */
 	background-color: blue;
-}
-
-[test="testvalue2"] { /* ALL elements with "test" equals "testvalue2" attributes */
-	background-color: green;
-}
-
-[test="testvalue3"] { /* All elements with "test" that equals subtext attributes */ 
-	background-color: yellow;
-}
-
-[test="testvalue4"] { /* All elements with "test" attributes that equal "test", or star with "test-" */
-	background-color: red;
-}
-
-[test="testvalue5"] { /* All elements with test attributes that equal beginning with "test" */
-	background-color: purple;
-}
-
-[test="testvalue6"] { /* All elements with test attributes that end with "value6" */
-	background-color: orange;
-}
-
-[test="testvalue7"] { /* All elements with test attributes the match substring partial word */
-	background-color: pink;
 }
