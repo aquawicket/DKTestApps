@@ -1,4 +1,4 @@
-<rml>
+<template name="window" content="content">
 	<head>
 		<title>Image Test</title>
 	</head>
@@ -14,4 +14,5 @@
 		<img src="/../../assets/imagetest/test.tga"></img>
 		<img src="/../../assets/imagetest/test.tif"></img>
 	</body>
-</rml>
+</template>
+
