@@ -1,7 +1,7 @@
 <template name="imagetest" content="content">
 	<head></head>
 	<body>
-		<span style="color:white;">Image Test<br /></span>
+		<span style="color:white;"><br />Image Test<br /></span>
 		<img src="/../../assets/imagetest/test.bmp"></img>
 		<img src="/../../assets/imagetest/test.gif"></img>
 		<img src="/../../assets/imagetest/test.jpeg"></img>

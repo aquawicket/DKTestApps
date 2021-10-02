@@ -5,7 +5,7 @@
 		<link type="text/template" href="C:/Users/IK/digitalknob/DKTestApps/DKApps/SDLRml/assets/csstest/index.rml" />
 	</head>
 	<body>
-		<template src="imagetest"></template>
+		<!-- <template src="imagetest"></template> -->
 		<template src="csstest"></template>
 	</body>
 </rml>
