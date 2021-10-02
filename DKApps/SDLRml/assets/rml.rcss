@@ -2,6 +2,8 @@
 * Default styles for all the basic elements.
 */
 
+
+
 body
 {
 	font-family: LatoLatin;
@@ -10,6 +12,10 @@ body
 	font-size: 15dp;
 	color: white;
 	overflow: auto;
+	height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
 }
 
 div

@@ -1,11 +1,13 @@
 <rml>
 	<head>
 		<link type="text/css" href="C:/Users/IK/digitalknob/DKTestApps/DKApps/SDLRml/assets/rml.rcss" />
-		<link type="text/template" href="C:/Users/IK/digitalknob/DKTestApps/DKApps/SDLRml/assets/imagetest/index.rml" />
-		<link type="text/template" href="C:/Users/IK/digitalknob/DKTestApps/DKApps/SDLRml/assets/csstest/index.rml" />
+		<link type="text/template" href="C:/Users/IK/digitalknob/DKTestApps/DKApps/SDLRml/assets/imagetest/imagetest.rml" />
+		<link type="text/template" href="C:/Users/IK/digitalknob/DKTestApps/DKApps/SDLRml/assets/csstest/csstest.rml" />
 	</head>
 	<body>
-		<!-- <template src="imagetest"></template> -->
+	<div>
+		<template src="imagetest"></template>
 		<template src="csstest"></template>
+	</div>
 	</body>
 </rml>
