@@ -116,7 +116,7 @@ int main(int /*argc*/, char** /*argv*/)
 
 	Rml::Debugger::Initialise(Context);
 
-	Rml::ElementDocument* Document = Context->LoadDocument("../../assets/index.rml");
+	Rml::ElementDocument* Document = Context->LoadDocument("../../assets/index.html");
 
 	if (Document)
 	{
