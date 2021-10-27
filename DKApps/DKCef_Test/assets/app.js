@@ -5,4 +5,4 @@ var url = "chrome://gpu";
 var width = 1240;
 var height = 900;
 CPP_DK_Create("DKCef");
-//CPP_DKCef_NewBrowser("Cef",0,0,width,height,url);
+CPP_DKCef_NewBrowser("Cef",0,0,width,height,url);
