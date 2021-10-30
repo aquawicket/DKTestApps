@@ -54,11 +54,11 @@ int main(int /*argc*/, char** /*argv*/)
 	int window_height = 768;
 	SDL_Init(SDL_INIT_VIDEO);
 	
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
 	SDL_Window* screen = SDL_CreateWindow("LibRmlUi SDL2 test", 20, 20, window_width, window_height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-	
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	
 	SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
 	int oglIdx = -1;
