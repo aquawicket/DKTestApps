@@ -1,11 +1,10 @@
 #include <string.h>
 #include <windows.h>
 #include <SDL.h>
-//#include <GL/glew.h>
+#include <GL/glew.h>
+#include <stdio.h>
 
 int main(int /*argc*/, char** /*argv*/){
-	
-	
 	/*
 	AllocConsole();
 	int window_width = 1024;
@@ -34,50 +33,53 @@ int main(int /*argc*/, char** /*argv*/){
 	//glMatrixMode(GL_PROJECTION | GL_MODELVIEW);
 	//glLoadIdentity();
 	//glOrtho(0, window_width, window_height, 0, 0, 1);
-	bool done = false;
-	while (!done){
-		SDL_Event event;
-		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-		SDL_RenderClear(renderer);
-		SDL_RenderPresent(renderer);
-		while (SDL_PollEvent(&event)){
-			switch (event.type) {
-				case SDL_QUIT:
-					done = true;
-					break;
-				default:
-					break;
-			}
-		}
-	}
-	SDL_DestroyRenderer(renderer);
-	SDL_GL_DeleteContext(glcontext);
-	SDL_DestroyWindow(screen);
-	SDL_Quit();
 	*/
 	
 	//System init
 	if(!SDL_WasInit(SDL_INIT_EVERYTHING))
 		SDL_Init(SDL_INIT_EVERYTHING);
 
-	this->SDL_window = SDL_CreateWindow(title,10,10,w,h,SDL_WINDOW_OPENGL);
-	if(this->SDL_window!=NULL){
+	SDL_Window* sdl_window = SDL_CreateWindow("RenderDocTeast", 10, 10, 800, 600, SDL_WINDOW_OPENGL);
+	if(sdl_window!=NULL){
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-		this->context = SDL_GL_CreateContext(SDL_window);
-		if(!this->context){
-			SDL_DestroyWindow(SDL_window);
-			COUT<<"FAILED TO CREATE CONTEXT. PRINTING ERROR AND THROWING EXCEPTION"<<ENDL;
-			COUT<<SDL_GetError()<<ENDL;
-			throw "ENGINE::WINDOW::GLCONTEXTERR";
+		SDL_GLContext context = SDL_GL_CreateContext(sdl_window);
+		if(!context){
+			SDL_DestroyWindow(sdl_window);
+			printf("FAILED TO CREATE CONTEXT. PRINTING ERROR AND THROWING EXCEPTION");
+			printf("%s", SDL_GetError());
 		}
         glewExperimental = GL_TRUE;
         glewInit();
 	}
 	else{
-		COUT<<"FAILED TO CREATE WINDOW. PRINTING ERROR AND THROWING EXCEPTION"<<ENDL;
-		COUT<<SDL_GetError()<<ENDL;
-		throw "ENGINE::WINDOW::SDLWINDOWERR";
+		printf("FAILED TO CREATE WINDOW.PRINTING ERROR AND THROWING EXCEPTION");
+		printf("%s", SDL_GetError());
 	}
+
+	bool done = false;
+	while (!done) {
+		/*
+		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+		SDL_RenderClear(renderer);
+		SDL_RenderPresent(renderer);
+		*/
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
+			case SDL_QUIT:
+				done = true;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	/*
+	SDL_DestroyRenderer(renderer);
+	SDL_GL_DeleteContext(glcontext);
+	SDL_DestroyWindow(screen);
+	*/
+	SDL_Quit();
 	return 0;
 }
