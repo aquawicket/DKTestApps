@@ -4,6 +4,9 @@
 //#include <GL/glew.h>
 
 int main(int /*argc*/, char** /*argv*/){
+	
+	
+	/*
 	AllocConsole();
 	int window_width = 1024;
 	int window_height = 768;
@@ -51,5 +54,30 @@ int main(int /*argc*/, char** /*argv*/){
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(screen);
 	SDL_Quit();
+	*/
+	
+	//System init
+	if(!SDL_WasInit(SDL_INIT_EVERYTHING))
+		SDL_Init(SDL_INIT_EVERYTHING);
+
+	this->SDL_window = SDL_CreateWindow(title,10,10,w,h,SDL_WINDOW_OPENGL);
+	if(this->SDL_window!=NULL){
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		this->context = SDL_GL_CreateContext(SDL_window);
+		if(!this->context){
+			SDL_DestroyWindow(SDL_window);
+			COUT<<"FAILED TO CREATE CONTEXT. PRINTING ERROR AND THROWING EXCEPTION"<<ENDL;
+			COUT<<SDL_GetError()<<ENDL;
+			throw "ENGINE::WINDOW::GLCONTEXTERR";
+		}
+        glewExperimental = GL_TRUE;
+        glewInit();
+	}
+	else{
+		COUT<<"FAILED TO CREATE WINDOW. PRINTING ERROR AND THROWING EXCEPTION"<<ENDL;
+		COUT<<SDL_GetError()<<ENDL;
+		throw "ENGINE::WINDOW::SDLWINDOWERR";
+	}
 	return 0;
 }
