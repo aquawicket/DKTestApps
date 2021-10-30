@@ -49,7 +49,6 @@ int main(int /*argc*/, char** /*argv*/)
 #ifdef RMLUI_PLATFORM_WIN32
 	AllocConsole();
 #endif
-
 	int window_width = 1024;
 	int window_height = 768;
 	SDL_Init(SDL_INIT_VIDEO);
@@ -71,10 +70,10 @@ int main(int /*argc*/, char** /*argv*/)
 	}
 	SDL_Renderer* renderer = SDL_CreateRenderer(screen, oglIdx, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+
 	SDL_DisplayMode current;
 	SDL_GetCurrentDisplayMode(0, &current);
 	SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
@@ -98,6 +97,21 @@ int main(int /*argc*/, char** /*argv*/)
 	Rml::SetFileInterface(&FileInterface);
 	Rml::SetRenderInterface(&Renderer);
 	Rml::SetSystemInterface(&SystemInterface);
+
+	//print opengl info
+	printf("OpenGL Vendor:   %s\n", glGetString(GL_VENDOR));
+	printf("OpenGL Renderer: %s\n", glGetString(GL_RENDERER));
+	printf("OpenGL Version:  %s\n", glGetString(GL_VERSION));
+	//print sdl results
+	int profile;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
+	printf("SDL_GL_CONTEXT_PROFILE_MASK = %d\n", profile);
+	int major;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major);
+	printf("SDL_GL_CONTEXT_MAJOR_VERSION = %d\n", major);
+	int minor;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
+	printf("SDL_GL_CONTEXT_MINOR_VERSION = %d\n", minor);
 
 	if (!Rml::Initialise())
 		return 1;
