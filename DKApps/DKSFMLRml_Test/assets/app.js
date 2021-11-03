@@ -25,7 +25,6 @@ window.addEventListener("keydown", function(event){
 		CPP_DKWindow_IsFullscreen() ? CPP_DKWindow_Windowed() : dk.window.fullscreen()
 })
 
-
 //// Console window
 const console_x = 0
 const console_y = 0
