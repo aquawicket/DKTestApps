@@ -1,4 +1,1 @@
-#DKDISABLE(DKDuktape)
-#DKDISABLE(DKCef)
-DKDEPEND(libvorbis)
 DKDEPEND(DK)
