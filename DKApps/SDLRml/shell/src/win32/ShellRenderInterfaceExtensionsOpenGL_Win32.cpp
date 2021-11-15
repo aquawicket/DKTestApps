@@ -1,3 +1,4 @@
+#ifdef WIN32
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -150,3 +151,4 @@ void ShellRenderInterfaceOpenGL::PresentRenderBuffer()
 	SwapBuffers(this->device_context);
 	RMLUI_FrameMark;
 }
+#endif

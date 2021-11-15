@@ -42,7 +42,9 @@
 
 #include <SDL.h>
 
+#ifdef
 #include <GL/glew.h>
+#endif
 
 int main(int /*argc*/, char** /*argv*/)
 {

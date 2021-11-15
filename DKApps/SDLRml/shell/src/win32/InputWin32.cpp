@@ -1,3 +1,4 @@
+#ifdef WIN32
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -451,3 +452,6 @@ std::wstring ConvertToUTF16(const Rml::String& str)
 	MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.length(), &wstr[0], count);
 	return wstr;
 }
+
+
+#endif

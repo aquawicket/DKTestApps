@@ -1,3 +1,4 @@
+#ifdef WIN32
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -28,7 +29,7 @@
 
 #ifndef RMLUI_SHELL_INPUTWIN32_H
 #define RMLUI_SHELL_INPUTWIN32_H
-
+ 
 #include <Input.h>
 #include <win32/IncludeWindows.h>
 #include <string>
@@ -52,4 +53,5 @@ public:
 Rml::String ConvertToUTF8(const std::wstring& wstr);
 std::wstring ConvertToUTF16(const Rml::String& str);
 
+#endif
 #endif

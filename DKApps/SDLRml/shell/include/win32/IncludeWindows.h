@@ -1,3 +1,4 @@
+#ifdef WIN32
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -44,4 +45,6 @@
 
 #include <windows.h>
 
+
+#endif
 #endif

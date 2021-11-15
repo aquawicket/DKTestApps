@@ -1,3 +1,4 @@
+#ifdef WIN32
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -531,3 +532,5 @@ static LRESULT CALLBACK WindowProcedure(HWND local_window_handle, UINT message, 
 	// All unhandled messages go to DefWindowProc.
 	return DefWindowProc(local_window_handle, message, w_param, l_param);
 }
+
+#endif
