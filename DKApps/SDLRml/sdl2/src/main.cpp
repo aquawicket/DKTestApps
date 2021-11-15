@@ -42,7 +42,7 @@
 
 #include <SDL.h>
 
-#ifdef
+#ifdef WIN32
 #include <GL/glew.h>
 #endif
 
