@@ -1,6 +1,6 @@
 var USE_CEF = 1;
-var url = "https://www.google.com";
 //var url = "chrome://gpu";
+var url = "https://www.google.com";
 
 var width = 1240;
 var height = 900;

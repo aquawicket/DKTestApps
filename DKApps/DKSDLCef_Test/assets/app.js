@@ -1,12 +1,13 @@
 var USE_CEF = 1
-CPP_DK_Create("DKWindow")
-var url = "http://duckduckgo.com"
+CPP_DK_Create("DKSDLWindow")
+var url = "chrome://gpu";
+//var url = "http://duckduckgo.com"
 var width = 800;//CPP_DKWindow_GetWidth()
 var height = 600;//CPP_DKWindow_GetHeight()
 CPP_DK_Create("DKCef,CefSDL,0,0,"+width+","+height+","+url)
-CPP_DKCef_NewBrowser("CefSDL",0,0,width,height,url)
-var currentBrowser = CPP_DKCef_GetCurrentBrowser("CefSDL")
-CPP_DKCef_SetUrl(0, url, currentBrowser)
+//CPP_DKCef_NewBrowser("CefSDL",0,0,width,height,url)
+//var currentBrowser = CPP_DKCef_GetCurrentBrowser("CefSDL")
+//CPP_DKCef_SetUrl(0, url, currentBrowser)
 //CPP_DKCef_SetFocus("CefSDL")
 
 //CPP_DK_Create("DKDebug/DKDebug.js")
