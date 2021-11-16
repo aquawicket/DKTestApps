@@ -1,5 +1,5 @@
 var USE_CEF = 1;
-var url = "http://www.duckduckgo.com/";
+var url = "https://www.google.com";
 //var url = "chrome://gpu";
 
 var width = 1240;
