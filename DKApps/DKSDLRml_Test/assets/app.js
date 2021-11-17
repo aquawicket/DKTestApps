@@ -1,8 +1,10 @@
 //const url = CPP_DKAssets_LocalAssets()+"index.html"
 const url = CPP_DKAssets_LocalAssets()+"DKWebTest/index.html"
+CPP_DK_Create("DKWindow")
+CPP_DK_Create("DKRml")
+location.href = url
 
-
-//// Create SDLRml window
+//// Resize SDLRml window
 const sdl_x = window.screen.width / 2
 const sdl_y = 0
 const sdl_width = window.screen.width / 2
@@ -11,11 +13,10 @@ const sdl_x_offset = 0
 const sdl_y_offest = 30
 const sdl_width_offset = 1
 const sdl_height_offset = -30
-CPP_DK_Create("DKWindow")
-CPP_DK_Create("DKRml")
+
+/*
 window.resizeTo(sdl_width+sdl_width_offset, sdl_height+sdl_height_offset)
 window.moveTo(sdl_x+sdl_x_offset, sdl_y+sdl_y_offest)
-location.href = url
 window.addEventListener("keydown", function(event){
 	CPP_DK_Create("DKWindow/DKWindow.js")
 	console.log(event.code)
@@ -36,3 +37,4 @@ const console_y_offest = -1
 const console_width_offset = +16
 const console_height_offset = +9
 CPP_DK_setConsolePosition(console_x+console_x_offset, console_y+console_y_offest, console_width+console_width_offset, console_height+console_height_offset)
+*/
