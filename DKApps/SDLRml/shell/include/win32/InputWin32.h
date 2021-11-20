@@ -56,4 +56,5 @@ std::wstring ConvertToUTF16(const Rml::String& str);
 
 #endif
 #endif
-#endif
+
+#endif //WIN32

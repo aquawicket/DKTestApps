@@ -1,3 +1,5 @@
+#ifdef LINUX
+
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -110,3 +112,6 @@ void ShellRenderInterfaceOpenGL::PresentRenderBuffer()
 	// Flips the OpenGL buffers.
 	glXSwapBuffers(this->nwData.display, this->nwData.window);
 }
+
+
+#endif //LINUX

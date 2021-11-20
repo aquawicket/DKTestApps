@@ -533,4 +533,4 @@ static LRESULT CALLBACK WindowProcedure(HWND local_window_handle, UINT message, 
 	return DefWindowProc(local_window_handle, message, w_param, l_param);
 }
 
-#endif
+#endif //WIN32

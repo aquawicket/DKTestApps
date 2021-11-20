@@ -1,3 +1,4 @@
+#ifdef LINUX
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -28,7 +29,6 @@
 
 #ifndef RMLUI_SHELL_X11_INPUTX11_H
 #define RMLUI_SHELL_X11_INPUTX11_H
-#ifdef LINUX
 
 #include <X11/Xlib.h>
 #include <x11/X11MacroZapper.h>
@@ -59,4 +59,5 @@ public:
 };
 
 #endif
-#endif
+
+#endif //LINUX

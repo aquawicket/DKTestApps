@@ -1,3 +1,4 @@
+#ifdef LINUX
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -556,3 +557,5 @@ void Shell::SetContext(Rml::Context* new_context)
 	context = new_context;
 	UpdateWindowDimensions();
 }
+
+#endif //LINUX

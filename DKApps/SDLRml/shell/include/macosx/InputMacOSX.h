@@ -1,3 +1,4 @@
+#ifdef MAC
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -28,7 +29,6 @@
 
 #ifndef RMLUI_SHELL_MACOSX_INPUTMACOSX_H
 #define RMLUI_SHELL_MACOSX_INPUTMACOSX_H
-#ifdef MAC
 
 #include "Input.h"
 #include <Carbon/Carbon.h>
@@ -50,4 +50,5 @@ public:
 };
 
 #endif
+
 #endif //MAC

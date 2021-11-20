@@ -1,3 +1,5 @@
+#ifdef LINUX
+
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -28,7 +30,6 @@
 
 #ifndef RMLUI_SHELL_X11_X11MACROZAPPER_H
 #define RMLUI_SHELL_X11_X11MACROZAPPER_H
-#ifdef LINUX
 
 // The None and Always defines from X.h conflicts with RmlUi code base,
 // use their underlying constants where necessary.
@@ -42,4 +43,5 @@
 #endif
 
 #endif
-#endif
+
+#endif //LINUX

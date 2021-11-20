@@ -151,4 +151,5 @@ void ShellRenderInterfaceOpenGL::PresentRenderBuffer()
 	SwapBuffers(this->device_context);
 	RMLUI_FrameMark;
 }
-#endif
+
+#endif //WIN32

@@ -1,3 +1,5 @@
+#ifdef LINUX
+
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -400,3 +402,5 @@ static void InitialiseKeymap()
 	key_identifier_map[XK_y & 0xFF] = Rml::Input::KI_Y;
 	key_identifier_map[XK_z & 0xFF] = Rml::Input::KI_Z;
 }
+
+#endif //LINUX
