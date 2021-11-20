@@ -1,3 +1,4 @@
+#ifdef USE_METAL
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -26,16 +27,35 @@
  *
  */
 
-#ifndef RMLUISHELLPRECOMPILED_H
-#define RMLUISHELLPRECOMPILED_H
+#ifndef RMLUI_SHELL_SHELLMETAL_H
+#define RMLUI_SHELL_SHELLMETAL_H
 
-#include <RmlUi/Core/Core.h>
-#include <Shell.h>
+#include <RmlUi/Core/Platform.h>
 
-#ifdef USE_METAL
-	#include <ShellMetal.h>
-#else
-	#include <ShellOpenGL.h>
+#if defined RMLUI_PLATFORM_WIN32
+#include "win32/IncludeWindows.h"
+#include <gl/Gl.h>
+#include <gl/Glu.h>
+#elif defined RMLUI_PLATFORM_MACOSX
+#include <AGL/agl.h>
+#include <Metal/gl.h>
+#include <Metal/glu.h>
+#include <Metal/glext.h>
+#elif defined RMLUI_PLATFORM_UNIX
+#include <GL/glx.h>
+#include <GL/gl.h>
+#include <GL/glext.h>
+#include <GL/glu.h>
+
+#include <x11/X11MacroZapper.h>
+
+struct __X11NativeWindowData
+{
+	Window window;
+	Display *display;
+	XVisualInfo *visual_info;
+};
 #endif
 
 #endif
+#endif //USE_METAL
