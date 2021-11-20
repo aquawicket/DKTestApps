@@ -1,5 +1,5 @@
 #include <RmlUi/Core.h>
-#include "SDLRml/SDLRmlSystem.h"
+#include "SDLRmlSystem.h"
 
 Rml::Input::KeyIdentifier SDLRmlSystem::TranslateKey(SDL_Keycode sdlkey){
     using namespace Rml::Input;

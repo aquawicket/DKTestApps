@@ -9,12 +9,11 @@
 #include "SDLRmlRenderer.h"
 
 
-class SDLRml// : public ObjectT<SDLRml>
+class SDLRml
 {
 public:
 	bool Init();
 	bool End();
-
 	bool Handle(SDL_Event *event);
 	void Render();
 	void Update();
@@ -23,7 +22,7 @@ public:
 	SDLWindow* sdlWindow;
 	RmlMain* rmlmain;
 #ifdef RML_SHELL_RENDER
-	ShellRenderInterfaceOpenGL* Renderer;
+	ShellRenderInterfaceOpenGL* renderer;
 #else
 	SDLRmlRenderer* renderer;
 #endif
