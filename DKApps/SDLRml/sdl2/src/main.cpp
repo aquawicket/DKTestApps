@@ -41,15 +41,20 @@
 #endif
 
 #include <SDL.h>
-
 #include <GL/glew.h>
+
+#include <iostream>
+#include <filesystem>
 
 int main(int /*argc*/, char** /*argv*/)
 {
 #ifdef RMLUI_PLATFORM_WIN32
 	AllocConsole();
 #endif
-
+	std::cout << "Current path is " << std::filesystem::current_path() << '\n';
+    std::filesystem::current_path("../../assets");
+    std::cout << "Current path is " << std::filesystem::current_path() << '\n';
+	
 	int window_width = 1024;
 	int window_height = 768;
 
@@ -126,7 +131,7 @@ int main(int /*argc*/, char** /*argv*/)
 	for (const FontFace& face : font_faces)
 	{
 		//Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
-		Rml::LoadFontFace("../../assets/" + face.filename, face.fallback_face); //EDIT: digitalknob
+		Rml::LoadFontFace(face.filename, face.fallback_face); //EDIT: digitalknob
 	}
 
 	Rml::Context* Context = Rml::CreateContext("default",
@@ -135,7 +140,7 @@ int main(int /*argc*/, char** /*argv*/)
 	Rml::Debugger::Initialise(Context);
 
 	//Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
-	Rml::ElementDocument* Document = Context->LoadDocument("../../assets/index.html"); //EDIT: digitalknob
+	Rml::ElementDocument* Document = Context->LoadDocument("index.html"); //EDIT: digitalknob
 
 	if (Document)
 	{
