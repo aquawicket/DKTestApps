@@ -118,7 +118,7 @@ int main(int /*argc*/, char** /*argv*/)
 	//Rml::String root = Shell::FindSamplesRoot();
 //  TODO: get assets root
 	
-	RmlFile FileInterface(root);
+	RmlFile FileInterface(std::filesystem::current_path());
 
 	Rml::SetFileInterface(&fileInterface);
 	Rml::SetRenderInterface(&renderer);

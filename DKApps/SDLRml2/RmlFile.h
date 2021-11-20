@@ -2,11 +2,12 @@
 #ifndef RmlFile_H
 #define RmlFile_H
 #include <RmlUi/Core.h>
+#include <filesystem>
 
 class RmlFile : public Rml::FileInterface 
 {
 public:
-	RmlFile(const std::string& root);
+	bool FileInterface(const std::filesystem::path& root);
 	virtual Rml::FileHandle Open(const Rml::String& path);
 	virtual void Close(Rml::FileHandle file);
 	virtual size_t Read(void* buffer, size_t size, Rml::FileHandle file);
