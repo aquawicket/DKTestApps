@@ -1,3 +1,5 @@
+#ifdef MAC
+
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -119,3 +121,5 @@ void ShellRenderInterfaceOpenGL::PresentRenderBuffer()
 	// Flips the OpenGL buffers.
 	aglSwapBuffers(this->gl_context);
 }
+
+#endif //MAC

@@ -1,3 +1,4 @@
+#ifdef MAC
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -332,3 +333,6 @@ static OSStatus EventHandler(EventHandlerCallRef next_handler, EventRef event, v
 //	InputMacOSX::ProcessCarbonEvent(event);
 	return CallNextEventHandler(next_handler, event);
 }
+
+
+#endif //MAC

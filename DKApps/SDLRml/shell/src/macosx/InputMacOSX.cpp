@@ -1,3 +1,4 @@
+#ifdef MAC
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -300,3 +301,6 @@ static void InitialiseKeymap()
 	key_identifier_map[0x7D] = Rml::Input::KI_DOWN;
 	key_identifier_map[0x7E] = Rml::Input::KI_UP;
 }
+
+
+#endif //MAC
