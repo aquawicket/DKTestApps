@@ -31,9 +31,7 @@
 #include <RmlUi/Core/RenderInterface.h>
 
 #include <SDL.h>
-#ifdef WIN32
 #include <GL/glew.h>
-#endif
 
 #if !(SDL_VIDEO_RENDER_OGL)
     #error "Only the opengl sdl backend is supported."
