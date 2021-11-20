@@ -81,6 +81,23 @@ int main(int /*argc*/, char** /*argv*/)
 	glLoadIdentity();
 	glOrtho(0, window_width, window_height, 0, 0, 1);
 
+	//EDIT: digitalknob
+	//print opengl info
+	printf("OpenGL Vendor:   %s\n", glGetString(GL_VENDOR));
+	printf("OpenGL Renderer: %s\n", glGetString(GL_RENDERER));
+	printf("OpenGL Version:  %s\n", glGetString(GL_VERSION));
+	//print sdl results
+	int profile;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
+	printf("SDL_GL_CONTEXT_PROFILE_MASK = %d\n", profile);
+	int major;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major);
+	printf("SDL_GL_CONTEXT_MAJOR_VERSION = %d\n", major);
+	int minor;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
+	printf("SDL_GL_CONTEXT_MINOR_VERSION = %d\n", minor);
+	
+	
 	RmlUiSDL2Renderer Renderer(renderer, screen);
 	RmlUiSDL2SystemInterface SystemInterface;
 
@@ -108,7 +125,8 @@ int main(int /*argc*/, char** /*argv*/)
 
 	for (const FontFace& face : font_faces)
 	{
-		Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
+		//Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
+		Rml::LoadFontFace("../../assets/" + face.filename, face.fallback_face); //EDIT: digitalknob
 	}
 
 	Rml::Context* Context = Rml::CreateContext("default",
@@ -116,7 +134,8 @@ int main(int /*argc*/, char** /*argv*/)
 
 	Rml::Debugger::Initialise(Context);
 
-	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
+	//Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
+	Rml::ElementDocument* Document = Context->LoadDocument("../../assets/index.html"); //EDIT: digitalknob
 
 	if (Document)
 	{

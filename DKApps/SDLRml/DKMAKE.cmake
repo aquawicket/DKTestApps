@@ -1,3 +1,4 @@
+DKDEPEND(opengl)
 DKDEPEND(agl)
 DKDEPEND(shlwapi.lib)
 DKDEPEND(zlib)
@@ -13,4 +14,3 @@ DKDEPEND(rmlui rmlui_debugger)
 
 DKINCLUDE(${DKPROJECT})
 DKINCLUDE(${DKPROJECT}/shell/include)
-
