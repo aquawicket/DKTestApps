@@ -1,5 +1,6 @@
 DKDEPEND(opengl)
 DKDEPEND(agl)
+DKDEPEND(libx11-dev)
 DKDEPEND(shlwapi.lib)
 DKDEPEND(zlib)
 DKDEPEND(giflib)
