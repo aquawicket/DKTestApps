@@ -1,3 +1,4 @@
+#ifndef USE_METAL
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -63,4 +64,5 @@ private:
     SDL_Window* mScreen;
 };
 
-#endif
+#
+#endif // !USE_METAL

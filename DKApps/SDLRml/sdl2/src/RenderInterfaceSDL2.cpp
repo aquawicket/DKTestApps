@@ -1,3 +1,4 @@
+#ifndef USE_METAL
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -196,3 +197,5 @@ void RmlUiSDL2Renderer::ReleaseTexture(Rml::TextureHandle texture_handle)
 {
     SDL_DestroyTexture((SDL_Texture*) texture_handle);
 }
+
+#endif // !USE_METAL
