@@ -2,6 +2,7 @@
 //#include "RmlAndroid.h"
 #include "RmlFile.h"
 #include "SDLWindow.h"
+#include <map>
 
 #ifdef WIN32
     #include <GL/glew.h>
@@ -21,11 +22,8 @@
 	#include <GLES/gl.h>
 #endif
 
-//std::vector<boost::function<bool(SDL_Event *event)> > SDLWindow::event_funcs;
 std::vector<std::function<bool(SDL_Event* event)> > SDLWindow::event_funcs;
-//std::vector<boost::function<void()> > SDLWindow::render_funcs;
 std::vector<std::function<void()> > SDLWindow::render_funcs;
-//std::vector<boost::function<void()> > SDLWindow::update_funcs;
 std::vector<std::function<void()> > SDLWindow::update_funcs;
 std::map<int, int> SDLWindow::sdlKeyCode;
 std::map<int, int> SDLWindow::sdlCharCode;
@@ -34,19 +32,19 @@ std::map<int, int> SDLWindow::sdlMacCode;
 
 bool SDLWindow::Init() {
 #ifdef ANDROID
-    //INFO("CallJavaFunction(OpenActivity,SDLActivity)\n");
+    //RMLINFO("CallJavaFunction(OpenActivity,SDLActivity)\n");
     //CallJavaFunction("OpenActivity","SDLActivity");
 #endif
     //Get values from settings.txt file
     std::string sdl_renderer;
-    File::GetSetting(File::local_assets + "settings.txt", "[SDL_RENDERER]", sdl_renderer);
-    INFO("settings.txt: [SDL_RENDERER] = " + sdl_renderer + "\n");
+    //RmlFile::GetSetting(File::local_assets + "settings.txt", "[SDL_RENDERER]", sdl_renderer);
+    RMLINFO("settings.txt: [SDL_RENDERER] = " + sdl_renderer + "\n");
     SDL_SetMainReady(); //Bypass SDLmain  //https://wiki.libsdl.org/SDL_SetMainReady
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0)
         return ERROR("SDL_Init Error: " + std::string(SDL_GetError()) + "\n");
     std::string title;
-    File::GetExeName(title);
-    File::RemoveExtention(title);
+    RmlFile::GetExeName(title);
+    RmlFile::RemoveExtention(title);
     mTitle = title;
     winX = 0;
     winY = 0;
@@ -55,13 +53,13 @@ bool SDLWindow::Init() {
     last_mouseX = 0;
     last_mouseY = 0;
     std::string textX;
-    File::GetSetting(File::local_assets + "settings.txt", "[WINX]", textX);
+    RmlFile::GetSetting(File::local_assets + "settings.txt", "[WINX]", textX);
     std::string textY;
-    File::GetSetting(File::local_assets + "settings.txt", "[WINY]", textY);
+    RmlFile::GetSetting(File::local_assets + "settings.txt", "[WINY]", textY);
     std::string textWidth;
-    File::GetSetting(File::local_assets + "settings.txt", "[WIDTH]", textWidth);
+    RmlFile::GetSetting(File::local_assets + "settings.txt", "[WIDTH]", textWidth);
     std::string textHeight;
-    File::GetSetting(File::local_assets + "settings.txt", "[HEIGHT]", textHeight);
+    RmlFile::GetSetting(File::local_assets + "settings.txt", "[HEIGHT]", textHeight);
     if(!textX.empty())
         winX = toInt(textX);
     if(!textY.empty())
@@ -96,7 +94,7 @@ bool SDLWindow::Init() {
 #endif
     std::string result;
 #if defined(ANDROID) || defined(IOS)
-    INFO("Creating SDLWindow for mobile device\n");
+    RMLINFO("Creating SDLWindow for mobile device\n");
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengles");
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
@@ -105,12 +103,12 @@ bool SDLWindow::Init() {
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     result = "OpenglES";
-    INFO("SDLWindow Width: " + toString(width) + " Height: " + toString(height) + "\n");
+    RMLINFO("SDLWindow Width: " + toString(width) + " Height: " + toString(height) + "\n");
     if(SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer) < 0)
         return ERROR("SDL_CreateWindow Error: " + std::string(SDL_GetError()) + "\n");
 	//GLenum err = glewInit();
 	//if (err != GLEW_OK)
-	//	ERROR("GLEW ERROR: "+glewGetErrorString(err)+"\n");
+	//	RMLERROR("GLEW ERROR: "+glewGetErrorString(err)+"\n");
 #endif
 #if !defined(ANDROID) && !defined(IOS)
     INFO("Creating SDLWindow for Desktop\n");
@@ -127,7 +125,7 @@ bool SDLWindow::Init() {
     window = SDL_CreateWindow(mTitle.c_str(), winX, winY, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
     if(!window) {
         SDL_Quit();
-        return ERROR("SDL_CreateWindow Error: " + std::string(SDL_GetError()) + "\n");
+        return RMLERROR("SDL_CreateWindow Error: " + std::string(SDL_GetError()) + "\n");
     }
     renderer = NULL;
     if(!same(sdl_renderer, "SOFTWARE")) {
@@ -141,17 +139,17 @@ bool SDLWindow::Init() {
     if(!renderer) {
         SDL_DestroyWindow(window);
         SDL_Quit();
-		return ERROR("SDL_CreateRenderer Error: " + std::string(SDL_GetError()) + "\n");
+		return RMLERROR("SDL_CreateRenderer Error: " + std::string(SDL_GetError()) + "\n");
     }
 #ifdef WIN32
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
-		ERROR("GLEW ERROR:\n"); // "+glewGetErrorString(err)+"\n");
+		RMLERROR("GLEW ERROR:\n"); // "+glewGetErrorString(err)+"\n");
 #endif
 #endif
     //Set window Title
     std::string title2;
-    File::GetExeName(title2);
+    RmlFile::GetExeName(title2);
 #if defined(WIN32) && !defined(WIN64)
     title2 += " - WIN32";
 #elif WIN64
@@ -225,64 +223,64 @@ bool SDLWindow::Init() {
     ///Verify Render Drivers used
     SDL_RendererInfo info;
     SDL_GetRendererInfo(renderer, &info);
-    INFO("##############################\n");
-    INFO("##### Window Information #####\n");
-    INFO("##############################\n");
-    //INFO("GL_MAJOR_VERSION = " + gl_major_version + "\n");
-    //INFO("GL_MINOR_VERSION = " + gl_minor_version + "\n");
+    RMLINFO("##############################\n");
+    RMLINFO("##### Window Information #####\n");
+    RMLINFO("##############################\n");
+    //RMLINFO("GL_MAJOR_VERSION = " + gl_major_version + "\n");
+    //RMLINFO("GL_MINOR_VERSION = " + gl_minor_version + "\n");
     int profile;
     SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
-    INFO("SDL_GL_CONTEXT_PROFILE_MASK = "+ toString(profile)+"\n");
+    RMLINFO("SDL_GL_CONTEXT_PROFILE_MASK = "+ toString(profile)+"\n");
     int major;
     SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major);
-    INFO("SDL_GL_CONTEXT_MAJOR_VERSION = " + toString(major)+"\n");
+    RMLINFO("SDL_GL_CONTEXT_MAJOR_VERSION = " + toString(major)+"\n");
     int minor;
     SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
-    INFO("SDL_GL_CONTEXT_MINOR_VERSION = "+ toString(minor)+"\n");
+    RMLINFO("SDL_GL_CONTEXT_MINOR_VERSION = "+ toString(minor)+"\n");
     int doubleBuffer;
     SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &doubleBuffer);
-    INFO("SDL_GL_DOUBLEBUFFER = " + toString(doubleBuffer) + "\n");
+    RMLINFO("SDL_GL_DOUBLEBUFFER = " + toString(doubleBuffer) + "\n");
     int acceleratedVisual;
     SDL_GL_GetAttribute(SDL_GL_ACCELERATED_VISUAL, &acceleratedVisual);
-    INFO("SDL_GL_ACCELERATED_VISUAL = " + toString(acceleratedVisual) + "\n");
+    RMLINFO("SDL_GL_ACCELERATED_VISUAL = " + toString(acceleratedVisual) + "\n");
     int depthSize;
     SDL_GL_GetAttribute(SDL_GL_DEPTH_SIZE, &depthSize);
-    INFO("SDL_GL_DEPTH_SIZE = " + toString(depthSize) + "\n");
-    INFO("GL_VERSION = " + gl_version + "\n");
-    INFO("GL_VENDOR = " + gl_vendor + "\n");
-    INFO("GL_RENDERER = " + gl_renderer + "\n");
-    //INFO("GL_SHADING_LANGUAGE_VERSION = "+gl_shading+"\n");
-    INFO("GL_EXTENSIONS = "+gl_extensions+"\n");
-    INFO("SDL Renderer = " + result + "\n");
-    INFO("Resolution = " + toString(width) + "x" + toString(height) + "\n");
-    INFO("Render Driver = " + toString(info.name) + "\n");
-    INFO("max_texture_height = "+toString(info.max_texture_height)+"\n");
-    INFO("max_texture_width = "+toString(info.max_texture_width)+"\n");
-    INFO("num_texture_formats = "+toString(info.num_texture_formats)+"\n");
+    RMLINFO("SDL_GL_DEPTH_SIZE = " + toString(depthSize) + "\n");
+    RMLINFO("GL_VERSION = " + gl_version + "\n");
+    RMLINFO("GL_VENDOR = " + gl_vendor + "\n");
+    RMLINFO("GL_RENDERER = " + gl_renderer + "\n");
+    //RMLINFO("GL_SHADING_LANGUAGE_VERSION = "+gl_shading+"\n");
+    RMLINFO("GL_EXTENSIONS = "+gl_extensions+"\n");
+    RMLINFO("SDL Renderer = " + result + "\n");
+    RMLINFO("Resolution = " + toString(width) + "x" + toString(height) + "\n");
+    RMLINFO("Render Driver = " + toString(info.name) + "\n");
+    RMLINFO("max_texture_height = "+toString(info.max_texture_height)+"\n");
+    RMLINFO("max_texture_width = "+toString(info.max_texture_width)+"\n");
+    RMLINFO("num_texture_formats = "+toString(info.num_texture_formats)+"\n");
     int depth;
     SDL_GL_GetAttribute(SDL_GL_DEPTH_SIZE, &depth);
-    INFO("Depth = " + toString(depth) + "\n");
+    RMLINFO("Depth = " + toString(depth) + "\n");
     int doublebuffer;
     SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &doublebuffer);
-    INFO("Double buffer = " + toString(doublebuffer) + "\n");
+    RMLINFO("Double buffer = " + toString(doublebuffer) + "\n");
     int red;
     SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &red);
-    INFO("Red Size = " + toString(red) + "\n");
+    RMLINFO("Red Size = " + toString(red) + "\n");
     int green;
     SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &green);
-    INFO("Green Size = " + toString(green) + "\n");
+    RMLINFO("Green Size = " + toString(green) + "\n");
     int blue;
     SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &blue);
-    INFO("Blue Size = " + toString(blue) + "\n");
+    RMLINFO("Blue Size = " + toString(blue) + "\n");
     int alpha;
     SDL_GL_GetAttribute(SDL_GL_ALPHA_SIZE, &alpha);
-    INFO("Alpha Size = " + toString(alpha) + "\n");
+    RMLINFO("Alpha Size = " + toString(alpha) + "\n");
     int buffer;
     SDL_GL_GetAttribute(SDL_GL_BUFFER_SIZE, &buffer);
-    INFO("Buffer Size = " + toString(buffer) + "\n");
+    RMLINFO("Buffer Size = " + toString(buffer) + "\n");
     int stencil;
     SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil);
-    INFO("Stencil Size = " + toString(stencil) + "\n");
+    RMLINFO("Stencil Size = " + toString(stencil) + "\n");
     if(has(gl_vendor, "Microsoft"))
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "OpenGL Drivers", "Your OpenGL video drivers are out of date. Please upgrade the graphics card drivers for best performance and compatability.", window);
 #endif
@@ -360,7 +358,7 @@ bool SDLWindow::GetHandle(const void* input, void* output) {
     //*(GdkWindow**)output = gdk_window;
     //return true;
 #endif
-    WARN("SDLWindow::GetHandle(): not implemented on this OS\n");
+    RMLWARN("SDLWindow::GetHandle(): not implemented on this OS\n");
     return false;
 }
 
@@ -396,7 +394,7 @@ bool SDLWindow::GetPixelRatio(const void* input, void* output) {
 bool SDLWindow::GetWidth(const void* input, void* output) {
     int w;
     SDL_GetWindowSize(window, &w, NULL);
-    //INFO("SDLWindow::GetWidth() = "+toString(w)+"\n");
+    //RMLINFO("SDLWindow::GetWidth() = "+toString(w)+"\n");
     if(w == 0)
         w = width;
     *(int*)output = w;
@@ -480,14 +478,14 @@ bool SDLWindow::SetIcon(const void* input, void* output) {
     SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
     return true;
 #endif
-    WARN("SDLWindow::SetIcon is not implemented on this OS\n");
+    RMLWARN("SDLWindow::SetIcon is not implemented on this OS\n");
     return false;
 }
 
 bool SDLWindow::SetTitle(const void* input, void* output) {
     std::string title = *(std::string*)input;
     SDL_SetWindowTitle(window, title.c_str());
-    WARN("SDLWindow::SetTitle is not implemented on this OS\n");
+    RMLWARN("SDLWindow::SetTitle is not implemented on this OS\n");
     return false;
 }
 
@@ -576,7 +574,7 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
                 sdlWindow->winX = event->window.data1;
                 sdlWindow->winY = event->window.data2;
                 sdlWindow->Process();
-                //Events::SendEvent("sdlWindow", "move", toString(sdlWindow->winX) + "," + toString(sdlWindow->winY));
+                //RmlEvents::SendEvent("sdlWindow", "move", toString(sdlWindow->winX) + "," + toString(sdlWindow->winY));
                 return 1;
             }
             case SDL_WINDOWEVENT_RESIZED: {
@@ -584,7 +582,7 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
                 sldWindow->width = event->window.data1;
                 sldWindow->height = event->window.data2;
                 sldWindow->Process();
-                //Events::SendEvent("sdlWindow", "resize", toString(sldWindow->width) + "," + toString(sldWindow->height));
+                //RmlEvents::SendEvent("sdlWindow", "resize", toString(sldWindow->width) + "," + toString(sldWindow->height));
                 return 1;
             }
             case SDL_WINDOWEVENT_SIZE_CHANGED: {
@@ -592,19 +590,19 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
                 sldWindow->width = event->window.data1;
                 sldWindow->height = event->window.data2;
                 sldWindow->Process();
-                Events::SendEvent("sdlWindow", "resize", toString(sldWindow->width) + "," + toString(sldWindow->height));
+                RmlEvents::SendEvent("sdlWindow", "resize", toString(sldWindow->width) + "," + toString(sldWindow->height));
                 return 1;
             }
             case SDL_WINDOWEVENT_MINIMIZED: {
-                Events::SendEvent("sdlwindow", "minimize", "");
+                RmlEvents::SendEvent("sdlwindow", "minimize", "");
                 return 1;
             }
             case SDL_WINDOWEVENT_MAXIMIZED: {
-                Events::SendEvent("sdlwindow", "maximize", "");
+                RmlEvents::SendEvent("sdlwindow", "maximize", "");
                 return 1;
             }
             case SDL_WINDOWEVENT_RESTORED: {
-                Events::SendEvent("sdlwindow", "restore", "");
+                RmlEvents::SendEvent("sdlwindow", "restore", "");
                 return 1;
             }
         }
@@ -636,28 +634,28 @@ bool SDLWindow::handle(SDL_Event *event) {
             if(event->motion.x != last_mouseX || event->motion.y != last_mouseY) {
                 last_mouseX = event->motion.x;
                 last_mouseY = event->motion.y;
-                //Events::SendEvent("sdlwindow", "mousemove", toString(last_mouseX) + "," + toString(last_mouseY) + "," + toString(winX + last_mouseX) + "," + toString(winY + last_mouseY));
+                //RmlEvents::SendEvent("sdlwindow", "mousemove", toString(last_mouseX) + "," + toString(last_mouseY) + "," + toString(winX + last_mouseX) + "," + toString(winY + last_mouseY));
             }
             return false; //allow event to continue
         }
         case SDL_MOUSEBUTTONDOWN: {
-            //Events::SendEvent("sdlwindow", "mousedown", toString(event->button.button));
+            //RmlEvents::SendEvent("sdlwindow", "mousedown", toString(event->button.button));
             return false; //allow event to continue
         }
         case SDL_MOUSEBUTTONUP: {
-            //Events::SendEvent("sdlwindow", "mouseup", toString(event->button.button));
+            //RmlEvents::SendEvent("sdlwindow", "mouseup", toString(event->button.button));
             if(event->button.button == 3)
-                //Events::SendEvent("sdlwindow", "contextmenu", toString(event->button.button));
+                //RmlEvents::SendEvent("sdlwindow", "contextmenu", toString(event->button.button));
             else {
                 if(event->button.clicks == 2)
-                    //Events::SendEvent("sdlwindow", "dblclick", toString(event->button.button));
+                    //RmlEvents::SendEvent("sdlwindow", "dblclick", toString(event->button.button));
                 else
-                    //Events::SendEvent("sdlwindow", "click", toString(event->button.button));
+                    //RmlEvents::SendEvent("sdlwindow", "click", toString(event->button.button));
             }
             return false; //allow event to continue
         }
         case SDL_MOUSEWHEEL: {
-            //Events::SendEvent("sdlwindow", "wheel", toString(event->wheel.y));
+            //RmlEvents::SendEvent("sdlwindow", "wheel", toString(event->wheel.y));
             return false; //allow event to continue
         }
         case SDL_KEYDOWN: {
@@ -666,24 +664,24 @@ bool SDLWindow::handle(SDL_Event *event) {
                 return true;
             if(event->key.keysym.sym > 96 && event->key.keysym.sym < 123) { //letter
                 if(event->key.keysym.mod & KMOD_SHIFT && event->key.keysym.mod & KMOD_CAPS)   //both = lowercase
-                    //Events::SendEvent("sdlwindow", "keypress", toString(sdlCharCode[event->key.keysym.sym]));
+                    //RmlEvents::SendEvent("sdlwindow", "keypress", toString(sdlCharCode[event->key.keysym.sym]));
                 else if(event->key.keysym.mod & KMOD_SHIFT || event->key.keysym.mod & KMOD_CAPS)   //1 = uppercase
-                    //Events::SendEvent("sdlwindow", "keypress", toString(sdlShiftCharCode[event->key.keysym.sym]));
+                    //RmlEvents::SendEvent("sdlwindow", "keypress", toString(sdlShiftCharCode[event->key.keysym.sym]));
                 else {
-                    //Events::SendEvent("sdlwindow", "keypress", toString(sdlCharCode[event->key.keysym.sym])); //lowercase
+                    //RmlEvents::SendEvent("sdlwindow", "keypress", toString(sdlCharCode[event->key.keysym.sym])); //lowercase
                 }
             } else if(event->key.keysym.mod & KMOD_SHIFT) { //other character keys
-                //Events::SendEvent("sdlwindow", "keypress", toString(sdlShiftCharCode[event->key.keysym.sym])); //shifted symbol
+                //RmlEvents::SendEvent("sdlwindow", "keypress", toString(sdlShiftCharCode[event->key.keysym.sym])); //shifted symbol
             } else {
-                //Events::SendEvent("sdlwindow", "keypress", toString(sdlCharCode[event->key.keysym.sym])); //symbol
+                //RmlEvents::SendEvent("sdlwindow", "keypress", toString(sdlCharCode[event->key.keysym.sym])); //symbol
             }
-            //Events::SendEvent("sdlwindow", "keydown", toString(sdlKeyCode[event->key.keysym.sym])); //keycode
+            //RmlEvents::SendEvent("sdlwindow", "keydown", toString(sdlKeyCode[event->key.keysym.sym])); //keycode
             return false; //allow event to continue
         }
         case SDL_KEYUP: {
             if(event->key.keysym.sym == 0)
                 return true;
-            //Events::SendEvent("sdlwindow", "keyup", toString(sdlKeyCode[event->key.keysym.sym]));
+            //RmlEvents::SendEvent("sdlwindow", "keyup", toString(sdlKeyCode[event->key.keysym.sym]));
             return false; //allow event to continue
         }
     }

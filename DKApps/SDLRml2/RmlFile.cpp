@@ -17,29 +17,29 @@ Rml::FileHandle RmlFile::Open(const Rml::String& path){
 	//}
 	//else if(has(_path,"//")){ //could be //www.site.com/style.css or //site.com/style.css
 		//_path = RmlMain::Get()->protocol+":"+_path;
-		//return DKERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
+		//return ERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
 	//}
 	// else{
 		if(RmlFile::PathExists(RmlMain::Get()->workingPath+_path))
 			_path = RmlMain::Get()->workingPath+_path;
-		else if(!DKFile::VerifyPath(_path)){
-			return DKERROR("could not locate path ("+_path+")");
+		else if(!File::VerifyPath(_path)){
+			return RMLERROR("could not locate path ("+_path+")");
 		}
 		//if(_path.find("/home") == std::string::npos) //url may have unix home directory
 		//	_path = RmlMain::Get()->workingPath+_path;
-		//return DKERROR("RmlMain::LoadUrl(): cannot load relative paths\n");
+		//return ERROR("RmlMain::LoadUrl(): cannot load relative paths\n");
 	//}
 	if(has(_path,"://")){
-		DKFile::MakeDir(DKFile::local_assets+"Cache");
-		DKString filename;
-		DKFile::GetFileName(_path, filename);
+		RmlFile::MakeDir(_root+"/Cache");
+		std::string filename;
+		RmlFile::GetFileName(_path, filename);
 		//remove everything after ? in the filename if there is one
 		unsigned long found = filename.rfind("?");
 		if(found > 0)
 			filename = filename.substr(0,found);
-#ifdef USE_DKCurl
-		DKCurl::Get()->Download(_path, DKFile::local_assets+"Cache/"+filename);
-		_path = DKFile::local_assets+"Cache/"+filename;
+#ifdef USE_Curl
+		Curl::Get()->Download(_path, File::local_assets+"Cache/"+filename);
+		_path = File::local_assets+"Cache/"+filename;
 #endif
 	}
 
