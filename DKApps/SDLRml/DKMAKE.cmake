@@ -1,3 +1,5 @@
+DKDEPEND(agl)
+DKDEPEND(shlwapi.lib)
 DKDEPEND(zlib)
 DKDEPEND(giflib)
 DKDEPEND(libpng)
@@ -12,6 +14,3 @@ DKDEPEND(rmlui rmlui_debugger)
 DKINCLUDE(${DKPROJECT})
 DKINCLUDE(${DKPROJECT}/shell/include)
 
-#LIST(APPEND WIN_LIBS shlwapi.lib)
-WIN_DEBUG_LIB(shlwapi.lib)
-WIN_RELEASE_LIB(shlwapi.lib)
