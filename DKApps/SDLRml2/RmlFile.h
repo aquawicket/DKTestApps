@@ -2,7 +2,7 @@
 #ifndef DKRmlFile_H
 #define DKRmlFile_H
 #include <RmlUi/Core.h>
-#include "DK/DKFile.h"
+//#include "DK/DKFile.h"
 
 class DKRmlFile : public Rml::FileInterface {
 	virtual Rml::FileHandle Open(const Rml::String& path);

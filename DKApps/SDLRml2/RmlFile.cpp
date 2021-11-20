@@ -1,7 +1,6 @@
-#include "DK/stdafx.h"
-#include "DKRmlFile.h"
-#include "DKRml.h"
-#include "DKCurl/DKCurl.h"
+#include "RmlFile.h"
+#include "Rml.h"
+//#include "DKCurl/DKCurl.h"
 
 Rml::FileHandle DKRmlFile::Open(const Rml::String& path){
 	DKDEBUGFUNC("path");

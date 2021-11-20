@@ -20,8 +20,7 @@ extern "C" {
 
 
 
-////////////////////////////////////////////////////////////////
-class RmlSDL2Renderer : public Rml::RenderInterface
+class RmlSDLRenderer : public Rml::RenderInterface
 {
 public:
 	RmlSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen);

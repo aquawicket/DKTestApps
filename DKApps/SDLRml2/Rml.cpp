@@ -1,5 +1,3 @@
-#include "DK/stdafx.h"
-
 #ifdef USE_rmlui_debugger
 #include <RmlUi/Debugger.h>
 #endif
