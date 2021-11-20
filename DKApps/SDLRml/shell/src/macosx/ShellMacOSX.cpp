@@ -31,11 +31,12 @@
 #include <RmlUi/Core.h>
 #include "ShellFileInterface.h"
 #include "macosx/InputMacOSX.h"
-#include <Carbon/Carbon.h>
+
 
 #ifdef USE_METAL
 	//TODO
 #else
+	#include <Carbon/Carbon.h>
 	#include <AGL/agl.h>
 #endif 
 
