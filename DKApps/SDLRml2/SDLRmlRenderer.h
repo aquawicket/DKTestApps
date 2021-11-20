@@ -39,7 +39,7 @@ public:
 	/// Called by Rml when a loaded texture is no longer required.
 	virtual void ReleaseTexture(Rml::TextureHandle texture_handle);
 
-	std::map<Rml::TextureHandle, String> texture_name; //texture to name map
+	std::map<Rml::TextureHandle, std::string> texture_name; //texture to name map
 
 
 private:

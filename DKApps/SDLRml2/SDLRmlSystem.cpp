@@ -396,38 +396,46 @@ bool SDLRmlSystem::LogMessage(Rml::Log::Type type, const Rml::String& message){
 		type = Rml::Log::LT_DEBUG;
 	switch(type){
 	case Rml::Log::LT_ALWAYS:
-		INFO("[Rml] "+String(message)+"\n");
+		RMLINFO("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_ERROR:
-		ERROR("[Rml] "+String(message)+"\n");
+		RMLERROR("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_ASSERT:
-		ASSERT("[Rml] "+String(message)+"\n");
+		RMLASSERT("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_WARNING:
-		WARN("[Rml] "+String(message)+"\n");
+		RMLWARN("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_INFO:
-		INFO("[Rml] "+String(message)+"\n");
+		RMLINFO("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_DEBUG:
-		DEBUG("[Rml] "+String(message)+"\n");
+		RMLDEBUG("[Rml] "+String(message)+"\n");
 		break;
     case Rml::Log::LT_MAX:
-        VERBOSE("[Rml] "+String(message)+"\n");
+        RMLVERBOSE("[Rml] "+String(message)+"\n");
         break;
 	};
 	return true;
 };
 
-bool Log(const char* file, int line, const char* func, const std::string& message, const int lvl = DK_INFO){
+bool Log(const char* file, int line, const char* func, const std::string& message, const int lvl){
 	printf("%s: %d: %s, %s, %d", file, line, func, message, lvl);
 }
 
-#define  DKASSERT(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_ASSERT);
-#define   DKFATAL(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_FATAL);
-#define   DKERROR(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_ERROR);
-#define    DKWARN(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_WARN);
-#define    DKINFO(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_INFO);
-#define   DKDEBUG(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_DEBUG);
-#define DKVERBOSE(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_VERBOSE);
+#define _ASSERT 1
+#define _FATAL 2
+#define _ERROR 3
+#define _WARN 4
+#define _INFO 5
+#define _DEBUG 6
+#define _VERBOS 7
+
+#define  RMLASSERT(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _ASSERT);
+#define   RMLFATAL(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _FATAL);
+#define   RMLERROR(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _ERROR);
+#define    RMLWARN(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _WARN);
+#define    RMLINFO(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _INFO);
+#define   RMLDEBUG(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _DEBUG);
+#define RMLVERBOSE(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _VERBOSE);
