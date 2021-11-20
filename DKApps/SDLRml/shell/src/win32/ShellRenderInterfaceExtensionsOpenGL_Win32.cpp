@@ -1,4 +1,5 @@
 #ifdef WIN32
+#ifndef USE_METAL
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -152,4 +153,6 @@ void ShellRenderInterfaceOpenGL::PresentRenderBuffer()
 	RMLUI_FrameMark;
 }
 
+
+#endif // !USE_METAL
 #endif //WIN32

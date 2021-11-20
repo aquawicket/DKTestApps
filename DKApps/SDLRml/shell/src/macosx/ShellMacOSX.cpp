@@ -32,7 +32,13 @@
 #include "ShellFileInterface.h"
 #include "macosx/InputMacOSX.h"
 #include <Carbon/Carbon.h>
-#include <AGL/agl.h>
+
+#ifdef USE_METAL
+	//TODO
+#else
+	#include <AGL/agl.h>
+#endif 
+
 #include <sys/time.h>
 #include <stdio.h>
 #include <stdarg.h>
