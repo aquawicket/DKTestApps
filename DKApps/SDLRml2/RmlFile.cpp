@@ -1,20 +1,26 @@
 #include "RmlFile.h"
-#include "Rml.h"
-//#include "DKCurl/DKCurl.h"
+#include "RmlMain.h"
+
+
+
+RmlFile::RmlFile(const std::string& root)
+{
+	_root = root;
+}
 
 Rml::FileHandle RmlFile::Open(const Rml::String& path){
 
 	DKString _url = path;
 	
-	if (has(_url, ":/")) { //could be http:// , https:// or C:/
+	//if (has(_url, ":/")) { //could be http:// , https:// or C:/
 		//absolute path
-	}
-	else if(has(_url,"//")){ //could be //www.site.com/style.css or //site.com/style.css
+	//}
+	//else if(has(_url,"//")){ //could be //www.site.com/style.css or //site.com/style.css
 		//_url = RmlMain::Get()->protocol+":"+_url;
-		return DKERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
-	}
-	else{
-		if(DKFile::PathExists(RmlMain::Get()->workingPath+_url))
+		//return DKERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
+	//}
+	// else{
+		if(RmlFile::PathExists(RmlMain::Get()->workingPath+_url))
 			_url = RmlMain::Get()->workingPath+_url;
 		else if(!DKFile::VerifyPath(_url)){
 			return DKERROR("could not locate path ("+_url+")");
@@ -22,7 +28,7 @@ Rml::FileHandle RmlFile::Open(const Rml::String& path){
 		//if(_url.find("/home") == std::string::npos) //url may have unix home directory
 		//	_url = RmlMain::Get()->workingPath+_url;
 		//return DKERROR("RmlMain::LoadUrl(): cannot load relative paths\n");
-	}
+	//}
 	if(has(_url,"://")){
 		DKFile::MakeDir(DKFile::local_assets+"Cache");
 		DKString filename;
@@ -70,4 +76,10 @@ bool RmlFile::Seek(Rml::FileHandle file, long offset, int origin){
 /// @return The number of bytes from the origin of the file.
 size_t RmlFile::Tell(Rml::FileHandle file){
 	return ftell((FILE*) file);
+}
+
+
+bool RmlFile::PathExists(const std::string& path)
+{
+	//TODO
 }

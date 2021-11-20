@@ -2,8 +2,8 @@
 #include <SDL_image.h>
 //#include "DK/DK.h"
 //#include "DK/DKString.h"
-#include "SDLRml/SDLRmlRenderer.h"
-#include "SDLWindow/SDLWindow.h"
+#include "SDLRmlRenderer.h"
+#include "SDLWindow.h"
 
 #if !defined(IOS) && !defined(ANDROID)
 static PFNGLUSEPROGRAMOBJECTARBPROC glUseProgramObjectARB;

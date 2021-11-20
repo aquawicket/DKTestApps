@@ -31,7 +31,7 @@
 #include <RmlUi/Debugger/Debugger.h>
 //#include <Shell.h>
 //#include <ShellFileInterface.h>
-#include "Rml.h"
+#include "RmlMain.h"
 #include "RmlFile.h"
 #include <string.h>
 

@@ -3,12 +3,17 @@
 #define RmlFile_H
 #include <RmlUi/Core.h>
 
-class RmlFile : public Rml::FileInterface {
+class RmlFile : public Rml::FileInterface 
+{
+public:
+	RmlFile(const std::string& root);
 	virtual Rml::FileHandle Open(const Rml::String& path);
 	virtual void Close(Rml::FileHandle file);
 	virtual size_t Read(void* buffer, size_t size, Rml::FileHandle file);
 	virtual bool Seek(Rml::FileHandle file, long offset, int origin);
 	virtual size_t Tell(Rml::FileHandle file);
+	bool PathExists(const std::string& path);
+	std::string _root;
 };
 
 #endif //RmlFile_H

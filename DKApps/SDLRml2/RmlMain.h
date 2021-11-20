@@ -6,12 +6,13 @@
 #define RmlMain_H
 
 #include <RmlUi/Core.h>
-#include "DK/DK.h"
-#include "DKWindow/DKWindow.h"
-#include "RmlMain/RmlFile.h"
+//#include "DK/DK.h"
+//#include "DKWindow/DKWindow.h"
+#include "RmlFile.h"
 //#include "RmlMain/RmlMainConverter.h"
 
-class RmlMain : public Rml::EventListener, public objectT<RmlMain> {
+class RmlMain : public Rml::EventListener//, public objectT<RmlMain>
+{
 public:
 	bool Init();
 	bool End();
@@ -39,7 +40,7 @@ public:
 	Rml::ElementDocument* document;
 	static RmlFile* rmlMainFile;
 	Rml::Element* hover;
-	RmlMainConverter rmlMainConverter;
+	//RmlMainConverter rmlMainConverter;
 };
 
 #endif //RmlMain_H

@@ -3,13 +3,13 @@
 #define SDLRml_H
 
 #include <RmlUi/Core.h>
-#include "SDLWindow/SDLWindow.h"
-#include "Rml/Rml.h"
-#include "SDLRml/SDLRmlSystem.h"
-#include "SDLRml/SDLRmlRenderer.h"
+#include "SDLWindow.h"
+#include "RmlMain.h"
+#include "SDLRmlSystem.h"
+#include "SDLRmlRenderer.h"
 
 
-class SDLRml : public ObjectT<SDLRml>
+class SDLRml// : public ObjectT<SDLRml>
 {
 public:
 	bool Init();
@@ -21,15 +21,14 @@ public:
 	//void ProcessEvent(Rml::Core::Event& event);
 	
 	SDLWindow* sdlWindow;
-	Rml* rml;
+	RmlMain* rmlmain;
 #ifdef RML_SHELL_RENDER
 	ShellRenderInterfaceOpenGL* Renderer;
 #else
-	SDLRmlRenderer* Renderer;
+	SDLRmlRenderer* renderer;
 #endif
-	SDLRmlSystem* SystemInterface;
+	SDLRmlSystem* systemInterface;
 };
 
 
-REGISTER_OBJECT(SDLRml, true)
 #endif //SDLRml_H
