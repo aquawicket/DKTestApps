@@ -419,3 +419,15 @@ bool SDLRmlSystem::LogMessage(Rml::Log::Type type, const Rml::String& message){
 	};
 	return true;
 };
+
+bool Log(const char* file, int line, const char* func, const std::string& message, const int lvl = DK_INFO){
+	printf("%s: %d: %s, %s, %d", file, line, func, message, lvl);
+}
+
+#define  DKASSERT(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_ASSERT);
+#define   DKFATAL(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_FATAL);
+#define   DKERROR(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_ERROR);
+#define    DKWARN(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_WARN);
+#define    DKINFO(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_INFO);
+#define   DKDEBUG(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_DEBUG);
+#define DKVERBOSE(message) Log(__FILE__, __LINE__, __FUNCTION__, message, DK_VERBOSE);
