@@ -64,5 +64,6 @@ private:
     SDL_Window* mScreen;
 };
 
-#
+#endif
+
 #endif // !USE_METAL
