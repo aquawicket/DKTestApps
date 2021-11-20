@@ -41,7 +41,10 @@
 #endif
 
 #include <SDL.h>
+
+#if defined(WIN32) || defined(MAC)
 #include <GL/glew.h>
+#endif
 
 #include <iostream>
 #include <filesystem>
