@@ -120,9 +120,9 @@ int main(int /*argc*/, char** /*argv*/)
 	
 	RmlFile FileInterface(root);
 
-	Rml::SetFileInterface(&FileInterface);
-	Rml::SetRenderInterface(&Renderer);
-	Rml::SetSystemInterface(&SystemInterface);
+	Rml::SetFileInterface(&fileInterface);
+	Rml::SetRenderInterface(&renderer);
+	Rml::SetSystemInterface(&systemInterface);
 
 	if (!Rml::Initialise())
 		return 1;
@@ -151,7 +151,7 @@ int main(int /*argc*/, char** /*argv*/)
 	Rml::Debugger::Initialise(Context);
 
 	//Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
-	Rml::ElementDocument* Document = Context->LoadDocument("index.html"); //EDIT: digitalknob
+	Rml::ElementDocument* Document = Context->LoadDocument("SDLRml.rml"); //EDIT: digitalknob
 
 	if (Document)
 	{

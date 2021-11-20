@@ -10,7 +10,7 @@ RmlFile::RmlFile(const std::string& root)
 
 Rml::FileHandle RmlFile::Open(const Rml::String& path){
 
-	DKString _url = path;
+	std::string _url = path;
 	
 	//if (has(_url, ":/")) { //could be http:// , https:// or C:/
 		//absolute path
