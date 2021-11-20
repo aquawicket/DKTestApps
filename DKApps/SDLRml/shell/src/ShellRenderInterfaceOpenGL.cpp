@@ -1,3 +1,4 @@
+#ifndef USE_METAL
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -325,3 +326,6 @@ ShellRenderInterfaceOpenGL::Image ShellRenderInterfaceOpenGL::CaptureScreen()
 
 	return image;
 }
+
+\
+#endif //!USE_METAL

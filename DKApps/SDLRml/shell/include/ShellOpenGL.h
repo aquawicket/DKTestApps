@@ -1,3 +1,5 @@
+#ifndef USE_METAL
+
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -57,3 +59,6 @@ struct __X11NativeWindowData
 #endif
 
 #endif
+
+
+#endif // !USE_METAL

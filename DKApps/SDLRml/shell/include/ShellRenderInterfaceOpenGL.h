@@ -1,3 +1,4 @@
+#ifndef USE_METAL
 /*
  * This source file is part of RmlUi, the HTML/CSS Interface Middleware
  *
@@ -104,3 +105,5 @@ protected:
 };
 
 #endif
+
+#endif // !USE_METAL
