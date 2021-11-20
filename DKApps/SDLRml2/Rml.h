@@ -2,45 +2,44 @@
 // https://mikke89.github.io/RmlUiDoc/
 
 #pragma once
-#ifndef DKRml_H
-#define DKRml_H
+#ifndef RmlMain_H
+#define RmlMain_H
 
 #include <RmlUi/Core.h>
 #include "DK/DK.h"
 #include "DKWindow/DKWindow.h"
-#include "DKRml/RmlFile.h"
-#include "DKRml/DKRmlConverter.h"
+#include "RmlMain/RmlFile.h"
+//#include "RmlMain/RmlMainConverter.h"
 
-class DKRml : public Rml::EventListener, public DKObjectT<DKRml> {
+class RmlMain : public Rml::EventListener, public objectT<RmlMain> {
 public:
 	bool Init();
 	bool End();
-	bool GetSourceCode(DKString& source_code);
-	bool LoadFont(const DKString& file);
-	bool LoadFonts(DKString& directory);
-	bool LoadUrl(const DKString& url);
-	bool LoadHtml(const DKString& html);
+	bool GetSourceCode(std::string& source_code);
+	bool LoadFont(const std::string& file);
+	bool LoadFonts(std::string& directory);
+	bool LoadUrl(const std::string& url);
+	bool LoadHtml(const std::string& html);
 	void ProcessEvent(Rml::Event& rmlEvent); //overwritten
-	bool RegisterEvent(const DKString& elementAddress, const DKString& type);
-	bool SendEvent(const DKString& elementAddress, const DKString& type, const DKString& value);
+	bool RegisterEvent(const std::string& elementAddress, const std::string& type);
+	bool SendEvent(const std::string& elementAddress, const std::string& type, const std::string& value);
 	bool DebuggerOff();
 	bool DebuggerOn();
 	bool DebuggerToggle();
-	bool UnregisterEvent(const DKString& elementAddress, const DKString& type);
-	static Rml::Event* addressToEvent(const DKString& address);
-	static DKString eventToAddress(Rml::Event* event);
-	static Rml::Element* addressToElement(const DKString& address);
-	static DKString elementToAddress(Rml::Element* element);
-	DKString href;
-	DKString protocol;
-	DKString _path;
-	DKString workingPath;
+	bool UnregisterEvent(const std::string& elementAddress, const std::string& type);
+	static Rml::Event* addressToEvent(const std::string& address);
+	static std::string eventToAddress(Rml::Event* event);
+	static Rml::Element* addressToElement(const std::string& address);
+	static std::string elementToAddress(Rml::Element* element);
+	std::string href;
+	std::string protocol;
+	std::string _path;
+	std::string workingPath;
 	Rml::Context* context;
 	Rml::ElementDocument* document;
-	static RmlFile* dkRmlFile;
+	static RmlFile* rmlMainFile;
 	Rml::Element* hover;
-	DKRmlConverter dkRmlConverter;
+	RmlMainConverter rmlMainConverter;
 };
 
-REGISTER_OBJECT(DKRml, true)
-#endif //DKRml_H
+#endif //RmlMain_H
