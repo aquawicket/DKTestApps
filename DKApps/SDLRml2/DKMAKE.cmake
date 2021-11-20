@@ -1,8 +1,17 @@
-DKDEPEND(DKAssets)
-DKDEPEND(DKSDLWindow)
-DKDEPEND(DKRml)
+DKDEPEND(opengl)
+DKDEPEND(agl)
+DKDEPEND(libx11-dev)
+DKDEPEND(shlwapi.lib)
+DKDEPEND(zlib)
+DKDEPEND(giflib)
+DKDEPEND(libpng)
+DKDEPEND(libjpeg-turbo)
+DKDEPEND(libwebp)
+DKDEPEND(tiff)
+DKDEPEND(glew)
+DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
-## DKDEPEND(sdl2_gif) ##Deprecated
-## DKDEPEND(sdl2_giflib_sa-master) ##FIXME
+DKDEPEND(rmlui rmlui_debugger)
 
-generateCmake(DKSDLRml)
+DKINCLUDE(${DKPROJECT})
+DKINCLUDE(${DKPROJECT}/shell/include)

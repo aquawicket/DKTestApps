@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DKSDLRmlRenderer_H
-#define DKSDLRmlRenderer_H
+#ifndef SDLRmlRenderer_H
+#define SDLRmlRenderer_H
 
 #include <RmlUi/Core.h>
 //#include <RmlUi/Core/RenderInterface.h>
@@ -39,7 +39,7 @@ public:
 	/// Called by Rml when a loaded texture is no longer required.
 	virtual void ReleaseTexture(Rml::TextureHandle texture_handle);
 
-	std::map<Rml::TextureHandle, DKString> texture_name; //texture to name map
+	std::map<Rml::TextureHandle, String> texture_name; //texture to name map
 
 
 private:
@@ -51,4 +51,4 @@ private:
 #endif
 };
 
-#endif //DKSDLRmlRenderer_H
+#endif //SDLRmlRenderer_H

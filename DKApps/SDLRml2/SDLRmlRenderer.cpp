@@ -1,27 +1,25 @@
 #include <RmlUi/Core.h>
 #include <SDL_image.h>
-#include "DK/DK.h"
-#include "DK/DKString.h"
-#include "DKSDLRml/DKSDLRmlRenderer.h"
-#include "DKSDLWindow/DKSDLWindow.h"
+//#include "DK/DK.h"
+//#include "DK/DKString.h"
+#include "SDLRml/SDLRmlRenderer.h"
+#include "SDLWindow/SDLWindow.h"
 
 #if !defined(IOS) && !defined(ANDROID)
 static PFNGLUSEPROGRAMOBJECTARBPROC glUseProgramObjectARB;
 #endif
 
 RmlSDL2Renderer::RmlSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen) {
-	//DKDEBUGFUNC(renderer, screen);
     mRenderer = renderer;
     mScreen = screen;
 }
 
 // Called by Rml when it wants to render geometry that it does not wish to optimise.
 void RmlSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, const Rml::TextureHandle texture, const Rml::Vector2f& translation) {
-	//DKDEBUGFUNC(vertices, num_vertices, indices, num_indices, texture, translation);
 #if !defined(IOS) && !defined(ANDROID)
     // DISABLE SDL Shaders
-	//DKSDLWindow* dkSdlWindow = DKSDLWindow::Instance("DKSDLWindow0");
-	//if(!has(DKSDLWindow::Instance("DKSDLWindow0")->gl_vendor, "Microsoft")){
+	//SDLWindow* dkSdlWindow = SDLWindow::Instance("SDLWindow0");
+	//if(!has(SDLWindow::Instance("SDLWindow0")->gl_vendor, "Microsoft")){
 		glUseProgramObjectARB = (PFNGLUSEPROGRAMOBJECTARBPROC) SDL_GL_GetProcAddress("glUseProgramObjectARB");
 		glUseProgramObjectARB(0);  //FIXME: this crashes on Microsoft Generic GDI drivers
 	//}
@@ -47,22 +45,22 @@ void RmlSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, in
 		//Cef
 		//The id is mapped to the texture in texture_name
 		//If the id contains iframe_ , it is a cef image
-		//Update the texture with DKSDLCef::GetTexture(id);
+		//Update the texture with SDLCef::GetTexture(id);
 		///////////////////////////////////////////////////////////
 		if(has(texture_name[texture],"iframe_")){
-			DKString id = texture_name[texture];
+			String id = texture_name[texture];
 			replace(id,"iframe_","");
 			
-			struct DKTexture{ SDL_Texture* texture; };
-			DKTexture output;
-			if(!DKClass::CallFunc("DKSDLCef::GetTexture", &id, &output))
+			struct Texture{ SDL_Texture* texture; };
+			Texture output;
+			if(!Class::CallFunc("SDLCef::GetTexture", &id, &output))
                 return;
 			sdl_texture = output.texture;
 		}
         
 		if(!sdl_texture){ return; }
         if(SDL_GL_BindTexture(sdl_texture, &texw, &texh) == -1)
-			DKERROR("SDL_GL_BindTexture: "+DKString(SDL_GetError())+"\n");
+			ERROR("SDL_GL_BindTexture: "+String(SDL_GetError())+"\n");
     }
  
     for(int  i = 0; i < num_vertices; i++) {
@@ -125,7 +123,7 @@ void RmlSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, in
 // Called by Rml when it wants to enable or disable scissoring to clip content.
 void RmlSDL2Renderer::EnableScissorRegion(bool enable)
 {
-	//DKDEBUGFUNC(enable);
+	//DEBUGFUNC(enable);
     if (enable)
         glEnable(GL_SCISSOR_TEST);
     else
@@ -135,7 +133,7 @@ void RmlSDL2Renderer::EnableScissorRegion(bool enable)
 // Called by Rml when it wants to change the scissor region.
 void RmlSDL2Renderer::SetScissorRegion(int x, int y, int width, int height)
 {
-	//DKDEBUGFUNC(x, y, width, height);
+	//DEBUGFUNC(x, y, width, height);
     int w_width, w_height;
     SDL_GetWindowSize(mScreen, &w_width, &w_height);
     glScissor(x, w_height - (y + height), width, height);
@@ -144,7 +142,7 @@ void RmlSDL2Renderer::SetScissorRegion(int x, int y, int width, int height)
 // Called by Rml when a texture is required by the library.
 bool RmlSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vector2i& texture_dimensions, const Rml::String& source)
 {
-	//DKDEBUGFUNC(texture_handle, texture_dimensions, "Rml::String&");
+	//DEBUGFUNC(texture_handle, texture_dimensions, "Rml::String&");
 
 	//CEF Texture
 	//The source variable is the id of the iframe. It will contain iframe_ in it's id.
@@ -234,7 +232,7 @@ bool RmlSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vecto
 // Called by Rml when a texture is required to be built from an internally-generated sequence of pixels.
 bool RmlSDL2Renderer::GenerateTexture(Rml::TextureHandle& texture_handle, const Rml::byte* source, const Rml::Vector2i& source_dimensions)
 {
-	//DKDEBUGFUNC(texture_handle, source, source_dimensions);
+	//DEBUGFUNC(texture_handle, source, source_dimensions);
     #if SDL_BYTEORDER == SDL_BIG_ENDIAN
         Uint32 rmask = 0xff000000;
         Uint32 gmask = 0x00ff0000;
@@ -258,6 +256,6 @@ bool RmlSDL2Renderer::GenerateTexture(Rml::TextureHandle& texture_handle, const 
 // Called by Rml when a loaded texture is no longer required.
 void RmlSDL2Renderer::ReleaseTexture(Rml::TextureHandle texture_handle)
 {
-	//DKDEBUGFUNC(texture_handle);
+	//DEBUGFUNC(texture_handle);
     SDL_DestroyTexture((SDL_Texture*) texture_handle);
 }

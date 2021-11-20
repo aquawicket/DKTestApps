@@ -1,12 +1,12 @@
 #pragma once
-#ifndef DKSDLRmlSystem_H
-#define DKSDLRmlSystem_H
+#ifndef SDLRmlSystem_H
+#define SDLRmlSystem_H
 
 #include <RmlUi/Core.h>
 #include <SDL.h>
-#include "DK/DK.h"
+//#include "DK/DK.h"
 
-///////////////////////////////////////////////////////////
+
 class RmlSDL2SystemInterface : public Rml::SystemInterface
 {
 public:
@@ -17,4 +17,4 @@ public:
     bool LogMessage(Rml::Log::Type type, const Rml::String& message);
 };
 
-#endif //DKSDLRmlSystem_H
+#endif //SDLRmlSystem_H

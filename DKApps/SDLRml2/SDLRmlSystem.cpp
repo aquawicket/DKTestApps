@@ -1,8 +1,7 @@
 #include <RmlUi/Core.h>
-#include "DKSDLRml/DKSDLRmlSystem.h"
+#include "SDLRml/SDLRmlSystem.h"
 
 Rml::Input::KeyIdentifier RmlSDL2SystemInterface::TranslateKey(SDL_Keycode sdlkey){
-	DKDEBUGFUNC(sdlkey);
     using namespace Rml::Input;
     switch(sdlkey) {
         case SDLK_UNKNOWN:
@@ -354,7 +353,6 @@ Rml::Input::KeyIdentifier RmlSDL2SystemInterface::TranslateKey(SDL_Keycode sdlke
 }
 
 int RmlSDL2SystemInterface::TranslateMouseButton(Uint8 button){
-	DKDEBUGFUNC(button);
     switch(button){
         case SDL_BUTTON_LEFT:
             return 0;
@@ -376,7 +374,6 @@ int RmlSDL2SystemInterface::TranslateMouseButton(Uint8 button){
 }
 
 int RmlSDL2SystemInterface::GetKeyModifiers(){
-	DKDEBUGFUNC();
     SDL_Keymod sdlMods = SDL_GetModState();
     int retval = 0;
     if(sdlMods & KMOD_CTRL)
@@ -391,35 +388,33 @@ int RmlSDL2SystemInterface::GetKeyModifiers(){
 }
 
 double RmlSDL2SystemInterface::GetElapsedTime(){
-	//DKDEBUGFUNC();
 	return (float)SDL_GetTicks() / 1000;
 }
 
 bool RmlSDL2SystemInterface::LogMessage(Rml::Log::Type type, const Rml::String& message){
-	//DKDEBUGFUNC(type, message);
 	if(has(message,"Loaded font face"))
 		type = Rml::Log::LT_DEBUG;
 	switch(type){
 	case Rml::Log::LT_ALWAYS:
-		DKINFO("[Rml] "+DKString(message)+"\n");
+		INFO("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_ERROR:
-		DKERROR("[Rml] "+DKString(message)+"\n");
+		ERROR("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_ASSERT:
-		DKASSERT("[Rml] "+DKString(message)+"\n");
+		ASSERT("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_WARNING:
-		DKWARN("[Rml] "+DKString(message)+"\n");
+		WARN("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_INFO:
-		DKINFO("[Rml] "+DKString(message)+"\n");
+		INFO("[Rml] "+String(message)+"\n");
 		break;
 	case Rml::Log::LT_DEBUG:
-		DKDEBUG("[Rml] "+DKString(message)+"\n");
+		DEBUG("[Rml] "+String(message)+"\n");
 		break;
     case Rml::Log::LT_MAX:
-        DKVERBOSE("[Rml] "+DKString(message)+"\n");
+        VERBOSE("[Rml] "+String(message)+"\n");
         break;
 	};
 	return true;

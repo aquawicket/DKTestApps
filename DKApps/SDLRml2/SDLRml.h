@@ -1,19 +1,15 @@
 #pragma once
-#ifndef DKSDLRml_H
-#define DKSDLRml_H
+#ifndef SDLRml_H
+#define SDLRml_H
 
 #include <RmlUi/Core.h>
-#include "DK/DK.h"
-#include "DKSDLWindow/DKSDLWindow.h"
-#include "DKRml/DKRml.h"
-#include "DKSDLRml/DKSDLRmlSystem.h"
-#include "DKSDLRml/DKSDLRmlRenderer.h"
+#include "SDLWindow/SDLWindow.h"
+#include "Rml/Rml.h"
+#include "SDLRml/SDLRmlSystem.h"
+#include "SDLRml/SDLRmlRenderer.h"
 
-//#include "ShellRenderInterfaceOpenGL.h"
-//#define RML_SHELL_RENDER 1
 
-///////////////////////////////////////////
-class DKSDLRml : public DKObjectT<DKSDLRml>
+class SDLRml : public ObjectT<SDLRml>
 {
 public:
 	bool Init();
@@ -24,8 +20,8 @@ public:
 	void Update();
 	//void ProcessEvent(Rml::Core::Event& event);
 	
-	DKSDLWindow* dkSdlWindow;
-	DKRml* dkRml;
+	SDLWindow* sdlWindow;
+	Rml* rml;
 #ifdef RML_SHELL_RENDER
 	ShellRenderInterfaceOpenGL* Renderer;
 #else
@@ -35,5 +31,5 @@ public:
 };
 
 
-REGISTER_OBJECT(DKSDLRml, true)
-#endif //DKSDLRml_H
+REGISTER_OBJECT(SDLRml, true)
+#endif //SDLRml_H
