@@ -17,7 +17,6 @@
 RmlFile* RmlMain::rmlMainFile = NULL;
 
 bool RmlMain::Init(){
-	DKDEBUGFUNC();
 	DKClass::DKCreate("RmlMainJS");
 	DKClass::DKCreate("RmlMainV8");
 
@@ -86,7 +85,6 @@ bool RmlMain::Init(){
 }
 
 bool RmlMain::End(){
-	DKDEBUGFUNC();
 	if(context){
 		Rml::ReleaseTextures();
 		Rml::Shutdown();
@@ -122,14 +120,12 @@ bool RmlMain::GetSourceCode(DKString& source_code) {
 }
 
 bool RmlMain::LoadFont(const DKString& file){
-	DKDEBUGFUNC(file);
 	if(!Rml::LoadFontFace(file.c_str()))
 		return DKERROR("Could not load "+file+"\n");
 	return true;
 }
 
 bool RmlMain::LoadFonts(DKString& directory){
-	DKDEBUGFUNC();
 	
 	char ch = directory.back();
 	if(ch != '/')
@@ -232,7 +228,6 @@ bool RmlMain::LoadHtml(const DKString& html){
 }
 
 bool RmlMain::LoadUrl(const DKString& url){
-	DKDEBUGFUNC(url);
 	DKString _url = url;
 	if(has(_url,":/")) //could be http:// , https://, file:/// or C:/
 		href = _url; //absolute path including protocol
@@ -278,7 +273,6 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	//DKString rval;
 	//DKDuktape::Get()->RunDuktape(code, rval);
 	//DKINFO("RmlMain::ProcessEvent(): "+code+": rval="+rval+"\n");
-	//DKDEBUGFUNC(event);
 	if (!rmlEvent.GetCurrentElement())
 		return;
 	if (!rmlEvent.GetTargetElement())
@@ -389,7 +383,6 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 }
 
 bool RmlMain::RegisterEvent(const DKString& elementAddress, const DKString& type){
-	DKDEBUGFUNC(elementAddress, type);
 	if(elementAddress.empty())
 		return DKERROR("RmlMain::RegisterEvent(): elementAddress empty\n"); 
 	if(type.empty())
@@ -423,7 +416,6 @@ bool RmlMain::RegisterEvent(const DKString& elementAddress, const DKString& type
 }
 
 bool RmlMain::SendEvent(const DKString& elementAddress, const DKString& type, const DKString& value){
-	//DKDEBUGFUNC(id, type, value);
 	if(elementAddress.empty())
 		return DKERROR("elementAddress invalid");
 	if(type.empty())
@@ -462,7 +454,6 @@ bool RmlMain::DebuggerOn(){
 }
 
 bool RmlMain::DebuggerToggle(){
-	DKDEBUGFUNC();
 #ifdef USE_rmlui_debugger
 	if(Rml::Debugger::IsVisible()) //FIXME:  always returns false
 		RmlMain::DebuggerOff();
@@ -475,7 +466,6 @@ bool RmlMain::DebuggerToggle(){
 }
 
 bool RmlMain::UnregisterEvent(const DKString& elementAddress, const DKString& type){
-	DKDEBUGFUNC(elementAddress, type);
 	if(elementAddress.empty())
 		return DKERROR("elementAddress invalid");
 	if(type.empty())
@@ -496,7 +486,6 @@ bool RmlMain::UnregisterEvent(const DKString& elementAddress, const DKString& ty
 }
 
 Rml::Event* RmlMain::addressToEvent(const DKString& address){
-	//DKDEBUGFUNC(address);
 	Rml::Event* event;
 	if (address.compare(0, 2, "0x") != 0 || address.size() <= 2 || address.find_first_not_of("0123456789abcdefABCDEF", 2) != std::string::npos) {
 		DKERROR("the address ("+address+") is not a valid hex notation\n");
@@ -535,7 +524,6 @@ DKString RmlMain::eventToAddress(Rml::Event* event){
 }
 
 Rml::Element* RmlMain::addressToElement(const DKString& address) {
-	//DKDEBUGFUNC(address);
 	Rml::Element* element = nullptr;
 	if (address == "window") {
 		element = RmlMain::Get()->document->GetContext()->GetRootElement(); //Root element that holds all the documents.

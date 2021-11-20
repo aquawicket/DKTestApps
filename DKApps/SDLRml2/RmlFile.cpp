@@ -3,7 +3,6 @@
 //#include "DKCurl/DKCurl.h"
 
 Rml::FileHandle RmlFile::Open(const Rml::String& path){
-	DKDEBUGFUNC("path");
 
 	DKString _url = path;
 	
@@ -45,7 +44,6 @@ Rml::FileHandle RmlFile::Open(const Rml::String& path){
 /// Closes a previously opened file.
 /// @param file The file handle previously opened through Open().
 void RmlFile::Close(Rml::FileHandle file){
-	DKDEBUGFUNC(file);
 	fclose((FILE*) file);
 }
 
@@ -55,7 +53,6 @@ void RmlFile::Close(Rml::FileHandle file){
 /// @param file The handle of the file.
 /// @return The total number of bytes read into the buffer.
 size_t RmlFile::Read(void* buffer, size_t size, Rml::FileHandle file){
-	DKDEBUGFUNC(buffer, size, file);
 	return fread(buffer, 1, size, (FILE*) file);
 }
 
@@ -65,7 +62,6 @@ size_t RmlFile::Read(void* buffer, size_t size, Rml::FileHandle file){
 /// @param origin One of either SEEK_SET (seek from the beginning of the file), SEEK_END (seek from the end of the file) or SEEK_CUR (seek from the current file position).
 /// @return True if the operation completed successfully, false otherwise.
 bool RmlFile::Seek(Rml::FileHandle file, long offset, int origin){
-	DKDEBUGFUNC(file, offset, origin);
 	return fseek((FILE*) file, offset, origin) == 0;
 }
 
@@ -73,6 +69,5 @@ bool RmlFile::Seek(Rml::FileHandle file, long offset, int origin){
 /// @param file The handle of the file to be queried.
 /// @return The number of bytes from the origin of the file.
 size_t RmlFile::Tell(Rml::FileHandle file){
-	DKDEBUGFUNC(file);
 	return ftell((FILE*) file);
 }
