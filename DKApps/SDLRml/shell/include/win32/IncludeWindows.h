@@ -29,6 +29,7 @@
 
 #ifndef RMLUI_SHELL_WIN32_INCLUDEWINDOWS_H
 #define RMLUI_SHELL_WIN32_INCLUDEWINDOWS_H
+#ifdef WIN32
 
 #if !defined _WIN32_WINNT || _WIN32_WINNT < 0x0601
 	#undef _WIN32_WINNT
@@ -48,3 +49,4 @@
 
 #endif
 #endif
+#endif //WIN32

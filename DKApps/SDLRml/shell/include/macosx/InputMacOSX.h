@@ -28,6 +28,7 @@
 
 #ifndef RMLUI_SHELL_MACOSX_INPUTMACOSX_H
 #define RMLUI_SHELL_MACOSX_INPUTMACOSX_H
+#ifdef MAC
 
 #include "Input.h"
 #include <Carbon/Carbon.h>
@@ -49,3 +50,4 @@ public:
 };
 
 #endif
+#endif //MAC

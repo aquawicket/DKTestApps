@@ -29,7 +29,8 @@
 
 #ifndef RMLUI_SHELL_INPUTWIN32_H
 #define RMLUI_SHELL_INPUTWIN32_H
- 
+#ifdef WIN32
+
 #include <Input.h>
 #include <win32/IncludeWindows.h>
 #include <string>
@@ -53,5 +54,6 @@ public:
 Rml::String ConvertToUTF8(const std::wstring& wstr);
 std::wstring ConvertToUTF16(const Rml::String& str);
 
+#endif
 #endif
 #endif
