@@ -8,7 +8,7 @@
 #include <RmlUi/Core.h>
 #include "DK/DK.h"
 #include "DKWindow/DKWindow.h"
-#include "DKRml/DKRmlFile.h"
+#include "DKRml/RmlFile.h"
 #include "DKRml/DKRmlConverter.h"
 
 class DKRml : public Rml::EventListener, public DKObjectT<DKRml> {
@@ -37,7 +37,7 @@ public:
 	DKString workingPath;
 	Rml::Context* context;
 	Rml::ElementDocument* document;
-	static DKRmlFile* dkRmlFile;
+	static RmlFile* dkRmlFile;
 	Rml::Element* hover;
 	DKRmlConverter dkRmlConverter;
 };

@@ -23,7 +23,7 @@ extern "C" {
 class RmlSDLRenderer : public Rml::RenderInterface
 {
 public:
-	RmlSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen);
+	SDLRmlRenderer(SDL_Renderer* renderer, SDL_Window* screen);
 
 	/// Called by Rml when it wants to render geometry that it does not wish to optimise.
 	virtual void RenderGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rml::TextureHandle texture, const Rml::Vector2f& translation);

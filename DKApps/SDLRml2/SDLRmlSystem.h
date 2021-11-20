@@ -7,7 +7,7 @@
 //#include "DK/DK.h"
 
 
-class RmlSDL2SystemInterface : public Rml::SystemInterface
+class SDLRmlSystem : public Rml::SystemInterface
 {
 public:
     Rml::Input::KeyIdentifier TranslateKey(SDL_Keycode sdlkey);

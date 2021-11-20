@@ -1,7 +1,7 @@
 #include <RmlUi/Core.h>
 #include "SDLRml/SDLRmlSystem.h"
 
-Rml::Input::KeyIdentifier RmlSDL2SystemInterface::TranslateKey(SDL_Keycode sdlkey){
+Rml::Input::KeyIdentifier SDLRmlSystem::TranslateKey(SDL_Keycode sdlkey){
     using namespace Rml::Input;
     switch(sdlkey) {
         case SDLK_UNKNOWN:
@@ -352,7 +352,7 @@ Rml::Input::KeyIdentifier RmlSDL2SystemInterface::TranslateKey(SDL_Keycode sdlke
     }
 }
 
-int RmlSDL2SystemInterface::TranslateMouseButton(Uint8 button){
+int SDLRmlSystem::TranslateMouseButton(Uint8 button){
     switch(button){
         case SDL_BUTTON_LEFT:
             return 0;
@@ -373,7 +373,7 @@ int RmlSDL2SystemInterface::TranslateMouseButton(Uint8 button){
     }
 }
 
-int RmlSDL2SystemInterface::GetKeyModifiers(){
+int SDLRmlSystem::GetKeyModifiers(){
     SDL_Keymod sdlMods = SDL_GetModState();
     int retval = 0;
     if(sdlMods & KMOD_CTRL)
@@ -387,11 +387,11 @@ int RmlSDL2SystemInterface::GetKeyModifiers(){
     return retval;
 }
 
-double RmlSDL2SystemInterface::GetElapsedTime(){
+double SDLRmlSystem::GetElapsedTime(){
 	return (float)SDL_GetTicks() / 1000;
 }
 
-bool RmlSDL2SystemInterface::LogMessage(Rml::Log::Type type, const Rml::String& message){
+bool SDLRmlSystem::LogMessage(Rml::Log::Type type, const Rml::String& message){
 	if(has(message,"Loaded font face"))
 		type = Rml::Log::LT_DEBUG;
 	switch(type){

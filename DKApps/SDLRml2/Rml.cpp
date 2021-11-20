@@ -14,7 +14,7 @@
 #include "../../3rdParty/RmlUi-master/Source/Core/XMLNodeHandlerBody.h"
 
 #define DRAG_FIX 1
-DKRmlFile* DKRml::dkRmlFile = NULL;
+RmlFile* DKRml::dkRmlFile = NULL;
 
 bool DKRml::Init(){
 	DKDEBUGFUNC();
@@ -23,13 +23,13 @@ bool DKRml::Init(){
 
 	document = NULL;
 	if(!dkRmlFile){ 
-		dkRmlFile = new DKRmlFile();
+		dkRmlFile = new RmlFile();
 		Rml::SetFileInterface(dkRmlFile);
 	}
 
-	//Create DKSDLRml or DKOSGRml
-	if(DKClass::DKAvailable("DKSDLRml")){
-		DKClass::DKCreate("DKSDLRml");
+	//Create SDLRml or DKOSGRml
+	if(DKClass::DKAvailable("SDLRml")){
+		DKClass::DKCreate("SDLRml");
 		if(!Rml::Initialise())
 			return DKERROR("Rml::Initialise(): failed\n");
 		int w;

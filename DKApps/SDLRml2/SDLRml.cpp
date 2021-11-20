@@ -9,16 +9,16 @@ bool SDLRml::Init(){
 	//SDL_StartTextInput(); 
 	//SDL_EventState(SDL_TEXTINPUT, SDL_ENABLE);
 	
-	SdlWindow = DKSDLWindow::Instance("DKSDLWindow0");
+	SdlWindow = SDLWindow::Instance("SDLWindow0");
 	Rml = Rml::Instance("Rml0");
 	if(!SdlWindow || !Rml)
 		return ERROR("SDLRml::Init(): INVALID OBJECTS\n");
 #ifdef RML_SHELL_RENDER
 	Renderer = new ShellRenderInterfaceOpenGL();
 #else
-	Renderer = new RmlSDL2Renderer(SdlWindow->renderer, SdlWindow->window);
+	Renderer = new SDLRmlRenderer(SdlWindow->renderer, SdlWindow->window);
 #endif
-	SystemInterface = new RmlSDL2SystemInterface();
+	SystemInterface = new SDLRmlSystem();
 	Rml::SetRenderInterface(Renderer);
     Rml::SetSystemInterface(SystemInterface);
 	SDLWindow::AddEventFunc(&SDLRml::Handle, this);
@@ -31,7 +31,7 @@ bool SDLRml::End(){
 	return true;
 }
 
-bool DKSDLRml::Handle(SDL_Event *event) {
+bool SDLRml::Handle(SDL_Event *event) {
 	if(!Rml->document)
 		return ERROR("Rml->document invalid");
 	Rml::Element* hover;

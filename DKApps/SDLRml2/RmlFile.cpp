@@ -2,7 +2,7 @@
 #include "Rml.h"
 //#include "DKCurl/DKCurl.h"
 
-Rml::FileHandle DKRmlFile::Open(const Rml::String& path){
+Rml::FileHandle RmlFile::Open(const Rml::String& path){
 	DKDEBUGFUNC("path");
 
 	DKString _url = path;
@@ -44,7 +44,7 @@ Rml::FileHandle DKRmlFile::Open(const Rml::String& path){
 
 /// Closes a previously opened file.
 /// @param file The file handle previously opened through Open().
-void DKRmlFile::Close(Rml::FileHandle file){
+void RmlFile::Close(Rml::FileHandle file){
 	DKDEBUGFUNC(file);
 	fclose((FILE*) file);
 }
@@ -54,7 +54,7 @@ void DKRmlFile::Close(Rml::FileHandle file){
 /// @param size The number of bytes to read into the buffer.
 /// @param file The handle of the file.
 /// @return The total number of bytes read into the buffer.
-size_t DKRmlFile::Read(void* buffer, size_t size, Rml::FileHandle file){
+size_t RmlFile::Read(void* buffer, size_t size, Rml::FileHandle file){
 	DKDEBUGFUNC(buffer, size, file);
 	return fread(buffer, 1, size, (FILE*) file);
 }
@@ -64,7 +64,7 @@ size_t DKRmlFile::Read(void* buffer, size_t size, Rml::FileHandle file){
 /// @param offset The number of bytes to seek.
 /// @param origin One of either SEEK_SET (seek from the beginning of the file), SEEK_END (seek from the end of the file) or SEEK_CUR (seek from the current file position).
 /// @return True if the operation completed successfully, false otherwise.
-bool DKRmlFile::Seek(Rml::FileHandle file, long offset, int origin){
+bool RmlFile::Seek(Rml::FileHandle file, long offset, int origin){
 	DKDEBUGFUNC(file, offset, origin);
 	return fseek((FILE*) file, offset, origin) == 0;
 }
@@ -72,7 +72,7 @@ bool DKRmlFile::Seek(Rml::FileHandle file, long offset, int origin){
 /// Returns the current position of the file pointer.
 /// @param file The handle of the file to be queried.
 /// @return The number of bytes from the origin of the file.
-size_t DKRmlFile::Tell(Rml::FileHandle file){
+size_t RmlFile::Tell(Rml::FileHandle file){
 	DKDEBUGFUNC(file);
 	return ftell((FILE*) file);
 }
