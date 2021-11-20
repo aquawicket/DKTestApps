@@ -14,4 +14,5 @@ DKDEPEND(sdl2_image)
 DKDEPEND(rmlui rmlui_debugger)
 
 DKINCLUDE(${DKPROJECT})
-DKINCLUDE(${DKPROJECT}/shell/include)
+#DKINCLUDE(${DKPROJECT}/shell/include)
+
