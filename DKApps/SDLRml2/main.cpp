@@ -29,12 +29,16 @@
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
 #include <RmlUi/Debugger/Debugger.h>
-#include <Shell.h>
-#include <ShellFileInterface.h>
+//#include <Shell.h>
+//#include <ShellFileInterface.h>
+#include "Rml.h"
+#include "RmlFile.h"
 #include <string.h>
 
-#include "SystemInterfaceSDL2.h"
-#include "RenderInterfaceSDL2.h"
+//#include "SystemInterfaceSDL2.h"
+#include "SDLRmlSystem.h"
+//#include "RenderInterfaceSDL2.h"
+#include "SDLRmlRenderer.h"
 
 #ifdef RMLUI_PLATFORM_WIN32
 #include <windows.h>
@@ -106,11 +110,15 @@ int main(int /*argc*/, char** /*argv*/)
 	printf("SDL_GL_CONTEXT_MINOR_VERSION = %d\n", minor);
 	
 	
-	RmlUiSDL2Renderer Renderer(renderer, screen);
-	RmlUiSDL2SystemInterface SystemInterface;
+	//RmlUiSDL2Renderer Renderer(renderer, screen);
+	SDLRmlRenderer(renderer, screen);
+	//RmlUiSDL2SystemInterface SystemInterface;
+	SDLRmlSystem SystemInterface;
 
-	Rml::String root = Shell::FindSamplesRoot();
-	ShellFileInterface FileInterface(root);
+	//Rml::String root = Shell::FindSamplesRoot();
+//  TODO: get assets root
+	
+	RmlFile FileInterface(root);
 
 	Rml::SetFileInterface(&FileInterface);
 	Rml::SetRenderInterface(&Renderer);
