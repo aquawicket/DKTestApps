@@ -18,7 +18,9 @@ public:
 	static bool GetDirectoryContents(const std::string& path, RmlStringArray& contents);
 	static bool IsDirectory(const std::string& path);
 	static bool GetExtention(const std::string& path);
-	static bool GetExeName(const std::string& path);
+	static bool GetExeName(std::string& path);
+	static bool GetExePath(std::string& path);
+	static bool GetModifiedTime(const std::string& file, std::string& time);
 
 	bool FileInterface(const std::filesystem::path& root);
 	virtual Rml::FileHandle Open(const Rml::String& path);

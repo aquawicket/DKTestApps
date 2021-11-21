@@ -52,6 +52,7 @@ bool SDLWindow::Init() {
     height = 0;
     last_mouseX = 0;
     last_mouseY = 0;
+    /*
     std::string textX;
     RmlFile::GetSetting(RmlFile::local_assets + "settings.txt", "[WINX]", textX);
     std::string textY;
@@ -68,7 +69,8 @@ bool SDLWindow::Init() {
         width = toInt(textWidth);
     if(!textHeight.empty())
         height = toInt(textHeight);
-#ifdef WIN32 //account window frame
+    */
+#ifdef WIN32 //account for window frame
     winY = (winY + 30);
     winX = (winX + 10);
 #endif
@@ -171,7 +173,7 @@ bool SDLWindow::Init() {
     RmlFile::GetExePath(file);
     RmlFile::GetModifiedTime(file, mTime);
     title2 += mTime;
-    std::string icon = RmlFile::local_assets + "icon.ico";
+    std::string icon = RmlFile::Get()->_root + "icon.ico";
     SetIcon(&icon, NULL);
     SDL_SetWindowTitle(window, title2.c_str());
     /*
@@ -616,17 +618,17 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
         }
     }
     if(event->type == SDL_APP_WILLENTERBACKGROUND) {
-        INFO("SDLWindow::SDL_APP_WILLENTERBACKGROUND\n");
-        App::paused = true;
+        RMLINFO("SDLWindow::SDL_APP_WILLENTERBACKGROUND\n");
+        RmlApp::paused = true;
         return 1;
     }
     if(event->type == SDL_APP_DIDENTERFOREGROUND) {
-        INFO("SDLWindow::SDL_APP_DIDENTERFOREGROUND\n");
-        App::paused = false;
+        RMLINFO("SDLWindow::SDL_APP_DIDENTERFOREGROUND\n");
+        RmlApp::paused = false;
         return 1;
     }
     if(event->type == SDL_TEXTINPUT) {
-        //INFO("SDLWindow::SDL_TEXTINPUT\n");
+        //RMLINFO("SDLWindow::SDL_TEXTINPUT\n");
         return 1;
     }
     return 1;
@@ -635,7 +637,7 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
 bool SDLWindow::handle(SDL_Event *event) {
     switch(event->type) {
         case SDL_QUIT: {
-            App::Exit();
+            RmlApp::Exit();
             return false; //allow event to continue
         }
         case SDL_MOUSEMOTION: {
@@ -652,13 +654,16 @@ bool SDLWindow::handle(SDL_Event *event) {
         }
         case SDL_MOUSEBUTTONUP: {
             //RmlEvents::SendEvent("sdlwindow", "mouseup", toString(event->button.button));
-            if(event->button.button == 3)
+            if (event->button.button == 3) {
                 //RmlEvents::SendEvent("sdlwindow", "contextmenu", toString(event->button.button));
+            }
             else {
-                if(event->button.clicks == 2)
+                if (event->button.clicks == 2) {
                     //RmlEvents::SendEvent("sdlwindow", "dblclick", toString(event->button.button));
-                else
+                }
+                else {
                     //RmlEvents::SendEvent("sdlwindow", "click", toString(event->button.button));
+                }
             }
             return false; //allow event to continue
         }
@@ -671,10 +676,12 @@ bool SDLWindow::handle(SDL_Event *event) {
             if(event->key.keysym.sym == 0)
                 return true;
             if(event->key.keysym.sym > 96 && event->key.keysym.sym < 123) { //letter
-                if(event->key.keysym.mod & KMOD_SHIFT && event->key.keysym.mod & KMOD_CAPS)   //both = lowercase
+                if (event->key.keysym.mod & KMOD_SHIFT && event->key.keysym.mod & KMOD_CAPS) {   //both = lowercase
                     //RmlEvents::SendEvent("sdlwindow", "keypress", toString(sdlCharCode[event->key.keysym.sym]));
-                else if(event->key.keysym.mod & KMOD_SHIFT || event->key.keysym.mod & KMOD_CAPS)   //1 = uppercase
+                }
+                else if (event->key.keysym.mod & KMOD_SHIFT || event->key.keysym.mod & KMOD_CAPS) {   //1 = uppercase
                     //RmlEvents::SendEvent("sdlwindow", "keypress", toString(sdlShiftCharCode[event->key.keysym.sym]));
+                }
                 else {
                     //RmlEvents::SendEvent("sdlwindow", "keypress", toString(sdlCharCode[event->key.keysym.sym])); //lowercase
                 }

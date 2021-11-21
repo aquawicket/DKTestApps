@@ -33,10 +33,12 @@ public:
 
 	///Get the handle of the window
 	static bool GetHandle(void*& handle);
+	*/
 
 	///Get the Height of the window
 	static bool GetHeight(int& height);
 
+	/*
 	///Get the Mouse x postion in the window
 	static bool GetMouseX(int& x);
 
@@ -48,10 +50,12 @@ public:
 	
 	///Get the Title of the window
 	static bool GetTitle(std::string& title);
+	*/
 
 	///Get the Width of the window
 	static bool GetWidth(int& width);
 
+	/*
 	///Get the Left position of the window
 	static bool GetX(int& x);
 

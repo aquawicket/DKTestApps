@@ -62,13 +62,23 @@ bool RmlFile::GetExtention(const std::string& path)
 	return false;
 }
 
-bool RmlFile::GetExeName(const std::string& path)
+bool RmlFile::GetExeName(std::string& path)
 {
 	//TODO
 	return false;
 }
 
+bool RmlFile::GetExePath(std::string& path)
+{
+	//TODO
+	return false;
+}
 
+bool RmlFile::GetModifiedTime(const std::string & file, std::string & time)
+{
+	//TODO
+	return false;
+}
 
 
 

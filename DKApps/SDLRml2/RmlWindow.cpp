@@ -130,9 +130,11 @@ bool RmlWindow::GetHandle(void*& handle)
 	RMLWARN("RmlWindow::GetHandle(): No function available\n");
 	return false;
 }
+*/
 
 bool RmlWindow::GetHeight(int& height)
 {
+	/*
 	if(RmlClass::HasFunc("CefWindow::GetHeight")){
 		return RmlClass::CallFunc("CefWindow::GetHeight", NULL, &height);
 	}
@@ -143,9 +145,11 @@ bool RmlWindow::GetHeight(int& height)
 		return RmlClass::CallFunc("OSGWindow::GetHeight", NULL, &height);
 	}
 	RMLWARN("RmlWindow::GetHeight(): No function available\n");
+	*/
 	return false;
 }
 
+/*
 bool RmlWindow::GetMouseX(int& x)
 {
 	if(RmlClass::HasFunc("CefWindow::GetMouseX")){
@@ -206,9 +210,11 @@ bool RmlWindow::GetTitle(std::string& title)
 	RMLWARN("RmlWindow::GetTitle(): No function available\n");
 	return false;
 }
+*/
 
 bool RmlWindow::GetWidth(int& width)
 {
+	/*
 	if(RmlClass::HasFunc("CefWindow::GetWidth")){
 		return RmlClass::CallFunc("CefWindow::GetWidth", NULL, &width);
 	}
@@ -219,9 +225,11 @@ bool RmlWindow::GetWidth(int& width)
 		return RmlClass::CallFunc("OSGWindow::GetWidth", NULL, &width);
 	}
 	RMLWARN("RmlWindow::GetWidth(): No function available\n");
+	*/
 	return false;
 }
 
+/*
 bool RmlWindow::GetX(int& x)
 {
 	if(RmlClass::HasFunc("CefWindow::GetX")){

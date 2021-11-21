@@ -140,7 +140,7 @@ bool RmlMain::LoadFonts(std::string& directory){
 	if(ch != '/')
 		directory += '/'; //make sure directory has a trailing /
 
-	std::stringArray files;
+	RmlStringArray files;
 	RmlFile::GetDirectoryContents(directory, files);
 	for(unsigned int i=0; i<files.size(); ++i){
 		if(RmlFile::IsDirectory(directory+files[i]))
