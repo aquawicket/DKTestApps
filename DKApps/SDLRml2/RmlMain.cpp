@@ -261,8 +261,9 @@ bool RmlMain::LoadUrl(const std::string& url){
 	_path = _url.substr(0,found+1);
 	//DKWARN("RmlMain::LoadUrl(): last / at "+toString(found)+"\n");
 	RMLINFO("RmlMain::LoadUrl(): _path = "+_path+"\n");
-	/*
+
 	std::string html;
+	/*
 	if(RmlUtility::stringContains(_url, "http://") || RmlUtility::stringContains(_url, "https://")){
 		DKClass::DKCreate("DKCurl");
 		if(!DKCurl::Get()->HttpFileExists(_url))
@@ -272,8 +273,8 @@ bool RmlMain::LoadUrl(const std::string& url){
 	}
 	else{
 	*/
-		if(!RmlFile::FileToString(_url, html))
-			return RMLERROR("RmlFile::FileToString failed on "+_url+"\n");
+	if(!RmlFile::FileToString(_url, html))
+		return RMLERROR("RmlFile::FileToString failed on "+_url+"\n");
 	//}
 	LoadHtml(html);
 	return true;

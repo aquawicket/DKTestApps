@@ -2,6 +2,7 @@
 #ifndef RmlFile_H
 #define RmlFile_H
 #include <RmlUi/Core.h>
+#include "RmlUtility.h"
 #include <filesystem>
 
 class RmlFile : public Rml::FileInterface 
