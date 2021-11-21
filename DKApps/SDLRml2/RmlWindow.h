@@ -12,6 +12,7 @@ public:
 	bool Init();
 	bool End();
 
+	/*
 	///Send a variable to RmlClass::CallFunc("DKXXXWindow::TestInt") and recieve a return value.
 	static bool TestInt(int& input, int& output);
 	
@@ -101,6 +102,7 @@ public:
 
 	///Set the Window to Windowed mode
 	static bool Windowed();
+	*/
 };
 
 #endif //RmlWindow_H

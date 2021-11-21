@@ -40,7 +40,7 @@ void SDLRmlRenderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int
     if(texture){
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         sdl_texture = (SDL_Texture*)texture;
-
+        /*
 		//Cef
 		//The id is mapped to the texture in texture_name
 		//If the id contains iframe_ , it is a cef image
@@ -52,14 +52,15 @@ void SDLRmlRenderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int
 			
 			struct Texture{ SDL_Texture* texture; };
 			Texture output;
-			if(!Class::CallFunc("SDLCef::GetTexture", &id, &output))
+			if(!RmlClass::CallFunc("SDLCef::GetTexture", &id, &output))
                 return;
 			sdl_texture = output.texture;
 		}
-        
+        */
+
 		if(!sdl_texture){ return; }
         if(SDL_GL_BindTexture(sdl_texture, &texw, &texh) == -1)
-			ERROR("SDL_GL_BindTexture: "+String(SDL_GetError())+"\n");
+			RMLERROR("SDL_GL_BindTexture: "+std::string(SDL_GetError())+"\n");
     }
  
     for(int  i = 0; i < num_vertices; i++) {
@@ -89,7 +90,7 @@ void SDLRmlRenderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int
     if(sdl_texture){
         SDL_BlendMode bm;
         SDL_GetTextureBlendMode(sdl_texture, &bm);
-        if(bm == SDL_BLENDMODE_BLEND || has(texture_name[texture],".gif")){
+        if(bm == SDL_BLENDMODE_BLEND || RmlUtility::stringContains(texture_name[texture],".gif")){
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         }
@@ -146,7 +147,7 @@ bool SDLRmlRenderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vector
 	//CEF Texture
 	//The source variable is the id of the iframe. It will contain iframe_ in it's id.
 	//We will map that id to the texture handle for later use. 
-	if(has(source,"iframe_")){
+	if(RmlUtility::stringContains(source,"iframe_")){
 		texture_handle = reinterpret_cast<Rml::TextureHandle>(&source);
 		texture_name[texture_handle] = source;
 		return true;

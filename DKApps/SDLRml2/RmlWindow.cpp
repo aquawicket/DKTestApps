@@ -15,7 +15,7 @@ bool RmlWindow::End()
 	return true;
 }
 
-
+/*
 
 ///
 ///  If "RmlWindow::TestInt()" calls a registered function, it will alter the variable and send it back.
@@ -64,7 +64,7 @@ bool RmlWindow::TestReturnInt(int& output)
 
 ///
 ///  If "RmlWindow::TestReturnString()" calls a registered function, it will return a variable.
-///  \a see: SDLWindow.h
+///  \ see: SDLWindow.h
 bool RmlWindow::TestReturnString(std::string& output)
 {
 	if(RmlClass::HasFunc("SDLWindow::TestReturnString")){
@@ -473,3 +473,5 @@ bool RmlWindow::Windowed()
 	RMLWARN("RmlWindow::Windowed(): No function available\n");
 	return false;
 }
+
+*/
