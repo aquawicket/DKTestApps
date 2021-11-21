@@ -104,7 +104,7 @@ bool RmlMain::End(){
 	return true;
 }
 
-RmlMain* RmlMaim::Get()
+RmlMain* RmlMain::Get()
 {
 	return this;
 }

@@ -25,31 +25,24 @@
  * THE SOFTWARE.
  *
  */
-
-#include <RmlUi/Core.h>
-#include <RmlUi/Core/Input.h>
-#include <RmlUi/Debugger/Debugger.h>
-//#include <Shell.h>
-//#include <ShellFileInterface.h>
-#include "RmlMain.h"
-#include "RmlFile.h"
-#include <string.h>
-
-//#include "SystemInterfaceSDL2.h"
-#include "SDLRmlSystem.h"
-//#include "RenderInterfaceSDL2.h"
-#include "SDLRmlRenderer.h"
-
+#if defined(WIN32) || defined(MAC)
+#include <GL/glew.h>
+#endif
 #ifdef RMLUI_PLATFORM_WIN32
 #include <windows.h>
 #endif
 
+#include <RmlUi/Core.h>
+#include <RmlUi/Core/Input.h>
+#include <RmlUi/Debugger/Debugger.h>
+#include "RmlMain.h"
+#include "RmlFile.h"
+#include <string.h>
+ //#include <Shell.h>
+ //#include <ShellFileInterface.h>
+#include "SDLRmlSystem.h"
+#include "SDLRmlRenderer.h"
 #include <SDL.h>
-
-#if defined(WIN32) || defined(MAC)
-#include <GL/glew.h>
-#endif
-
 #include <iostream>
 #include <filesystem>
 

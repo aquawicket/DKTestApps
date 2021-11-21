@@ -56,7 +56,7 @@ bool RmlFile::IsDirectory(const std::string& path)
 	return false;
 }
 
-bool RmlFile::GetExtention(const std::string& path, std::string& ext);
+bool RmlFile::GetExtention(const std::string& path, std::string& ext)
 {
 	//TODO
 	return false;
