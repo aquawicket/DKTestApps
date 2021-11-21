@@ -1,24 +1,24 @@
 #ifdef USE_rmlui_debugger
 #include <RmlUi/Debugger.h>
 #endif
-#include "RmlMain/RmlMain.h"
-#include "DKWindow/DKWindow.h"
-#include "DKCurl/DKCurl.h"
-#include "DKDuktape/DKDuktape.h"
-#include "DKXml/DKXml.h"
-#include "RmlMain/RmlMainHeadInstancer.h"
+#include "RmlMain.h"
+#include "RmlWindow.h"
+//#include "Curl.h"
+//#include "DKDuktape/DKDuktape.h"
+//#include "DKXml/DKXml.h"
+//#include "RmlMain/RmlMainHeadInstancer.h"
 
 #include <RmlUi/Core/StreamMemory.h>
 #include "../../3rdParty/RmlUi-master/Source/Core/PluginRegistry.h"
 #include "../../3rdParty/RmlUi-master/Source/Core/XMLNodeHandlerDefault.h"
 #include "../../3rdParty/RmlUi-master/Source/Core/XMLNodeHandlerBody.h"
 
-#define DRAG_FIX 1
+//#define DRAG_FIX 1
 RmlFile* RmlMain::rmlMainFile = NULL;
 
 bool RmlMain::Init(){
-	DKClass::DKCreate("RmlMainJS");
-	DKClass::DKCreate("RmlMainV8");
+	//RmlClass::RmlCreate("RmlMainJS");
+	//RmlClass::RmlCreate("RmlMainV8");
 
 	document = NULL;
 	if(!rmlMainFile){ 
@@ -27,26 +27,26 @@ bool RmlMain::Init(){
 	}
 
 	//Create SDLRml or DKOSGRml
-	if(DKClass::DKAvailable("SDLRml")){
-		DKClass::DKCreate("SDLRml");
+	if(RmlClass::DKAvailable("SDLRml")){
+		RmlClass::DKCreate("SDLRml");
 		if(!Rml::Initialise())
-			return DKERROR("Rml::Initialise(): failed\n");
+			return RMLERROR("Rml::Initialise(): failed\n");
 		int w;
-		if(!DKWindow::GetWidth(w)){ return false; }
+		if(!RmlWindow::GetWidth(w)){ return false; }
 		int h;
-		if(!DKWindow::GetHeight(h)){ return false; }
+		if(!RmlWindow::GetHeight(h)){ return false; }
 		context = Rml::CreateContext("default", Rml::Vector2i(w, h));
 	}
-	else if(DKClass::DKAvailable("DKOSGRml")){
-		DKClass::DKCreate("DKOSGRml");
+	else if(RmlClass::DKAvailable("DKOSGRml")){
+		RmlClass::DKCreate("DKOSGRml");
 	}
 	else{
-		DKERROR("No registered window found\n");
+		RMLERROR("No registered window found\n");
 		return false;
 	}
 #ifdef USE_rmlui_debugger
 	if (!Rml::Debugger::Initialise(context))
-		return DKERROR("Rml::Debugger::Initialise(): failed\n");
+		return RMLERROR("Rml::Debugger::Initialise(): failed\n");
 #endif
 	//Add missing stylesheet properties
 	//TODO - https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat
@@ -61,9 +61,9 @@ bool RmlMain::Init(){
 		.GetId(); //this supresses border-style warnings temporarily
 
 	context->SetDocumentsBaseTag("html");
-	DKString rmlFonts = DKFile::local_assets+"RmlMain";
+	std::string rmlFonts = RmlFile::local_assets+"RmlMain";
 	LoadFonts(rmlFonts);
-	LoadFonts(DKFile::local_assets);
+	LoadFonts(RmlFile::Get()->_root);
 	DKEvents::AddRegisterEventFunc(&RmlMain::RegisterEvent, this);
 	//DKEvents::AddUnegisterEventFunc(&RmlMain::UnregisterEvent, this);
 	//DKEvents::AddSendEventFunc(&RmlMain::SendEvent, this);
@@ -76,10 +76,10 @@ bool RmlMain::Init(){
 	
 	DKClass::DKCreate("DKDom");
 	
-	DKString html;
-	DKString workingPath = DKFile::local_assets;
-	DKFile::FileToString(workingPath +"RmlMain/blank.html", html);
-	DKFile::ChDir(workingPath);
+	std::string html;
+	std::string workingPath = RmlFile::local_assets;
+	RmlFile::FileToString(workingPath +"RmlMain/blank.html", html);
+	RmlFile::ChDir(workingPath);
 	LoadHtml(html);
 	return true;
 }
@@ -94,13 +94,18 @@ bool RmlMain::End(){
 	}
 	DKClass::DKClose("RmlMainJS");
 	DKClass::DKClose("RmlMainV8");
-	DKEvents::RemoveRegisterEventFunc(&RmlMain::RegisterEvent, this);
-	DKEvents::RemoveUnegisterEventFunc(&RmlMain::UnregisterEvent, this);
-	DKEvents::RemoveSendEventFunc(&RmlMain::SendEvent, this);
+	//RmlEvents::RemoveRegisterEventFunc(&RmlMain::RegisterEvent, this);
+	//RmlEvents::RemoveUnegisterEventFunc(&RmlMain::UnregisterEvent, this);
+	//RmlEvents::RemoveSendEventFunc(&RmlMain::SendEvent, this);
 	return true;
 }
 
-bool RmlMain::GetSourceCode(DKString& source_code) {
+RmlMain* RmlMaim::Get()
+{
+	return this;
+}
+
+bool RmlMain::GetSourceCode(std::string& source_code) {
 	source_code = document->GetContext()->GetRootElement()->GetInnerRML();
 	DKINFO("######################## CODE FROM RmlUi #########################\n");
 	DKINFO(source_code+"\n");
@@ -119,38 +124,38 @@ bool RmlMain::GetSourceCode(DKString& source_code) {
 	return true;
 }
 
-bool RmlMain::LoadFont(const DKString& file){
+bool RmlMain::LoadFont(const std::string& file){
 	if(!Rml::LoadFontFace(file.c_str()))
 		return DKERROR("Could not load "+file+"\n");
 	return true;
 }
 
-bool RmlMain::LoadFonts(DKString& directory){
+bool RmlMain::LoadFonts(std::string& directory){
 	
 	char ch = directory.back();
 	if(ch != '/')
 		directory += '/'; //make sure directory has a trailing /
 
-	DKStringArray files;
-	DKFile::GetDirectoryContents(directory, files);
+	std::stringArray files;
+	RmlFile::GetDirectoryContents(directory, files);
 	for(unsigned int i=0; i<files.size(); ++i){
-		if(DKFile::IsDirectory(directory+files[i]))
+		if(RmlFile::IsDirectory(directory+files[i]))
 			continue;
-		DKString extension;
-		DKFile::GetExtention(files[i],extension);
+		std::string extension;
+		RmlFile::GetExtention(files[i],extension);
 		if(same(extension,".otf") || same(extension,".ttf")){
-			//DKString file;
-			//DKFile::GetFileName(files[i],file);
+			//std::string file;
+			//RmlFile::GetFileName(files[i],file);
 			LoadFont(directory+files[i]);
 		}
 	}
 	return true;
 }
 
-bool RmlMain::LoadHtml(const DKString& html){
+bool RmlMain::LoadHtml(const std::string& html){
 	//// Prepair the html document for RmlUi
 
-	DKString rml;
+	std::string rml;
 	rmlMainConverter.HtmlToRml(html, rml);
 
 	//// Clear any document and load the rml into the document
@@ -165,8 +170,8 @@ bool RmlMain::LoadHtml(const DKString& html){
 	
 
 	//Create DOM javascript instance of the document using the documents element address
-	DKString rval;
-	DKString document_address = elementToAddress(document);
+	std::string rval;
+	std::string document_address = elementToAddress(document);
 	DKDuktape::RunDuktape("var document = new Document(\"" + document_address + "\");", rval);
 	Rml::Element* ele = document;
 	
@@ -194,7 +199,7 @@ bool RmlMain::LoadHtml(const DKString& html){
 	else if (!head && body)
 		document->GetOwnerDocument()->InsertBefore(document->CreateElement("head"), body);
 	//Load user agent style sheet
-	DKString file = DKFile::local_assets + "RmlMain/RmlMain.css";
+	std::string file = RmlFile::local_assets + "RmlMain/RmlMain.css";
 	const Rml::StyleSheetContainer* doc_sheet = document->GetOwnerDocument()->GetStyleSheetContainer();
 	Rml::SharedPtr<Rml::StyleSheetContainer> file_sheet = Rml::Factory::InstanceStyleSheetFile(file.c_str());
 	if(doc_sheet) { 
@@ -227,8 +232,8 @@ bool RmlMain::LoadHtml(const DKString& html){
 	return true;
 }
 
-bool RmlMain::LoadUrl(const DKString& url){
-	DKString _url = url;
+bool RmlMain::LoadUrl(const std::string& url){
+	std::string _url = url;
 	if(has(_url,":/")) //could be http:// , https://, file:/// or C:/
 		href = _url; //absolute path including protocol
 	else if(has(_url,"//")){ //could be //www.site.com/style.css or //site.com/style.css
@@ -249,7 +254,7 @@ bool RmlMain::LoadUrl(const DKString& url){
 	_path = _url.substr(0,found+1);
 	//DKWARN("RmlMain::LoadUrl(): last / at "+toString(found)+"\n");
 	DKINFO("RmlMain::LoadUrl(): _path = "+_path+"\n");
-	DKString html;
+	std::string html;
 	if(has(_url, "http://") || has(_url, "https://")){
 		DKClass::DKCreate("DKCurl");
 		if(!DKCurl::Get()->HttpFileExists(_url))
@@ -258,8 +263,8 @@ bool RmlMain::LoadUrl(const DKString& url){
 			return DKERROR("Could not get html from url "+_url+"\n");
 	}
 	else{
-		if(!DKFile::FileToString(_url, html))
-			return DKERROR("DKFile::FileToString failed on "+_url+"\n");
+		if(!RmlFile::FileToString(_url, html))
+			return DKERROR("RmlFile::FileToString failed on "+_url+"\n");
 	}
 	LoadHtml(html);
 	return true;
@@ -268,9 +273,9 @@ bool RmlMain::LoadUrl(const DKString& url){
 void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	//TODO - make rmlEvent accessable through javascript
 	//1. Create Javascript Event object that references the rmlEvent
-	DKString rmlEventAddress = eventToAddress(&rmlEvent);
-	//DKString code = "new Event("+rmlEventAddress+")";
-	//DKString rval;
+	std::string rmlEventAddress = eventToAddress(&rmlEvent);
+	//std::string code = "new Event("+rmlEventAddress+")";
+	//std::string rval;
 	//DKDuktape::Get()->RunDuktape(code, rval);
 	//DKINFO("RmlMain::ProcessEvent(): "+code+": rval="+rval+"\n");
 	if (!rmlEvent.GetCurrentElement())
@@ -278,19 +283,19 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	if (!rmlEvent.GetTargetElement())
 		return;
 	Rml::Element* currentElement = rmlEvent.GetCurrentElement();
-	DKString currentElementAddress = elementToAddress(currentElement);
+	std::string currentElementAddress = elementToAddress(currentElement);
 	Rml::Element* targetElement = rmlEvent.GetTargetElement();
-	DKString targetElementAddress = elementToAddress(targetElement);
-	DKString type = rmlEvent.GetType();
+	std::string targetElementAddress = elementToAddress(targetElement);
+	std::string type = rmlEvent.GetType();
 	//TODO: implement this
     //int phase = (int)rmlEvent.GetPhase(); //{ None, Capture = 1, Target = 2, Bubble = 4 };
 	
     
     /*
 	// Send this event back to duktape to be processed in javascript
-	DKString evnt = "{type:'"+type+"', eventPhase:"+toString(phase)+"}";
-	DKString code = "EventFromCPP('"+ currentElementAddress +"',"+evnt+");";
-	DKString rval;
+	std::string evnt = "{type:'"+type+"', eventPhase:"+toString(phase)+"}";
+	std::string code = "EventFromCPP('"+ currentElementAddress +"',"+evnt+");";
+	std::string rval;
 	DKDuktape::Get()->RunDuktape(code, rval);
 	if(!rval.empty()){ DKINFO("RmlMain::ProcessEvent(): rval = "+rval+"\n"); }
 	*/
@@ -307,12 +312,12 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	//if(rmlEvent.GetPhase() == 1 && currentElement != hover){ return; }
 	/*
 	//Event Monitor
-	DKString tag = currentElement->GetTagName();
-	DKString id = currentElement->GetId();
-	DKString target_id = targetElement->GetId();
-	DKString target_tag = targetElement->GetTagName();
-	DKString hover_id = hover->GetId();
-	DKString string = "EVENT: " + type + " (current) " + tag + "> " + id + " (target) " + target_tag + "> " + target_id + "(hover)" + hover_id + "\n";
+	std::string tag = currentElement->GetTagName();
+	std::string id = currentElement->GetId();
+	std::string target_id = targetElement->GetId();
+	std::string target_tag = targetElement->GetTagName();
+	std::string hover_id = hover->GetId();
+	std::string string = "EVENT: " + type + " (current) " + tag + "> " + id + " (target) " + target_tag + "> " + target_id + "(hover)" + hover_id + "\n";
 	DKINFO(string + "\n");
 	*/
 #ifdef ANDROID
@@ -338,7 +343,7 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	for(unsigned int i = 0; i < DKEvents::events.size(); ++i){
 		DKEvents* ev = DKEvents::events[i];
 		//certain stored events are altered before comparison 
-		DKString _type = ev->GetType();
+		std::string _type = ev->GetType();
 		if (same(_type, "input"))
 			_type = "change";
 		//// PROCESS ELEMENT EVENTS //////
@@ -382,7 +387,7 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	}
 }
 
-bool RmlMain::RegisterEvent(const DKString& elementAddress, const DKString& type){
+bool RmlMain::RegisterEvent(const std::string& elementAddress, const std::string& type){
 	if(elementAddress.empty())
 		return DKERROR("RmlMain::RegisterEvent(): elementAddress empty\n"); 
 	if(type.empty())
@@ -390,7 +395,7 @@ bool RmlMain::RegisterEvent(const DKString& elementAddress, const DKString& type
 	Rml::Element* element = addressToElement(elementAddress.c_str());
 	if(!element)
 		return DKERROR("RmlMain::RegisterEvent("+elementAddress+","+type+"): element invalid\n");
-	DKString _type = type;
+	std::string _type = type;
 	if(same(type, "contextmenu"))
 		_type = "mouseup";
 	if(same(type, "input"))
@@ -415,7 +420,7 @@ bool RmlMain::RegisterEvent(const DKString& elementAddress, const DKString& type
 	return true;
 }
 
-bool RmlMain::SendEvent(const DKString& elementAddress, const DKString& type, const DKString& value){
+bool RmlMain::SendEvent(const std::string& elementAddress, const std::string& type, const std::string& value){
 	if(elementAddress.empty())
 		return DKERROR("elementAddress invalid");
 	if(type.empty())
@@ -465,7 +470,7 @@ bool RmlMain::DebuggerToggle(){
 	return true;
 }
 
-bool RmlMain::UnregisterEvent(const DKString& elementAddress, const DKString& type){
+bool RmlMain::UnregisterEvent(const std::string& elementAddress, const std::string& type){
 	if(elementAddress.empty())
 		return DKERROR("elementAddress invalid");
 	if(type.empty())
@@ -476,7 +481,7 @@ bool RmlMain::UnregisterEvent(const DKString& elementAddress, const DKString& ty
 	Rml::Element* element = addressToElement(elementAddress);
 	if(!element)
 		return DKERROR("element invalid");
-	DKString _type = type;
+	std::string _type = type;
 	if(same(type, "contextmenu"))
 		_type = "mouseup";
 	if(same(type, "input"))
@@ -485,7 +490,7 @@ bool RmlMain::UnregisterEvent(const DKString& elementAddress, const DKString& ty
 	return true;
 }
 
-Rml::Event* RmlMain::addressToEvent(const DKString& address){
+Rml::Event* RmlMain::addressToEvent(const std::string& address){
 	Rml::Event* event;
 	if (address.compare(0, 2, "0x") != 0 || address.size() <= 2 || address.find_first_not_of("0123456789abcdefABCDEF", 2) != std::string::npos) {
 		DKERROR("the address ("+address+") is not a valid hex notation\n");
@@ -508,7 +513,7 @@ Rml::Event* RmlMain::addressToEvent(const DKString& address){
 	return event;
 }
 
-DKString RmlMain::eventToAddress(Rml::Event* event){
+std::string RmlMain::eventToAddress(Rml::Event* event){
 	if (!event) {
 		DKERROR("RmlMain::eventToAddress(): invalid event\n");
 		return "";
@@ -523,7 +528,7 @@ DKString RmlMain::eventToAddress(Rml::Event* event){
 	return ss.str();
 }
 
-Rml::Element* RmlMain::addressToElement(const DKString& address) {
+Rml::Element* RmlMain::addressToElement(const std::string& address) {
 	Rml::Element* element = nullptr;
 	if (address == "window") {
 		element = RmlMain::Get()->document->GetContext()->GetRootElement(); //Root element that holds all the documents.
@@ -558,7 +563,7 @@ Rml::Element* RmlMain::addressToElement(const DKString& address) {
 	return element;
 }
 
-DKString RmlMain::elementToAddress(Rml::Element* element){
+std::string RmlMain::elementToAddress(Rml::Element* element){
 	if (!element) {
 		DKERROR("RmlMain::elementToAddress(): invalid element\n");
 		return "";

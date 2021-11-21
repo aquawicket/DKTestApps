@@ -2,16 +2,30 @@
 #include "RmlMain.h"
 
 
+RmlFile* RmlFile::Get() {
+	return this;
+}
+
+bool RmlFile::MakeDir(const std::string path)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::PathExists(const std::string path)
+{
+	//TODO
+	return false;
+}
 
 bool RmlFile::FileInterface(const std::filesystem::path& root)
 {
 	std::string _root{ root.u8string() };
 }
 
-Rml::FileHandle RmlFile::Open(const Rml::String& path){
-
+Rml::FileHandle RmlFile::Open(const Rml::String& path)
+{
 	std::string _path = path;
-	
 	//if (has(_path, ":/")) { //could be http:// , https:// or C:/
 		//absolute path
 	//}
