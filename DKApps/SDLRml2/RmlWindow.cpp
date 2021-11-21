@@ -5,8 +5,8 @@
 
 bool RmlWindow::Init()
 {
-	RmlClass::RmlCreate("RmlWindowJS");
-	RmlClass::RmlCreate("RmlWindowV8");
+	//RmlClass::RmlCreate("RmlWindowJS");
+	//RmlClass::RmlCreate("RmlWindowV8");
 	return true;
 }
 

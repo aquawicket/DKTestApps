@@ -31,7 +31,7 @@ bool RmlMain::Init(){
 	//Create SDLRml or DKOSGRml
 	//if(RmlClass::DKAvailable("SDLRml")){
 	SDLRml* sldRml = new SDLRml();
-	if(sdlRml)
+	if(sdlRml){
 		if(!Rml::Initialise())
 			return RMLERROR("Rml::Initialise(): failed\n");
 		int w;
@@ -40,11 +40,11 @@ bool RmlMain::Init(){
 		if(!RmlWindow::GetHeight(h)){ return false; }
 		context = Rml::CreateContext("default", Rml::Vector2i(w, h));
 	}
-	else if(RmlClass::DKAvailable("DKOSGRml")){
-		RmlClass::DKCreate("DKOSGRml");
-	}
+	//else if(RmlClass::RmlAvailable("SFMLRml")){
+	//	RmlClass::RmlCreate("SFMLRml");
+	//}
 	else{
-		RMLERROR("No registered window found\n");
+		RMLERROR("No window types registered\n");
 		return false;
 	}
 #ifdef USE_rmlui_debugger
@@ -64,20 +64,21 @@ bool RmlMain::Init(){
 		.GetId(); //this supresses border-style warnings temporarily
 
 	context->SetDocumentsBaseTag("html");
-	std::string rmlFonts = RmlFile::local_assets+"RmlMain";
+	std::string rmlFonts = RmlFile::Get()->_root + "RmlMain";
 	LoadFonts(rmlFonts);
 	LoadFonts(RmlFile::Get()->_root);
-	RmlEvents::AddRegisterEventFunc(&RmlMain::RegisterEvent, this);
+	//RmlEvents::AddRegisterEventFunc(&RmlMain::RegisterEvent, this);
 	//DKEvents::AddUnegisterEventFunc(&RmlMain::UnregisterEvent, this);
 	//DKEvents::AddSendEventFunc(&RmlMain::SendEvent, this);
 	//DKClass::DKCreate("RmlMainJS");  //NOTE: already call above.   around line 23
-	Rml::Factory::RegisterElementInstancer("html", new Rml::ElementInstancerGeneric<Rml::ElementDocument>);
-	Rml::XMLParser::RegisterNodeHandler("html", std::make_shared<Rml::XMLNodeHandlerBody>());
-	Rml::XMLParser::RegisterNodeHandler("head", std::make_shared<HeadInstancer>());
-	Rml::Factory::RegisterElementInstancer("body", new Rml::ElementInstancerElement);
-	Rml::XMLParser::RegisterNodeHandler("body", std::make_shared<Rml::XMLNodeHandlerDefault>());
 	
-	DKClass::DKCreate("DKDom");
+	//Rml::Factory::RegisterElementInstancer("html", new Rml::ElementInstancerGeneric<Rml::ElementDocument>);
+	//Rml::XMLParser::RegisterNodeHandler("html", std::make_shared<Rml::XMLNodeHandlerBody>());
+	//Rml::XMLParser::RegisterNodeHandler("head", std::make_shared<HeadInstancer>());
+	//Rml::Factory::RegisterElementInstancer("body", new Rml::ElementInstancerElement);
+	//Rml::XMLParser::RegisterNodeHandler("body", std::make_shared<Rml::XMLNodeHandlerDefault>());
+	
+	//RmlClass::RmlCreate("DKDom");
 	
 	std::string html;
 	std::string workingPath = RmlFile::Get()->_root;
@@ -493,32 +494,34 @@ bool RmlMain::UnregisterEvent(const std::string& elementAddress, const std::stri
 	return true;
 }
 
+/*
 Rml::Event* RmlMain::addressToEvent(const std::string& address){
 	Rml::Event* event;
 	if (address.compare(0, 2, "0x") != 0 || address.size() <= 2 || address.find_first_not_of("0123456789abcdefABCDEF", 2) != std::string::npos) {
-		DKERROR("the address ("+address+") is not a valid hex notation\n");
+		RMLERROR("the address ("+address+") is not a valid hex notation\n");
 		return NULL;
 	}
 	//Convert a string of an address back into a pointer
 	std::stringstream ss;
 	ss << address.substr(2, address.size() - 2);
-	//int tmp(0);
 	std::uint64_t tmp;
 	if (!(ss >> std::hex >> tmp)) {
-		DKERROR("RmlMain::addressToEvent(" + address + "): invalid address\n");
+		RMLERROR("RmlMain::addressToEvent(" + address + "): invalid address\n");
 		return NULL;
 	}
 	event = reinterpret_cast<Rml::Event*>(tmp);
 	if (!event->GetCurrentElement()) {
-		DKERROR("RmlMain::addressToEvent(" + address + "): currentElement invalid\n");
+		RMLERROR("RmlMain::addressToEvent(" + address + "): currentElement invalid\n");
 		return NULL;
 	}
 	return event;
 }
+*/
 
+/*
 std::string RmlMain::eventToAddress(Rml::Event* event){
 	if (!event) {
-		DKERROR("RmlMain::eventToAddress(): invalid event\n");
+		RMLERROR("RmlMain::eventToAddress(): invalid event\n");
 		return "";
 	}
 	std::stringstream ss;
@@ -530,7 +533,9 @@ std::string RmlMain::eventToAddress(Rml::Event* event){
 #endif
 	return ss.str();
 }
+*/
 
+/*
 Rml::Element* RmlMain::addressToElement(const std::string& address) {
 	Rml::Element* element = nullptr;
 	if (address == "window") {
@@ -539,12 +544,9 @@ Rml::Element* RmlMain::addressToElement(const std::string& address) {
 	else if (address == "document") {
 		element = RmlMain::Get()->document->GetOwnerDocument();
 	}
-	//else if (address == "document") {
-	//	element = RmlMain::Get()->document;
-	//}
 	else {
 		if (address.compare(0, 2, "0x") != 0 || address.size() <= 2 || address.find_first_not_of("0123456789abcdefABCDEF", 2) != std::string::npos) {
-			DKERROR("NOTE: RmlMain::addressToElement(): the address is not a valid hex notation");
+			RMLERROR("NOTE: RmlMain::addressToElement(): the address is not a valid hex notation");
 			return NULL;
 		}
 		//Convert a string of an address back into a pointer
@@ -552,23 +554,25 @@ Rml::Element* RmlMain::addressToElement(const std::string& address) {
 		ss << address.substr(2, address.size() - 2);
 		std::uint64_t tmp;
 		if (!(ss >> std::hex >> tmp)) {
-			DKERROR("invalid address\n");
+			RMLERROR("invalid address\n");
 			return NULL;
 		}
 		element = reinterpret_cast<Rml::Element*>(tmp);
 	}	
 	if (!element) {
-		DKERROR("invalid element\n");
+		RMLERROR("invalid element\n");
 		return NULL;
 	}
 	if (element->GetTagName().empty())
 		return NULL;
 	return element;
 }
+*/
 
+/*
 std::string RmlMain::elementToAddress(Rml::Element* element){
 	if (!element) {
-		DKERROR("RmlMain::elementToAddress(): invalid element\n");
+		RMLERROR("RmlMain::elementToAddress(): invalid element\n");
 		return "";
 	}
 	std::stringstream ss;
@@ -578,7 +582,7 @@ std::string RmlMain::elementToAddress(Rml::Element* element){
 		ss << "document";
 	else if (element == RmlMain::Get()->document) {
 		//TEST: Let's just test if we ever hear anything from this one
-		throw DKERROR("!!!! element = RmlMain::Get()->document  !!!!");
+		throw RMLERROR("!!!! element = RmlMain::Get()->document  !!!!");
 		ss << "document";
 	}
 	else {
@@ -593,3 +597,4 @@ std::string RmlMain::elementToAddress(Rml::Element* element){
 		return "";
 	return ss.str();
 }
+*/

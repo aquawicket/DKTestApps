@@ -24,7 +24,6 @@ public:
 	bool PathExists(const std::string& path);
 	static RmlFile* rmlFile;
 	std::string _root;
-
 };
 
 #endif //RmlFile_H

@@ -38,7 +38,7 @@ bool RmlFile::VerifyPath(std::string& path)
 }
 
 
-bool FileToString(const std::string file, std::string& str);
+bool FileToString(const std::string file, std::string& str)
 {
 	//TODO
 	return false;
@@ -61,7 +61,7 @@ Rml::FileHandle RmlFile::Open(const Rml::String& path)
 		//return ERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
 	//}
 	// else{
-		if(RmlFile::PathExists(RmlMain::Get()->workingPath+_path))
+		if(RmlFile::pathExists(RmlMain::Get()->workingPath+_path))
 			_path = RmlMain::Get()->workingPath+_path;
 		else if(!RmlFile::VerifyPath(_path)){
 			return RMLERROR("could not locate path ("+_path+")");
