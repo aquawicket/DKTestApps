@@ -68,14 +68,14 @@ bool SDLRml::Handle(SDL_Event *event) {
             break;
 #ifdef ANDROID
         case SDL_KEYDOWN:
-			//INFO("SDLRml::SDL_KEYDOWN("+toString((int)event->key.keysym.sym)+")\n");
+			//RMLINFO("SDLRml::SDL_KEYDOWN("+toString((int)event->key.keysym.sym)+")\n");
 			rmlMain->context->ProcessKeyDown(systemInterface->TranslateKey(event->key.keysym.sym), systemInterface->GetKeyModifiers());
 			if(event->key.keysym.sym == 13) //enter
 				rmlMain->context->ProcessTextInput("\n");
             break;
 #else
 		case SDL_KEYDOWN:{
-			//INFO("SDLWindow::SDL_KEYDOWN("+toString(event->key.keysym.sym)+")\n");
+			//RMLINFO("SDLWindow::SDL_KEYDOWN("+toString(event->key.keysym.sym)+")\n");
 			/*
 			if(event->key.keysym.sym == 0){ return true; }
 			if(event->key.keysym.sym > 96 && event->key.keysym.sym < 123){ //letter
@@ -112,11 +112,11 @@ bool SDLRml::Handle(SDL_Event *event) {
 		}
 #endif
 		case SDL_TEXTINPUT:
-			//INFO("SDLRml::SDL_TEXTINPUT("+String(event->text.text)+")\n");
+			//RMLINFO("SDLRml::SDL_TEXTINPUT("+String(event->text.text)+")\n");
 			rmlMain->context->ProcessTextInput(event->text.text);
 			break;
 		case SDL_TEXTEDITING:
-			//INFO("SDLRml::SDL_TEXTEDITING()\n");
+			//RMLINFO("SDLRml::SDL_TEXTEDITING()\n");
 			break;	
 		case SDL_KEYUP:
 			//rmlMain->context->ProcessKeyUp((Rml::Input::KeyIdentifier)SDLWindow::sdlKeyCode[event->key.keysym.sym], systemInterface->GetKeyModifiers());
