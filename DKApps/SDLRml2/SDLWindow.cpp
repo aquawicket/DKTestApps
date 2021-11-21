@@ -295,6 +295,12 @@ bool SDLWindow::End() {
     return true;
 }
 
+SDLWindow* SDLWindow::Get()
+{
+    //TODO
+    //return (const SDLWindow*)this;
+}
+
 bool SDLWindow::TestInt(const void* input, void* output) {
     int in = *(int*)input;
     int out = in;

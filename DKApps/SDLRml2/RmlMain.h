@@ -16,7 +16,7 @@ class RmlMain : public Rml::EventListener//, public objectT<RmlMain>
 public:
 	bool Init();
 	bool End();
-	RmlMain* Get();
+	static RmlMain* Get();
 	bool GetSourceCode(std::string& source_code);
 	bool LoadFont(const std::string& file);
 	bool LoadFonts(std::string& directory);
@@ -42,7 +42,7 @@ public:
 	static RmlFile* rmlMainFile;
 	Rml::Element* hover;
 	//RmlMainConverter rmlMainConverter;
-	SDLRml* sdlRml;
+	static SDLRml* _sdlRml;
 };
 
 #endif //RmlMain_H

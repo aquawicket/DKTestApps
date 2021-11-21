@@ -3,14 +3,14 @@
 #define SDLWindow_H
 
 #include "SDL.h"
-//#include "DK/DK.h"
+#include <map>
 
-class SDLWindow// : public ObjectT<SDLWindow>{
+class SDLWindow
 {
 public:
 	bool Init();
 	bool End();
-
+	static SDLWindow* Get();
 	bool TestInt(const void* input, void* output);
 	bool TestString(const void* input, void* output);
 	bool TestReturnInt(const void* input, void* output);
