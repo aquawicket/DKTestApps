@@ -17,3 +17,9 @@ bool RmlUtility::stringsMatch(const std::string& strA, const std::string& strB)
 	//TODO
 	return false;
 }
+
+void RmlUtility::Sleep(unsigned int milliseconds)
+{
+	//TODO
+	return;
+}

@@ -80,6 +80,13 @@ bool RmlFile::GetModifiedTime(const std::string & file, std::string & time)
 	return false;
 }
 
+bool RmlFile::RemoveExtention(std::string& file)
+{
+	//TODO
+	return false;
+}
+
+
 
 
 bool RmlFile::FileToString(const std::string file, std::string& str)

@@ -2,6 +2,7 @@
 //#include "RmlAndroid.h"
 #include "RmlFile.h"
 #include "SDLWindow.h"
+#include "RmlUtility.h"
 #include <map>
 
 #ifdef WIN32
@@ -113,7 +114,7 @@ bool SDLWindow::Init() {
 	//	RMLERROR("GLEW ERROR: "+glewGetErrorString(err)+"\n");
 #endif
 #if !defined(ANDROID) && !defined(IOS)
-    INFO("Creating SDLWindow for Desktop\n");
+    RMLINFO("Creating SDLWindow for Desktop\n");
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
@@ -130,7 +131,7 @@ bool SDLWindow::Init() {
         return RMLERROR("SDL_CreateWindow Error: " + std::string(SDL_GetError()) + "\n");
     }
     renderer = NULL;
-    if(!same(sdl_renderer, "SOFTWARE")) {
+    if(!RmlUtility::stringsMatch(sdl_renderer, "SOFTWARE")) {
         result = "SDL_RENDERER_ACCELERATED"; // | SDL_RENDERER_PRESENTVSYNC";
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED /*| SDL_RENDERER_PRESENTVSYNC*/);
     }
@@ -554,7 +555,7 @@ bool SDLWindow::drawBackground(SDL_Renderer *renderer, int w, int h){
 
 void SDLWindow::Process() {
     if(SDL_GetWindowFlags(window) & SDL_WINDOW_HIDDEN)
-        Util::Sleep(1000); //FIXME - look for a better way to save cpu usage here
+        RmlUtility::Sleep(1000); //FIXME - look for a better way to save cpu usage here
 
     //SDL_SetRenderTarget(renderer, NULL);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); //white
@@ -580,7 +581,7 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
     if(event->type == SDL_WINDOWEVENT) {
         switch(event->window.event) {
             case SDL_WINDOWEVENT_MOVED: {
-                SDLWindow* sdlWindowd = static_cast<SDLWindow*>(userdata);
+                SDLWindow* sdlWindow = static_cast<SDLWindow*>(userdata);
                 sdlWindow->winX = event->window.data1;
                 sdlWindow->winY = event->window.data2;
                 sdlWindow->Process();
@@ -589,9 +590,9 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
             }
             case SDL_WINDOWEVENT_RESIZED: {
                 SDLWindow* sdlWindow = static_cast<SDLWindow*>(userdata);
-                sldWindow->width = event->window.data1;
-                sldWindow->height = event->window.data2;
-                sldWindow->Process();
+                sdlWindow->width = event->window.data1;
+                sdlWindow->height = event->window.data2;
+                sdlWindow->Process();
                 //RmlEvents::SendEvent("sdlWindow", "resize", toString(sldWindow->width) + "," + toString(sldWindow->height));
                 return 1;
             }
