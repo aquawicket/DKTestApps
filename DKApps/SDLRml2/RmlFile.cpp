@@ -7,6 +7,12 @@ RmlFile* RmlFile::Get() {
 	return rmlFile;
 }
 
+bool RmlFile::pathExists(const std::string path)
+{
+	//TODO
+	return false;
+}
+
 bool RmlFile::MakeDir(const std::string path)
 {
 	//TODO

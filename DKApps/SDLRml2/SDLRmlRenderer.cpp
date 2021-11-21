@@ -1,9 +1,8 @@
 #include <RmlUi/Core.h>
 #include <SDL_image.h>
-//#include "DK/DK.h"
-//#include "DK/DKString.h"
 #include "SDLRmlRenderer.h"
 #include "SDLWindow.h"
+#include "RmlUtility.h"
 
 #if !defined(IOS) && !defined(ANDROID)
 static PFNGLUSEPROGRAMOBJECTARBPROC glUseProgramObjectARB;
@@ -47,9 +46,9 @@ void SDLRmlRenderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int
 		//If the id contains iframe_ , it is a cef image
 		//Update the texture with SDLCef::GetTexture(id);
 		///////////////////////////////////////////////////////////
-		if(has(texture_name[texture],"iframe_")){
-			String id = texture_name[texture];
-			replace(id,"iframe_","");
+		if(RmlUtility::stringContains(texture_name[texture],"iframe_")){
+			std::string id = texture_name[texture];
+			RmlUtility::replace(id,"iframe_","");
 			
 			struct Texture{ SDL_Texture* texture; };
 			Texture output;
