@@ -130,11 +130,11 @@ bool SDLRml::Handle(SDL_Event *event) {
 
 void SDLRml::Render(){
     //DEBUGFUNC();
-	if(SdlWindow->width != rmlMain->context->GetDimensions().x || SdlWindow->height != rmlMain->context->GetDimensions().y){
-		rmlMain->context->SetDimensions(Rml::Vector2i(SdlWindow->width, SdlWindow->height));
+	if(sdlWindow->width != rmlMain->context->GetDimensions().x || sdlWindow->height != rmlMain->context->GetDimensions().y){
+		rmlMain->context->SetDimensions(Rml::Vector2i(sdlWindow->width, sdlWindow->height));
 		// Reset blending and draw a fake point just outside the screen to let SDL know that it needs to reset its state in case it wants to render a texture 
-		SDL_SetRenderDrawBlendMode(SdlWindow->renderer, SDL_BLENDMODE_NONE);
-		SDL_RenderDrawPoint(SdlWindow->renderer, -1, -1);
+		SDL_SetRenderDrawBlendMode(sdlWindow->renderer, SDL_BLENDMODE_NONE);
+		SDL_RenderDrawPoint(sdlWindow->renderer, -1, -1);
 	}
 	rmlMain->context->Render();
 }
