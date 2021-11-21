@@ -4,6 +4,7 @@
 #include "RmlMain.h"
 #include "RmlWindow.h"
 #include "SDLRml.h"
+#include "RMLUtility.h"
 //#include "Curl.h"
 //#include "DKDuktape/DKDuktape.h"
 //#include "DKXml/DKXml.h"
@@ -29,7 +30,7 @@ bool RmlMain::Init(){
 
 	//Create SDLRml or DKOSGRml
 	//if(RmlClass::DKAvailable("SDLRml")){
-	sldRml = new SDLRml();
+	SDLRml* sldRml = new SDLRml();
 	if(sdlRml)
 		if(!Rml::Initialise())
 			return RMLERROR("Rml::Initialise(): failed\n");
@@ -66,7 +67,7 @@ bool RmlMain::Init(){
 	std::string rmlFonts = RmlFile::local_assets+"RmlMain";
 	LoadFonts(rmlFonts);
 	LoadFonts(RmlFile::Get()->_root);
-	DKEvents::AddRegisterEventFunc(&RmlMain::RegisterEvent, this);
+	RmlEvents::AddRegisterEventFunc(&RmlMain::RegisterEvent, this);
 	//DKEvents::AddUnegisterEventFunc(&RmlMain::UnregisterEvent, this);
 	//DKEvents::AddSendEventFunc(&RmlMain::SendEvent, this);
 	//DKClass::DKCreate("RmlMainJS");  //NOTE: already call above.   around line 23
@@ -79,7 +80,7 @@ bool RmlMain::Init(){
 	DKClass::DKCreate("DKDom");
 	
 	std::string html;
-	std::string workingPath = RmlFile::local_assets;
+	std::string workingPath = RmlFile::Get()->_root;
 	RmlFile::FileToString(workingPath +"RmlMain/blank.html", html);
 	RmlFile::ChDir(workingPath);
 	LoadHtml(html);
@@ -94,8 +95,8 @@ bool RmlMain::End(){
 		delete Rml::GetSystemInterface();
 		delete Rml::GetFileInterface();
 	}
-	DKClass::DKClose("RmlMainJS");
-	DKClass::DKClose("RmlMainV8");
+	RmlClass::DKClose("RmlMainJS");
+	RmlClass::DKClose("RmlMainV8");
 	//RmlEvents::RemoveRegisterEventFunc(&RmlMain::RegisterEvent, this);
 	//RmlEvents::RemoveUnegisterEventFunc(&RmlMain::UnregisterEvent, this);
 	//RmlEvents::RemoveSendEventFunc(&RmlMain::SendEvent, this);

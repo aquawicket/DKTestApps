@@ -37,6 +37,13 @@ bool RmlFile::VerifyPath(std::string& path)
 	return false;
 }
 
+
+bool FileToString(const std::string file, std::string& str);
+{
+	//TODO
+	return false;
+}
+
 bool RmlFile::FileInterface(const std::filesystem::path& root)
 {
 	rmlFile = this;
