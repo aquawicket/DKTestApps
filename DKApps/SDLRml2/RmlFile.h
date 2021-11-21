@@ -18,7 +18,7 @@ public:
 	static bool FileToString(const std::string file, std::string& str);
 	static bool GetDirectoryContents(const std::string& path, RmlStringArray& contents);
 	static bool IsDirectory(const std::string& path);
-	static bool GetExtention(const std::string& path);
+	static bool GetExtention(const std::string& path, std::string& ext);
 	static bool GetExeName(std::string& path);
 	static bool GetExePath(std::string& path);
 	static bool GetModifiedTime(const std::string& file, std::string& time);
