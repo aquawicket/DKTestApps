@@ -18,7 +18,7 @@ void SDLRmlRenderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int
 #if !defined(IOS) && !defined(ANDROID)
     // DISABLE SDL Shaders
 	//SDLWindow* dkSdlWindow = SDLWindow::Instance("SDLWindow0");
-	//if(!has(SDLWindow::Instance("SDLWindow0")->gl_vendor, "Microsoft")){
+	//if(!RmlUtility::stringContains(SDLWindow::Instance("SDLWindow0")->gl_vendor, "Microsoft")){
 		glUseProgramObjectARB = (PFNGLUSEPROGRAMOBJECTARBPROC) SDL_GL_GetProcAddress("glUseProgramObjectARB");
 		glUseProgramObjectARB(0);  //FIXME: this crashes on Microsoft Generic GDI drivers
 	//}
@@ -168,7 +168,7 @@ bool SDLRmlRenderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vector
 
 #ifdef USE_SDL2_gif
 	std::string src = source;
-	if(has(src,".gif")){
+	if(RmlUtility::stringContains(src,".gif")){
 		animations.push_back(SDL_GIFAnimLoad_RW(SDL_RWFromMem(buffer, buffer_size), mRenderer));
 		SDL_Texture *texture = SDL_GIFTexture(animations[animations.size()-1]);
 		SDL_GIFLoopMode(animations[animations.size()-1], GIF_REPEAT_FOR);

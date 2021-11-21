@@ -15,6 +15,10 @@ public:
 	static bool GetFilename(const std::string path, std::string& filename);
 	static bool VerifyPath(std::string& path);
 	static bool FileToString(const std::string file, std::string& str);
+	static bool GetDirectoryContents(const std::string& path, RmlStringArray& contents);
+	static bool IsDirectory(const std::string& path);
+	static bool GetExtention(const std::string& path);
+	static bool GetExeName(const std::string& path);
 
 	bool FileInterface(const std::filesystem::path& root);
 	virtual Rml::FileHandle Open(const Rml::String& path);

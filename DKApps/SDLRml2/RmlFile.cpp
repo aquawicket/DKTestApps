@@ -44,7 +44,35 @@ bool RmlFile::VerifyPath(std::string& path)
 }
 
 
-bool FileToString(const std::string file, std::string& str)
+bool RmlFile::GetDirectoryContents(const std::string& path, RmlStringArray& contents)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::IsDirectory(const std::string& path) 
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::GetExtention(const std::string& path)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::GetExeName(const std::string& path)
+{
+	//TODO
+	return false;
+}
+
+
+
+
+
+bool RmlFile::FileToString(const std::string file, std::string& str)
 {
 	//TODO
 	return false;
@@ -59,10 +87,10 @@ bool RmlFile::FileInterface(const std::filesystem::path& root)
 Rml::FileHandle RmlFile::Open(const Rml::String& path)
 {
 	std::string _path = path;
-	//if (has(_path, ":/")) { //could be http:// , https:// or C:/
+	//if (RmlUtility::stringContains(_path, ":/")) { //could be http:// , https:// or C:/
 		//absolute path
 	//}
-	//else if(has(_path,"//")){ //could be //www.site.com/style.css or //site.com/style.css
+	//else if(RmlUtility::stringContains(_path,"//")){ //could be //www.site.com/style.css or //site.com/style.css
 		//_path = RmlMain::Get()->protocol+":"+_path;
 		//return ERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
 	//}
@@ -85,8 +113,8 @@ Rml::FileHandle RmlFile::Open(const Rml::String& path)
 		if(found > 0)
 			filename = filename.substr(0,found);
 #ifdef USE_Curl
-		Curl::Get()->Download(_path, File::local_assets+"Cache/"+filename);
-		_path = File::local_assets+"Cache/"+filename;
+		Curl::Get()->Download(_path, RmlFile::local_assets+"Cache/"+filename);
+		_path = RmlFile::local_assets+"Cache/"+filename;
 #endif
 	}
 

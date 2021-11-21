@@ -111,20 +111,20 @@ RmlMain* RmlMaim::Get()
 
 bool RmlMain::GetSourceCode(std::string& source_code) {
 	source_code = document->GetContext()->GetRootElement()->GetInnerRML();
-	DKINFO("######################## CODE FROM RmlUi #########################\n");
-	DKINFO(source_code+"\n");
-	DKINFO("##################################################################\n");
+	RMLINFO("######################## CODE FROM RmlUi #########################\n");
+	RMLINFO(source_code+"\n");
+	RMLINFO("##################################################################\n");
 	
 	// Actually, we only want the  last html node
 	unsigned long n = source_code.rfind("<html");
 	if(n < 0)
-		return DKWARN("html tag not found\n");
+		return RMLWARN("html tag not found\n");
 
 	source_code = source_code.substr(n);
-	replace(source_code, "<", "\n<"); //put all tags on a new line
-	DKINFO("################## Last <html> node from RmlUi ##################\n");
-	DKINFO(source_code+"\n");
-	DKINFO("#################################################################\n");
+	RmlUtility::replace(source_code, "<", "\n<"); //put all tags on a new line
+	RMLINFO("################## Last <html> node from RmlUi ##################\n");
+	RMLINFO(source_code+"\n");
+	RMLINFO("#################################################################\n");
 	return true;
 }
 
@@ -147,7 +147,7 @@ bool RmlMain::LoadFonts(std::string& directory){
 			continue;
 		std::string extension;
 		RmlFile::GetExtention(files[i],extension);
-		if(same(extension,".otf") || same(extension,".ttf")){
+		if(RmlUtility::stringsMatch(extension,".otf") || RmlUtility::stringsMatch(extension,".ttf")){
 			//std::string file;
 			//RmlFile::GetFileName(files[i],file);
 			LoadFont(directory+files[i]);
@@ -160,7 +160,7 @@ bool RmlMain::LoadHtml(const std::string& html){
 	//// Prepair the html document for RmlUi
 
 	std::string rml;
-	rmlMainConverter.HtmlToRml(html, rml);
+	//rmlMainConverter.HtmlToRml(html, rml);
 
 	//// Clear any document and load the rml into the document
 	if (document) {
@@ -180,6 +180,7 @@ bool RmlMain::LoadHtml(const std::string& html){
 	Rml::Element* ele = document;
 	*/
 	
+	/*
 	Rml::XMLParser parser(ele);
 	parser.Parse(stream.get());
 	//Make sure we have <head> and <body> tags
@@ -202,8 +203,10 @@ bool RmlMain::LoadHtml(const std::string& html){
 		document->GetOwnerDocument()->AppendChild(document->CreateElement("body"), true);
 	else if (!head && body)
 		document->GetOwnerDocument()->InsertBefore(document->CreateElement("head"), body);
+	*/
+
 	//Load user agent style sheet
-	std::string file = RmlFile::local_assets + "RmlMain/RmlMain.css";
+	std::string file = RmlFile::Get()->_root + "RmlMain/RmlMain.css";
 	const Rml::StyleSheetContainer* doc_sheet = document->GetOwnerDocument()->GetStyleSheetContainer();
 	Rml::SharedPtr<Rml::StyleSheetContainer> file_sheet = Rml::Factory::InstanceStyleSheetFile(file.c_str());
 	if(doc_sheet) { 
@@ -227,7 +230,7 @@ bool RmlMain::LoadHtml(const std::string& html){
 	if(!elements[0])
 		return RMLERROR("body element invalid\n");
 	//rmlMainConverter.PostProcess(document);
-	rmlMainConverter.PostProcess(elements[0]);
+	//rmlMainConverter.PostProcess(elements[0]);
 	document->Show();
 #ifdef ANDROID
 	//We have to make sure the fonts are loaded on ANDROID
@@ -238,9 +241,9 @@ bool RmlMain::LoadHtml(const std::string& html){
 
 bool RmlMain::LoadUrl(const std::string& url){
 	std::string _url = url;
-	if(has(_url,":/")) //could be http:// , https://, file:/// or C:/
+	if(RmlUtility::stringContains(_url,":/")) //could be http:// , https://, file:/// or C:/
 		href = _url; //absolute path including protocol
-	else if(has(_url,"//")){ //could be //www.site.com/style.css or //site.com/style.css
+	else if(RmlUtility::stringContains(_url,"//")){ //could be //www.site.com/style.css or //site.com/style.css
 		return RMLERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
 	}
 	else
@@ -248,19 +251,19 @@ bool RmlMain::LoadUrl(const std::string& url){
 	//Get the working path;
 	std::size_t found = _url.find_last_of("/");
 	workingPath = _url.substr(0, found + 1);
-	DKINFO("RmlMain::LoadUrl(): workingPath: " + workingPath + "\n");
-	DKINFO("RmlMain::LoadUrl(): href: " + href + "\n");
+	RMLINFO("RmlMain::LoadUrl(): workingPath: " + workingPath + "\n");
+	RMLINFO("RmlMain::LoadUrl(): href: " + href + "\n");
 	//get the protocol
 	unsigned long n = _url.find(":");
 	protocol = _url.substr(0,n);
-	DKINFO("RmlMain::LoadUrl(): protocol: "+protocol+"\n");
+	RMLINFO("RmlMain::LoadUrl(): protocol: "+protocol+"\n");
 	found = _url.rfind("/");
 	_path = _url.substr(0,found+1);
 	//DKWARN("RmlMain::LoadUrl(): last / at "+toString(found)+"\n");
-	DKINFO("RmlMain::LoadUrl(): _path = "+_path+"\n");
+	RMLINFO("RmlMain::LoadUrl(): _path = "+_path+"\n");
 	/*
 	std::string html;
-	if(has(_url, "http://") || has(_url, "https://")){
+	if(RmlUtility::stringContains(_url, "http://") || RmlUtility::stringContains(_url, "https://")){
 		DKClass::DKCreate("DKCurl");
 		if(!DKCurl::Get()->HttpFileExists(_url))
 			return RMLERROR("Could not locate "+_url+"\n");
@@ -283,7 +286,7 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	//std::string code = "new Event("+rmlEventAddress+")";
 	//std::string rval;
 	//DKDuktape::Get()->RunDuktape(code, rval);
-	//DKINFO("RmlMain::ProcessEvent(): "+code+": rval="+rval+"\n");
+	//RMLINFO("RmlMain::ProcessEvent(): "+code+": rval="+rval+"\n");
 	if (!rmlEvent.GetCurrentElement())
 		return;
 	if (!rmlEvent.GetTargetElement())
@@ -303,7 +306,7 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	std::string code = "EventFromCPP('"+ currentElementAddress +"',"+evnt+");";
 	std::string rval;
 	DKDuktape::Get()->RunDuktape(code, rval);
-	if(!rval.empty()){ DKINFO("RmlMain::ProcessEvent(): rval = "+rval+"\n"); }
+	if(!rval.empty()){ RMLINFO("RmlMain::ProcessEvent(): rval = "+rval+"\n"); }
 	*/
 	// If the event bubbles up, ignore elements underneith 
 	Rml::Context* context = document->GetContext();
@@ -324,7 +327,7 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	std::string target_tag = targetElement->GetTagName();
 	std::string hover_id = hover->GetId();
 	std::string string = "EVENT: " + type + " (current) " + tag + "> " + id + " (target) " + target_tag + "> " + target_id + "(hover)" + hover_id + "\n";
-	DKINFO(string + "\n");
+	RMLINFO(string + "\n");
 	*/
 #ifdef ANDROID
 	//Toggle Keyboard on text element click
@@ -346,14 +349,14 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 #endif
 	if (RmlUtility::stringsMatch(type, "mouseup") && rmlEvent.GetParameter<int>("button", 0) == 1) 
 		type = "contextmenu";
-	for(unsigned int i = 0; i < DKEvents::events.size(); ++i){
-		DKEvents* ev = DKEvents::events[i];
+	for(unsigned int i = 0; i < RmlEvents::events.size(); ++i){
+		RmlEvents* ev = RmlEvents::events[i];
 		//certain stored events are altered before comparison 
 		std::string _type = ev->GetType();
 		if (RmlUtility::stringsMatch(_type, "input"))
 			_type = "change";
 		//// PROCESS ELEMENT EVENTS //////
-		if (RmlUtility::stringsMatch(ev->GetId(), currentElementAddress) && same(_type, type)) {
+		if (RmlUtility::stringsMatch(ev->GetId(), currentElementAddress) && RmlUtility::stringsMatch(_type, type)) {
 			ev->data.clear();
 			ev->data.push_back(rmlEventAddress);
 			//ev->rEvent = &rmlEvent;
@@ -374,7 +377,7 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 				return;
 			}
 		    //call the function linked to the event
-			//DKINFO("Event: "+ev->type+", "+ev->id+"\n");
+			//RMLINFO("Event: "+ev->type+", "+ev->id+"\n");
 			//FIXME - StopPropagation() on a mousedown even will bock the elements ability to drag
 			// we need to find a way to stop propagation of the event, while allowing drag events.
 /*

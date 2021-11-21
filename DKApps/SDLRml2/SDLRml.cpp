@@ -52,7 +52,7 @@ bool SDLRml::Handle(SDL_Event *event) {
             rmlMain->context->ProcessMouseButtonDown(systemInterface->TranslateMouseButton(event->button.button), systemInterface->GetKeyModifiers());
             //if we clicked an element, end the event.
 			hover = rmlMain->context->GetHoverElement();
-			if(hover && (!DKUtility::stringContains(hover->GetId(), "iframe_")))
+			if(hover && (!RmlUtility::stringContains(hover->GetId(), "iframe_")))
 				return true;
 			break;
         case SDL_MOUSEBUTTONUP:

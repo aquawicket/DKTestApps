@@ -392,29 +392,29 @@ double SDLRmlSystem::GetElapsedTime(){
 }
 
 bool SDLRmlSystem::LogMessage(Rml::Log::Type type, const Rml::String& message){
-	if(has(message,"Loaded font face"))
+	if(RmlUtility::stringContains(message,"Loaded font face"))
 		type = Rml::Log::LT_DEBUG;
 	switch(type){
 	case Rml::Log::LT_ALWAYS:
-		RMLINFO("[Rml] "+String(message)+"\n");
+		RMLINFO("[Rml] "+std::string(message)+"\n");
 		break;
 	case Rml::Log::LT_ERROR:
-		RMLERROR("[Rml] "+String(message)+"\n");
+		RMLERROR("[Rml] "+std::string(message)+"\n");
 		break;
 	case Rml::Log::LT_ASSERT:
-		RMLASSERT("[Rml] "+String(message)+"\n");
+		RMLASSERT("[Rml] "+std::string(message)+"\n");
 		break;
 	case Rml::Log::LT_WARNING:
-		RMLWARN("[Rml] "+String(message)+"\n");
+		RMLWARN("[Rml] "+std::string(message)+"\n");
 		break;
 	case Rml::Log::LT_INFO:
-		RMLINFO("[Rml] "+String(message)+"\n");
+		RMLINFO("[Rml] "+std::string(message)+"\n");
 		break;
 	case Rml::Log::LT_DEBUG:
-		RMLDEBUG("[Rml] "+String(message)+"\n");
+		RMLDEBUG("[Rml] "+std::string(message)+"\n");
 		break;
     case Rml::Log::LT_MAX:
-        RMLVERBOSE("[Rml] "+String(message)+"\n");
+        RMLVERBOSE("[Rml] "+std::string(message)+"\n");
         break;
 	};
 	return true;

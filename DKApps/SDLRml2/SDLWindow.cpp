@@ -37,7 +37,7 @@ bool SDLWindow::Init() {
 #endif
     //Get values from settings.txt file
     std::string sdl_renderer;
-    //RmlFile::GetSetting(File::local_assets + "settings.txt", "[SDL_RENDERER]", sdl_renderer);
+    //RmlFile::GetSetting(RmlFile::local_assets + "settings.txt", "[SDL_RENDERER]", sdl_renderer);
     RMLINFO("settings.txt: [SDL_RENDERER] = " + sdl_renderer + "\n");
     SDL_SetMainReady(); //Bypass SDLmain  //https://wiki.libsdl.org/SDL_SetMainReady
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0)
@@ -53,13 +53,13 @@ bool SDLWindow::Init() {
     last_mouseX = 0;
     last_mouseY = 0;
     std::string textX;
-    RmlFile::GetSetting(File::local_assets + "settings.txt", "[WINX]", textX);
+    RmlFile::GetSetting(RmlFile::local_assets + "settings.txt", "[WINX]", textX);
     std::string textY;
-    RmlFile::GetSetting(File::local_assets + "settings.txt", "[WINY]", textY);
+    RmlFile::GetSetting(RmlFile::local_assets + "settings.txt", "[WINY]", textY);
     std::string textWidth;
-    RmlFile::GetSetting(File::local_assets + "settings.txt", "[WIDTH]", textWidth);
+    RmlFile::GetSetting(RmlFile::local_assets + "settings.txt", "[WIDTH]", textWidth);
     std::string textHeight;
-    RmlFile::GetSetting(File::local_assets + "settings.txt", "[HEIGHT]", textHeight);
+    RmlFile::GetSetting(RmlFile::local_assets + "settings.txt", "[HEIGHT]", textHeight);
     if(!textX.empty())
         winX = toInt(textX);
     if(!textY.empty())
@@ -168,10 +168,10 @@ bool SDLWindow::Init() {
 #endif
     std::string mTime;
     std::string file;
-    File::GetExePath(file);
-    File::GetModifiedTime(file, mTime);
+    RmlFile::GetExePath(file);
+    RmlFile::GetModifiedTime(file, mTime);
     title2 += mTime;
-    std::string icon = File::local_assets + "icon.ico";
+    std::string icon = RmlFile::local_assets + "icon.ico";
     SetIcon(&icon, NULL);
     SDL_SetWindowTitle(window, title2.c_str());
     /*
@@ -283,7 +283,7 @@ bool SDLWindow::Init() {
     int stencil;
     SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil);
     RMLINFO("Stencil Size = " + toString(stencil) + "\n");
-    if(has(gl_vendor, "Microsoft"))
+    if(RmlUtility::stringContains(gl_vendor, "Microsoft"))
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "OpenGL Drivers", "Your OpenGL video drivers are out of date. Please upgrade the graphics card drivers for best performance and compatability.", window);
 #endif
     return true;
