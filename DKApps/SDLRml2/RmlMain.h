@@ -42,6 +42,7 @@ public:
 	static RmlFile* rmlMainFile;
 	Rml::Element* hover;
 	//RmlMainConverter rmlMainConverter;
+	SDLRml* sdlRml;
 };
 
 #endif //RmlMain_H

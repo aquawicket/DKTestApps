@@ -3,6 +3,7 @@
 #endif
 #include "RmlMain.h"
 #include "RmlWindow.h"
+#include "SDLRml.h"
 //#include "Curl.h"
 //#include "DKDuktape/DKDuktape.h"
 //#include "DKXml/DKXml.h"
@@ -19,7 +20,7 @@ RmlFile* RmlMain::rmlMainFile = NULL;
 bool RmlMain::Init(){
 	//RmlClass::RmlCreate("RmlMainJS");
 	//RmlClass::RmlCreate("RmlMainV8");
-
+	SDLRml* sdlRml = NULL;
 	document = NULL;
 	if(!rmlMainFile){ 
 		rmlMainFile = new RmlFile();
@@ -27,8 +28,9 @@ bool RmlMain::Init(){
 	}
 
 	//Create SDLRml or DKOSGRml
-	if(RmlClass::DKAvailable("SDLRml")){
-		RmlClass::DKCreate("SDLRml");
+	//if(RmlClass::DKAvailable("SDLRml")){
+	sldRml = new SDLRml();
+	if(sdlRml)
 		if(!Rml::Initialise())
 			return RMLERROR("Rml::Initialise(): failed\n");
 		int w;

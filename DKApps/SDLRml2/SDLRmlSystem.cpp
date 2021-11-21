@@ -419,23 +419,3 @@ bool SDLRmlSystem::LogMessage(Rml::Log::Type type, const Rml::String& message){
 	};
 	return true;
 };
-
-bool Log(const char* file, int line, const char* func, const std::string& message, const int lvl){
-	printf("%s: %d: %s, %s, %d", file, line, func, message, lvl);
-}
-
-#define _ASSERT 1
-#define _FATAL 2
-#define _ERROR 3
-#define _WARN 4
-#define _INFO 5
-#define _DEBUG 6
-#define _VERBOS 7
-
-#define  RMLASSERT(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _ASSERT);
-#define   RMLFATAL(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _FATAL);
-#define   RMLERROR(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _ERROR);
-#define    RMLWARN(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _WARN);
-#define    RMLINFO(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _INFO);
-#define   RMLDEBUG(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _DEBUG);
-#define RMLVERBOSE(message) Log(__FILE__, __LINE__, __FUNCTION__, message, _VERBOSE);

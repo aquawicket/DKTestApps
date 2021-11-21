@@ -12,6 +12,7 @@
 class SDLRml
 {
 public:
+	SDLRml();
 	bool Init();
 	bool End();
 	bool Handle(SDL_Event *event);
@@ -20,7 +21,7 @@ public:
 	//void ProcessEvent(Rml::Core::Event& event);
 	
 	SDLWindow* sdlWindow;
-	RmlMain* rmlmain;
+	RmlMain* rmlMain;
 #ifdef RML_SHELL_RENDER
 	ShellRenderInterfaceOpenGL* renderer;
 #else

@@ -1,26 +1,31 @@
-//#include "DK/stdafx.h"
 #include "SDL.h"
-//#include "DK/DKFile.h"
-//#include "DKAssets/DKAssets.h"
-#include "SDLRml/SDLRml.h"
+#include "RmlFile.h"
+#include "SDLRml.h"
+#include "RmlUtility.h"
+
+
+SDLRml::SDLRml()
+{
+	//return this;
+}
 
 bool SDLRml::Init(){
 	//Android SDL_TEXTINPUT events not working
 	//SDL_StartTextInput(); 
 	//SDL_EventState(SDL_TEXTINPUT, SDL_ENABLE);
 	
-	SdlWindow = SDLWindow::Instance("SDLWindow0");
-	Rml = Rml::Instance("Rml0");
-	if(!SdlWindow || !Rml)
+	sdlWindow = SDLWindow::Get();
+	rmlMain = RmlMain::Get();
+	if(!sdlWindow || !rmlMain)
 		return ERROR("SDLRml::Init(): INVALID OBJECTS\n");
 #ifdef RML_SHELL_RENDER
-	Renderer = new ShellRenderInterfaceOpenGL();
+	renderer = new ShellRenderInterfaceOpenGL();
 #else
-	Renderer = new SDLRmlRenderer(SdlWindow->renderer, SdlWindow->window);
+	renderer = new SDLRmlRenderer(sdlWindow->renderer, sdlWindow->window);
 #endif
-	SystemInterface = new SDLRmlSystem();
-	Rml::SetRenderInterface(Renderer);
-    Rml::SetSystemInterface(SystemInterface);
+	systemInterface = new SDLRmlSystem();
+	Rml::SetRenderInterface(renderer);
+    Rml::SetSystemInterface(systemInterface);
 	SDLWindow::AddEventFunc(&SDLRml::Handle, this);
 	SDLWindow::AddRenderFunc(&SDLRml::Render, this);
 	SDLWindow::AddUpdateFunc(&SDLRml::Update, this);
@@ -32,41 +37,41 @@ bool SDLRml::End(){
 }
 
 bool SDLRml::Handle(SDL_Event *event) {
-	if(!Rml->document)
-		return ERROR("Rml->document invalid");
+	if(!rmlMain->document)
+		return ERROR("rmlMain->document invalid");
 	Rml::Element* hover;
 	switch(event->type){
 		case SDL_MOUSEMOTION:
-			Rml->context->ProcessMouseMove(event->motion.x, event->motion.y, SystemInterface->GetKeyModifiers());
+			rmlMain->context->ProcessMouseMove(event->motion.x, event->motion.y, systemInterface->GetKeyModifiers());
 			//if we clicked an element, end the event.
-			hover = Rml->context->GetHoverElement();
-			if(hover && (!has(hover->GetId(), "iframe_")))
+			hover = rmlMain->context->GetHoverElement();
+			if(hover && (!RmlUtility::stringContains(hover->GetId(), "iframe_")))
 				return true;
             break;   
 		case SDL_MOUSEBUTTONDOWN:
-            Rml->context->ProcessMouseButtonDown(SystemInterface->TranslateMouseButton(event->button.button), SystemInterface->GetKeyModifiers());
+            rmlMain->context->ProcessMouseButtonDown(systemInterface->TranslateMouseButton(event->button.button), systemInterface->GetKeyModifiers());
             //if we clicked an element, end the event.
-			hover = Rml->context->GetHoverElement();
-			if(hover && (!has(hover->GetId(), "iframe_")))
+			hover = rmlMain->context->GetHoverElement();
+			if(hover && (!DKUtility::stringContains(hover->GetId(), "iframe_")))
 				return true;
 			break;
         case SDL_MOUSEBUTTONUP:
-            Rml->context->ProcessMouseButtonUp(SystemInterface->TranslateMouseButton(event->button.button), SystemInterface->GetKeyModifiers());
+            rmlMain->context->ProcessMouseButtonUp(systemInterface->TranslateMouseButton(event->button.button), systemInterface->GetKeyModifiers());
 			//if we clicked an element, end the event.
-			hover = Rml->context->GetHoverElement();
-			if(hover && (!has(hover->GetId(), "iframe_"))){
+			hover = rmlMain->context->GetHoverElement();
+			if(hover && (!RmlUtility::stringContains(hover->GetId(), "iframe_"))){
 				//return true;
 			}
 			break;
         case SDL_MOUSEWHEEL:
-            Rml->context->ProcessMouseWheel(event->wheel.y * -1, SystemInterface->GetKeyModifiers());
+            rmlMain->context->ProcessMouseWheel(event->wheel.y * -1, systemInterface->GetKeyModifiers());
             break;
 #ifdef ANDROID
         case SDL_KEYDOWN:
 			//INFO("SDLRml::SDL_KEYDOWN("+toString((int)event->key.keysym.sym)+")\n");
-			Rml->context->ProcessKeyDown(SystemInterface->TranslateKey(event->key.keysym.sym), SystemInterface->GetKeyModifiers());
+			rmlMain->context->ProcessKeyDown(systemInterface->TranslateKey(event->key.keysym.sym), systemInterface->GetKeyModifiers());
 			if(event->key.keysym.sym == 13) //enter
-				Rml->context->ProcessTextInput("\n");
+				rmlMain->context->ProcessTextInput("\n");
             break;
 #else
 		case SDL_KEYDOWN:{
@@ -76,46 +81,46 @@ bool SDLRml::Handle(SDL_Event *event) {
 			if(event->key.keysym.sym > 96 && event->key.keysym.sym < 123){ //letter
 				if(event->key.keysym.mod & KMOD_SHIFT && event->key.keysym.mod & KMOD_CAPS){ //both = lowercase
 					//Event::SendEvent("window", "keypress", toString(SDLWindow::sdlCharCode[event->key.keysym.sym]));
-					Rml->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
+					rmlMain->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
 				}
 				else if(event->key.keysym.mod & KMOD_SHIFT || event->key.keysym.mod & KMOD_CAPS){ //1 = uppercase
 					//Event::SendEvent("window", "keypress", toString(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]));
-					Rml->context->ProcessTextInput(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]);
+					rmlMain->context->ProcessTextInput(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]);
 				}
 				else{
 					//Event::SendEvent("window", "keypress", toString(SDLWindow::sdlCharCode[event->key.keysym.sym])); //lowercase
-					Rml->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
+					rmlMain->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
 				}
 			}
 			else if(event->key.keysym.mod & KMOD_SHIFT){ //other character keys
 				//Event::SendEvent("window", "keypress", toString(SDLWindow::sdlShiftCharCode[event->key.keysym.sym])); //shifted symbol
-				Rml->context->ProcessTextInput(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]);
+				rmlMain->context->ProcessTextInput(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]);
 			}
 			else{
 				//Event::SendEvent("window", "keypress", toString(SDLWindow::sdlCharCode[event->key.keysym.sym])); //symbol
-				Rml->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
+				rmlMain->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
 			}
 			*/
 			//Event::SendEvent("window", "keydown", toString(SDLWindow::sdlKeyCode[event->key.keysym.sym])); //keycode
-			//Rml->context->ProcessKeyDown((Rml::Input::KeyIdentifier)SDLWindow::sdlKeyCode[event->key.keysym.sym], SystemInterface->GetKeyModifiers());
-			Rml->context->ProcessKeyDown(SystemInterface->TranslateKey(event->key.keysym.sym), SystemInterface->GetKeyModifiers());
+			//rmlMain->context->ProcessKeyDown((Rml::Input::KeyIdentifier)SDLWindow::sdlKeyCode[event->key.keysym.sym], systemInterface->GetKeyModifiers());
+			rmlMain->context->ProcessKeyDown(systemInterface->TranslateKey(event->key.keysym.sym), systemInterface->GetKeyModifiers());
 			//TODO: If enter is pressed, send enter event on ProcessTextInput
 			if(event->key.keysym.sym == 13) //Enter key
-			//Rml->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]); //TEST
-			Rml->context->ProcessTextInput("\n"); //TEST2
+			//rmlMain->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]); //TEST
+			rmlMain->context->ProcessTextInput("\n"); //TEST2
 			return false; //allow event to continue
 		}
 #endif
 		case SDL_TEXTINPUT:
 			//INFO("SDLRml::SDL_TEXTINPUT("+String(event->text.text)+")\n");
-			Rml->context->ProcessTextInput(event->text.text);
+			rmlMain->context->ProcessTextInput(event->text.text);
 			break;
 		case SDL_TEXTEDITING:
 			//INFO("SDLRml::SDL_TEXTEDITING()\n");
 			break;	
 		case SDL_KEYUP:
-			//Rml->context->ProcessKeyUp((Rml::Input::KeyIdentifier)SDLWindow::sdlKeyCode[event->key.keysym.sym], SystemInterface->GetKeyModifiers());
-			Rml->context->ProcessKeyUp(SystemInterface->TranslateKey(event->key.keysym.sym), SystemInterface->GetKeyModifiers());
+			//rmlMain->context->ProcessKeyUp((Rml::Input::KeyIdentifier)SDLWindow::sdlKeyCode[event->key.keysym.sym], systemInterface->GetKeyModifiers());
+			rmlMain->context->ProcessKeyUp(systemInterface->TranslateKey(event->key.keysym.sym), systemInterface->GetKeyModifiers());
 			break;
             default:
                 break;
@@ -125,15 +130,15 @@ bool SDLRml::Handle(SDL_Event *event) {
 
 void SDLRml::Render(){
     //DEBUGFUNC();
-	if(SdlWindow->width != Rml->context->GetDimensions().x || SdlWindow->height != Rml->context->GetDimensions().y){
-		Rml->context->SetDimensions(Rml::Vector2i(SdlWindow->width, SdlWindow->height));
+	if(SdlWindow->width != rmlMain->context->GetDimensions().x || SdlWindow->height != rmlMain->context->GetDimensions().y){
+		rmlMain->context->SetDimensions(Rml::Vector2i(SdlWindow->width, SdlWindow->height));
 		// Reset blending and draw a fake point just outside the screen to let SDL know that it needs to reset its state in case it wants to render a texture 
 		SDL_SetRenderDrawBlendMode(SdlWindow->renderer, SDL_BLENDMODE_NONE);
 		SDL_RenderDrawPoint(SdlWindow->renderer, -1, -1);
 	}
-	Rml->context->Render();
+	rmlMain->context->Render();
 }
 
 void SDLRml::Update(){
-	Rml->context->Update();
+	rmlMain->context->Update();
 }
