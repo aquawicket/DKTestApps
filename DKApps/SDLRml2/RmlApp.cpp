@@ -47,6 +47,7 @@
 
 
 
+
 int main(int /*argc*/, char** /*argv*/)
 {
 #ifdef RMLUI_PLATFORM_WIN32
@@ -214,4 +215,9 @@ int main(int /*argc*/, char** /*argv*/)
 	SDL_Quit();
 
 	return 0;
+}
+
+
+void RmlApp::Exit() {
+
 }

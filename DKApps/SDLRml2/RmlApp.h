@@ -5,7 +5,8 @@
 class RmlApp
 {
 public:
-	//TODO
+	void Exit();
+	bool paused;
 };
 
 #endif //RmlApp_H
