@@ -8,6 +8,7 @@ class RmlFile : public Rml::FileInterface
 {
 public:
 	static RmlFile* Get();
+	static bool ChDir(const std::string& path);
 	static bool pathExists(const std::string path);
 	static bool MakeDir(const std::string path);
 	static bool PathExists(const std::string path);

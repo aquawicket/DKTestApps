@@ -96,8 +96,8 @@ bool RmlMain::End(){
 		delete Rml::GetSystemInterface();
 		delete Rml::GetFileInterface();
 	}
-	RmlClass::DKClose("RmlMainJS");
-	RmlClass::DKClose("RmlMainV8");
+	//RmlClass::RmlClose("RmlMainJS");
+	//RmlClass::RmlClose("RmlMainV8");
 	//RmlEvents::RemoveRegisterEventFunc(&RmlMain::RegisterEvent, this);
 	//RmlEvents::RemoveUnegisterEventFunc(&RmlMain::UnregisterEvent, this);
 	//RmlEvents::RemoveSendEventFunc(&RmlMain::SendEvent, this);
@@ -130,7 +130,7 @@ bool RmlMain::GetSourceCode(std::string& source_code) {
 
 bool RmlMain::LoadFont(const std::string& file){
 	if(!Rml::LoadFontFace(file.c_str()))
-		return DKERROR("Could not load "+file+"\n");
+		return RMLERROR("Could not load "+file+"\n");
 	return true;
 }
 
@@ -172,13 +172,13 @@ bool RmlMain::LoadHtml(const std::string& html){
 	Rml::PluginRegistry::NotifyDocumentOpen(context, stream->GetSourceURL().GetURL());
 	document = context->CreateDocument("html");
 	
-
+	/*
 	//Create DOM javascript instance of the document using the documents element address
 	std::string rval;
 	std::string document_address = elementToAddress(document);
 	DKDuktape::RunDuktape("var document = new Document(\"" + document_address + "\");", rval);
 	Rml::Element* ele = document;
-	
+	*/
 	
 	Rml::XMLParser parser(ele);
 	parser.Parse(stream.get());
@@ -220,12 +220,12 @@ bool RmlMain::LoadHtml(const std::string& html){
 	document->UpdateDocument();
 	if(!document){
 		document = context->LoadDocumentFromMemory("");
-		return DKERROR("RmlMain::LoadHtml(): document invalid\n");
+		return RMLERROR("RmlMain::LoadHtml(): document invalid\n");
 	}
 	Rml::ElementList elements;
 	RmlMain::Get()->document->GetElementsByTagName(elements, "body");
 	if(!elements[0])
-		return DKERROR("body element invalid\n");
+		return RMLERROR("body element invalid\n");
 	//rmlMainConverter.PostProcess(document);
 	rmlMainConverter.PostProcess(elements[0]);
 	document->Show();
@@ -241,7 +241,7 @@ bool RmlMain::LoadUrl(const std::string& url){
 	if(has(_url,":/")) //could be http:// , https://, file:/// or C:/
 		href = _url; //absolute path including protocol
 	else if(has(_url,"//")){ //could be //www.site.com/style.css or //site.com/style.css
-		return DKERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
+		return RMLERROR("RmlMain::LoadUrl(): no protocol specified\n"); //absolute path without protocol
 	}
 	else
 		_url = workingPath + _url;
@@ -258,18 +258,20 @@ bool RmlMain::LoadUrl(const std::string& url){
 	_path = _url.substr(0,found+1);
 	//DKWARN("RmlMain::LoadUrl(): last / at "+toString(found)+"\n");
 	DKINFO("RmlMain::LoadUrl(): _path = "+_path+"\n");
+	/*
 	std::string html;
 	if(has(_url, "http://") || has(_url, "https://")){
 		DKClass::DKCreate("DKCurl");
 		if(!DKCurl::Get()->HttpFileExists(_url))
-			return DKERROR("Could not locate "+_url+"\n");
+			return RMLERROR("Could not locate "+_url+"\n");
 		if(!DKCurl::Get()->HttpToString(_url, html))
-			return DKERROR("Could not get html from url "+_url+"\n");
+			return RMLERROR("Could not get html from url "+_url+"\n");
 	}
 	else{
+	*/
 		if(!RmlFile::FileToString(_url, html))
-			return DKERROR("RmlFile::FileToString failed on "+_url+"\n");
-	}
+			return RMLERROR("RmlFile::FileToString failed on "+_url+"\n");
+	//}
 	LoadHtml(html);
 	return true;
 }
@@ -342,16 +344,16 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 		}
 	}
 #endif
-	if (same(type, "mouseup") && rmlEvent.GetParameter<int>("button", 0) == 1) 
+	if (RmlUtility::stringsMatch(type, "mouseup") && rmlEvent.GetParameter<int>("button", 0) == 1) 
 		type = "contextmenu";
 	for(unsigned int i = 0; i < DKEvents::events.size(); ++i){
 		DKEvents* ev = DKEvents::events[i];
 		//certain stored events are altered before comparison 
 		std::string _type = ev->GetType();
-		if (same(_type, "input"))
+		if (RmlUtility::stringsMatch(_type, "input"))
 			_type = "change";
 		//// PROCESS ELEMENT EVENTS //////
-		if (same(ev->GetId(), currentElementAddress) && same(_type, type)) {
+		if (RmlUtility::stringsMatch(ev->GetId(), currentElementAddress) && same(_type, type)) {
 			ev->data.clear();
 			ev->data.push_back(rmlEventAddress);
 			//ev->rEvent = &rmlEvent;
@@ -368,7 +370,7 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 			*/
 			//FIXME - we run the risk of having event function pointers that point to nowhere
 			if (!ev->event_func(ev)){
-				DKERROR("RmlMain::ProcessEvent failed \n");
+				RMLERROR("RmlMain::ProcessEvent failed \n");
 				return;
 			}
 		    //call the function linked to the event
@@ -393,16 +395,16 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 
 bool RmlMain::RegisterEvent(const std::string& elementAddress, const std::string& type){
 	if(elementAddress.empty())
-		return DKERROR("RmlMain::RegisterEvent(): elementAddress empty\n"); 
+		return RMLERROR("RmlMain::RegisterEvent(): elementAddress empty\n"); 
 	if(type.empty())
-		return DKERROR("RmlMain::RegisterEvent("+elementAddress+"): type empty\n");
+		return RMLERROR("RmlMain::RegisterEvent("+elementAddress+"): type empty\n");
 	Rml::Element* element = addressToElement(elementAddress.c_str());
 	if(!element)
-		return DKERROR("RmlMain::RegisterEvent("+elementAddress+","+type+"): element invalid\n");
+		return RMLERROR("RmlMain::RegisterEvent("+elementAddress+","+type+"): element invalid\n");
 	std::string _type = type;
-	if(same(type, "contextmenu"))
+	if(RmlUtility::stringsMatch(type, "contextmenu"))
 		_type = "mouseup";
-	if(same(type, "input"))
+	if(RmlUtility::stringsMatch(type, "input"))
 		_type = "change";
 	//NOTE: This was an old libRocket issue and has not been tested for a long time
 	//FIXME - StopPropagation() on a mousedown event will bock the elements ability to drag
@@ -426,16 +428,16 @@ bool RmlMain::RegisterEvent(const std::string& elementAddress, const std::string
 
 bool RmlMain::SendEvent(const std::string& elementAddress, const std::string& type, const std::string& value){
 	if(elementAddress.empty())
-		return DKERROR("elementAddress invalid");
+		return RMLERROR("elementAddress invalid");
 	if(type.empty())
-		return DKERROR("type invalid");
+		return RMLERROR("type invalid");
 	if(!document)
-		return DKERROR("document invalid");
+		return RMLERROR("document invalid");
 	//if(same(addressToElement(elementAddress)->GetId(),"window"))
 		//DKWARN("RmlMain::SendEvent(): recieved global window event\n");
 	Rml::Element* element = addressToElement(elementAddress);
 	if(!element)
-		return DKERROR("element invalid");
+		return RMLERROR("element invalid");
 	Rml::Dictionary parameters;
 	//parameters.Set("msg0", value.c_str());
 	element->DispatchEvent(type.c_str(), parameters, false);
@@ -445,9 +447,9 @@ bool RmlMain::SendEvent(const std::string& elementAddress, const std::string& ty
 bool RmlMain::DebuggerOff(){
 #ifdef USE_rmlui_debugger
 	Rml::Debugger::SetVisible(false);
-	DKINFO("Rml Debugger OFF\n");
+	RMLINFO("Rml Debugger OFF\n");
 #else
-	return DKERROR("RML Debugger not available \n");
+	return RMLERROR("RML Debugger not available \n");
 #endif
 	return true;
 }
@@ -455,9 +457,9 @@ bool RmlMain::DebuggerOff(){
 bool RmlMain::DebuggerOn(){
 #ifdef USE_rmlui_debugger
 	Rml::Debugger::SetVisible(true);
-	DKINFO("Rml Debugger ON\n");
+	RMLINFO("Rml Debugger ON\n");
 #else
-	return DKERROR("RML Debugger not available \n");
+	return RMLERROR("RML Debugger not available \n");
 #endif
 	return true;
 }
@@ -469,26 +471,26 @@ bool RmlMain::DebuggerToggle(){
 	else
 		RmlMain::DebuggerOn();
 #else
-	return DKERROR("RML Debugger not available \n");
+	return RMLERROR("RML Debugger not available \n");
 #endif
 	return true;
 }
 
 bool RmlMain::UnregisterEvent(const std::string& elementAddress, const std::string& type){
 	if(elementAddress.empty())
-		return DKERROR("elementAddress invalid");
+		return RMLERROR("elementAddress invalid");
 	if(type.empty())
-		return DKERROR("type invalid");
-	if (same(addressToElement(elementAddress)->GetId(), "window"))
-		return DKERROR("can not Unregister window event");
+		return RMLERROR("type invalid");
+	if (RmlUtility::stringsMatch(addressToElement(elementAddress)->GetId(), "window"))
+		return RMLERROR("can not Unregister window event");
 	//if(!DKValid("RmlMain0")){ return false; }
 	Rml::Element* element = addressToElement(elementAddress);
 	if(!element)
-		return DKERROR("element invalid");
+		return RMLERROR("element invalid");
 	std::string _type = type;
-	if(same(type, "contextmenu"))
+	if(RmlUtility::stringsMatch(type, "contextmenu"))
 		_type = "mouseup";
-	if(same(type, "input"))
+	if(RmlUtility::stringsMatch(type, "input"))
 		_type = "change";
 	element->RemoveEventListener(_type.c_str(), this, false);
 	return true;

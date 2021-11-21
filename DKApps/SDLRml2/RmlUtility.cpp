@@ -11,3 +11,9 @@ bool RmlUtility::replace(std::string& str, const std::string& with, const std::s
 	//TODO
 	return false;
 }
+
+bool RmlUtility::stringsMatch(const std::string& strA, const std::string& strB)
+{
+	//TODO
+	return false;
+}

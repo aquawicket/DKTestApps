@@ -174,6 +174,7 @@ bool SDLWindow::Init() {
     std::string icon = File::local_assets + "icon.ico";
     SetIcon(&icon, NULL);
     SDL_SetWindowTitle(window, title2.c_str());
+    /*
     Class::RegisterFunc("SDLWindow::TestInt", &SDLWindow::TestInt, this);
     Class::RegisterFunc("SDLWindow::TestString", &SDLWindow::TestString, this);
     Class::RegisterFunc("SDLWindow::TestReturnInt", &SDLWindow::TestReturnInt, this);
@@ -203,7 +204,8 @@ bool SDLWindow::Init() {
     Class::RegisterFunc("SDLWindow::Show", &SDLWindow::Show, this);
     Class::RegisterFunc("SDLWindow::Windowed", &SDLWindow::Windowed, this);
     Class::RegisterFunc("SDLWindow::MessageBox", &SDLWindow::MessageBox, this);
-    App::AppendLoopFunc(&SDLWindow::Process, this);
+    */
+    //RmlApp::AppendLoopFunc(&SDLWindow::Process, this);
     SDLWindow::AddEventFunc(&SDLWindow::handle, this);
     MapInputs();
     SDL_SetEventFilter(&SDLWindow::EventFilter, this); //DEBUG : bypassing events here for now
