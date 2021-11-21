@@ -1,9 +1,10 @@
 #include "RmlFile.h"
 #include "RmlMain.h"
+#include "RmlUtility.h"
 
 
 RmlFile* RmlFile::Get() {
-	return this;
+	return rmlFile;
 }
 
 bool RmlFile::MakeDir(const std::string path)
@@ -18,8 +19,21 @@ bool RmlFile::PathExists(const std::string path)
 	return false;
 }
 
+bool RmlFile::GetFilename(const std::string path, std::string& filename)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::VerifyPath(std::string& path)
+{
+	//TODO
+	return false;
+}
+
 bool RmlFile::FileInterface(const std::filesystem::path& root)
 {
+	rmlFile = this;
 	std::string _root{ root.u8string() };
 }
 
@@ -36,17 +50,17 @@ Rml::FileHandle RmlFile::Open(const Rml::String& path)
 	// else{
 		if(RmlFile::PathExists(RmlMain::Get()->workingPath+_path))
 			_path = RmlMain::Get()->workingPath+_path;
-		else if(!File::VerifyPath(_path)){
+		else if(!RmlFile::VerifyPath(_path)){
 			return RMLERROR("could not locate path ("+_path+")");
 		}
 		//if(_path.find("/home") == std::string::npos) //url may have unix home directory
 		//	_path = RmlMain::Get()->workingPath+_path;
 		//return ERROR("RmlMain::LoadUrl(): cannot load relative paths\n");
 	//}
-	if(has(_path,"://")){
+	if(RmlUtility::stringContains(_path,"://")){
 		RmlFile::MakeDir(_root+"/Cache");
 		std::string filename;
-		RmlFile::GetFileName(_path, filename);
+		RmlFile::GetFilename(_path, filename);
 		//remove everything after ? in the filename if there is one
 		unsigned long found = filename.rfind("?");
 		if(found > 0)

@@ -7,9 +7,11 @@
 class RmlFile : public Rml::FileInterface 
 {
 public:
-	RmlFile* Get();
-	bool MakeDir(const std::string path);
-	bool PathExists(const std::string path);
+	static RmlFile* Get();
+	static bool MakeDir(const std::string path);
+	static bool PathExists(const std::string path);
+	static bool GetFilename(const std::string path, std::string& filename);
+	static bool VerifyPath(std::string& path);
 	bool FileInterface(const std::filesystem::path& root);
 	virtual Rml::FileHandle Open(const Rml::String& path);
 	virtual void Close(Rml::FileHandle file);
@@ -17,6 +19,7 @@ public:
 	virtual bool Seek(Rml::FileHandle file, long offset, int origin);
 	virtual size_t Tell(Rml::FileHandle file);
 	bool PathExists(const std::string& path);
+	static RmlFile* rmlFile;
 	std::string _root;
 
 };
