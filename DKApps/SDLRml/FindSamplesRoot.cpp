@@ -38,6 +38,7 @@ Rml::String Shell::FindSamplesRoot()
 	GetFullPathName(path.c_str(), 256, resolved_path, &fileExt);
 	Rml::String out(resolved_path);
 #else
+	Rml::String testPath = "";
 	char *resolved_path = "";
 	char buf [PATH_MAX];
 	uint32_t bufsize = PATH_MAX;
