@@ -46,77 +46,77 @@ Rml::String Shell::FindSamplesRoot()
 	
 	Rml::String testPath = "";
 	testPath = appPath+"/Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
  
 	testPath = appPath+"/../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../../../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../../../../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../../../../../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../../../../../../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../../../../../../../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
         path = testPath;
 	
 	testPath = appPath+"/../../../../../../../../../../Samples";
-	printf("testPath = %s\n", testPath);
+	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(testPath))
