@@ -646,7 +646,7 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
 bool SDLWindow::handle(SDL_Event *event) {
     switch(event->type) {
         case SDL_QUIT: {
-            RmlApp::Exit();
+            //RmlApp::Exit();
             return false; //allow event to continue
         }
         case SDL_MOUSEMOTION: {

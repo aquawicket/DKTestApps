@@ -265,6 +265,8 @@ bool RmlMain::LoadUrl(const Rml::String& url){
 	workingPath = _url.substr(0, found + 1);
 	RMLINFO("RmlMain::LoadUrl(): workingPath: " + workingPath + "\n");
 	RMLINFO("RmlMain::LoadUrl(): href: " + href + "\n");
+	
+	/*
 	//get the protocol
 	unsigned long n = _url.find(":");
 	protocol = _url.substr(0,n);
@@ -273,6 +275,7 @@ bool RmlMain::LoadUrl(const Rml::String& url){
 	_path = _url.substr(0,found+1);
 	//RMLWARN("RmlMain::LoadUrl(): last / at "+std::to_string(found)+"\n");
 	RMLINFO("RmlMain::LoadUrl(): _path = "+_path+"\n");
+	*/
 
 	Rml::String html;
 	/*

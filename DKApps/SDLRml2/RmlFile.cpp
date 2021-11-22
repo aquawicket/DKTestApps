@@ -2,6 +2,8 @@
 #include "RmlMain.h"
 #include "RmlUtility.h"
 
+RmlFile* RmlFile::instance;
+
 
 RmlFile::RmlFile(const Rml::String& assets) {
 	instance = this;

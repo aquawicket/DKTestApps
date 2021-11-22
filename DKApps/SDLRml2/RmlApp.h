@@ -5,7 +5,6 @@
 class RmlApp
 {
 public:
-	static void Exit();
 	static bool paused;
 };
 
