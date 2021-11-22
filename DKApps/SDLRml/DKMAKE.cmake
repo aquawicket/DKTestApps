@@ -30,6 +30,12 @@ IF(LINUX)
 	ADD_SOURCE(${RMLUI}/Samples/shell/include/x11/*.*)
 	ADD_SOURCE(${RMLUI}/Samples/shell/src/x11/*.*)
 ENDIF()
+REMOVE_SOURCE(ShellOpenGL.*)
+REMOVE_SOURCE(ShellRenderInterfaceOpenGL.*)
+REMOVE_SOURCE(ShellRenderInterfaceExtensions.*)
+REMOVE_SOURCE(ShellRenderInterfaceExtensionsOpenGL_Win32.cpp.*)
+REMOVE_SOURCE(ShellSystemInterface.*)
+
 
 # rmlui sdl2
 DKINCLUDE(${RMLUI}/Samples/basic/sdl2/src)
