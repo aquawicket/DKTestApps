@@ -1,28 +1,28 @@
-#if defined(WIN32) || defined(MAC)
-#include <GL/glew.h>
-#endif
-#ifdef RMLUI_PLATFORM_WIN32
-#include <windows.h>
-#endif
 #include <string.h>
 #include <iostream>
 #include <filesystem>
-#include <SDL.h>
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
 #include <RmlUi/Core/StringUtilities.h>
 #include <RmlUi/Debugger/Debugger.h>
+#ifdef RMLUI_PLATFORM_WIN32
+	#include <windows.h>
+#endif
+#if defined(RMLUI_PLATFORM_WIN32) || defined(RMLUI_PLATFORM_MACOSX)
+	#include <GL/glew.h>
+#endif
 
 #include "RmlApp.h"
 #include "RmlMain.h"
 #include "RmlFile.h"
 #include "RmlUtility.h"
- //#include <Shell.h>
- //#include <ShellFileInterface.h>
+#include <SDL.h>
 #include "SDLRmlSystem.h"
 #include "SDLRmlRenderer.h"
+//#include <Shell.h>
+//#include <ShellFileInterface.h>
 
-bool RmlApp::paused = false;
+
 
 int main(int /*argc*/, char** /*argv*/)
 {
@@ -51,7 +51,6 @@ int main(int /*argc*/, char** /*argv*/)
 
 	if (err != GLEW_OK){
 		fprintf(stderr, "GLEW ERROR: %s\n", glewGetErrorString(err));
-		//RMLERROR("ERROR"+ std::to_string(glewGetErrorString(err))+"\n")
 	}
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -59,7 +58,6 @@ int main(int /*argc*/, char** /*argv*/)
 	glLoadIdentity();
 	glOrtho(0, window_width, window_height, 0, 0, 1);
 
-	//EDIT: digitalknob
 	//print opengl info
 	printf("OpenGL Vendor:   %s\n", glGetString(GL_VENDOR));
 	printf("OpenGL Renderer: %s\n", glGetString(GL_RENDERER));
@@ -75,18 +73,18 @@ int main(int /*argc*/, char** /*argv*/)
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
 	printf("SDL_GL_CONTEXT_MINOR_VERSION = %d\n", minor);
 
-	SDLRmlRenderer rmlSdlRenderer(renderer, screen);
-	SDLRmlSystem systemInterface;
-
 	Rml::String assets{ std::filesystem::current_path().u8string() };
 	RmlFile fileInterface(assets);
-
 	Rml::SetFileInterface(&fileInterface);
-	Rml::SetRenderInterface(&rmlSdlRenderer);
+
+	SDLRmlSystem systemInterface;
 	Rml::SetSystemInterface(&systemInterface);
 
+	SDLRmlRenderer rmlSdlRenderer(renderer, screen);
+	Rml::SetRenderInterface(&rmlSdlRenderer);
+	
 	if (!Rml::Initialise())
-		return 1;
+		fprintf(stderr, "Rml::Initialise failed\n");
 
 	struct FontFace {
 		Rml::String filename;
@@ -103,8 +101,7 @@ int main(int /*argc*/, char** /*argv*/)
 	for (const FontFace& face : font_faces)
 		Rml::LoadFontFace(face.filename, face.fallback_face);
 
-	Rml::Context* Context = Rml::CreateContext("default",
-		Rml::Vector2i(window_width, window_height));
+	Rml::Context* Context = Rml::CreateContext("default", Rml::Vector2i(window_width, window_height));
 
 	Rml::Debugger::Initialise(Context);
 	Rml::ElementDocument* Document = Context->LoadDocument("SDLRml.rml"); //EDIT: digitalknob
@@ -145,8 +142,8 @@ int main(int /*argc*/, char** /*argv*/)
 				Context->ProcessMouseWheel(float(event.wheel.y), systemInterface.GetKeyModifiers());
 				break;
 			case SDL_KEYDOWN:
-				// Intercept F8 key stroke to toggle RmlUi's visual debugger tool
-				if (event.key.keysym.sym == SDLK_F8){
+				// Intercept F12 key stroke to toggle RmlUi's visual debugger tool
+				if (event.key.keysym.sym == SDLK_F12){
 					Rml::Debugger::SetVisible(!Rml::Debugger::IsVisible());
 					break;
 				}

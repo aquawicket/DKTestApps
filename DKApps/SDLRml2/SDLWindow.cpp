@@ -628,12 +628,12 @@ int SDLWindow::EventFilter(void* userdata, SDL_Event* event) {
     }
     if(event->type == SDL_APP_WILLENTERBACKGROUND) {
         RMLINFO("SDLWindow::SDL_APP_WILLENTERBACKGROUND\n");
-        RmlApp::paused = true;
+        //RmlApp::paused = true;
         return 1;
     }
     if(event->type == SDL_APP_DIDENTERFOREGROUND) {
         RMLINFO("SDLWindow::SDL_APP_DIDENTERFOREGROUND\n");
-        RmlApp::paused = false;
+        //RmlApp::paused = false;
         return 1;
     }
     if(event->type == SDL_TEXTINPUT) {

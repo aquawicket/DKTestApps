@@ -22,7 +22,6 @@ RmlFile* RmlMain::rmlFile = NULL;
 RmlMain::RmlMain(){
 	//RmlClass::RmlCreate("RmlMainJS");
 	//RmlClass::RmlCreate("RmlMainV8");
-	SDLRml* sdlRml = NULL;
 	document = NULL;
 	if(!rmlFile){
 		Rml::String assets{ std::filesystem::current_path().u8string() };
@@ -32,7 +31,7 @@ RmlMain::RmlMain(){
 
 	//Create SDLRml or DKOSGRml
 	//if(RmlClass::DKAvailable("SDLRml")){
-	SDLRml* sldRml = new SDLRml();
+	SDLRml* sdlRml = new SDLRml();
 	if(sdlRml){
 		if (!Rml::Initialise()) {
 			RMLERROR("Rml::Initialise(): failed\n");
