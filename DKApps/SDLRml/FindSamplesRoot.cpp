@@ -77,7 +77,7 @@ Rml::String Shell::FindSamplesRoot()
 	testPath = appPath+"/../../../../../../Samples";
 	printf("testPath = %s\n", testPath.c_str());
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
-	printf("resolved_path = %s\n", resolved.c_str());
+	printf("resolved_path = %s\n", resolved_path.c_str());
 	
 	testPath = appPath+"/../../../../../../../Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
