@@ -63,50 +63,50 @@ Rml::String Shell::FindSamplesRoot()
 	printf("appPath = %s\n", appPath.c_str());
 	
 	testPath = appPath+"/Samples";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../Samples";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../Samples";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../Samples";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../../Samples";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../../../Samples";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	
 	testPath = appPath+"/../../../../../../Samples";
 	printf("testPath = %s\n", testPath.c_str());
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	printf("resolved_path = %s\n", resolved_path);
 	
 	testPath = appPath+"/../../../../../../../Samples";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../../../../../../Samples";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	
 	testPath = appPath+"/assets";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../assets";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../assets";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../assets";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../../assets";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../../../assets";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../../../../assets";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 	testPath = appPath+"/../../../../../../../assets";
-	if(!resolved_path){ resolved_path = realpath(testPath.c_str(), real_buf); }
+	if(!real_buf){ resolved_path = realpath(testPath.c_str(), real_buf); }
 
-    if(!resolved_path){
+    if(!real_buf){
         printf("ERROR: could not locate assets path \n");
 		return "";
 	}
-    Rml::String out(resolved_path);
+    Rml::String out(real_buf);
 #endif
 
 
