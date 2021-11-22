@@ -31,6 +31,7 @@
 #include <Input.h>
 #include <Shell.h>
 #include <ShellRenderInterfaceOpenGL.h>
+#include <filesystem>
 
 Rml::Context* context = nullptr;
 
@@ -65,7 +66,6 @@ int main(int RMLUI_UNUSED_PARAMETER(argc), char** RMLUI_UNUSED_PARAMETER(argv))
 #ifdef RMLUI_PLATFORM_WIN32
         AllocConsole();
 #endif
-
     int window_width = 1024;
     int window_height = 768;
 
@@ -105,7 +105,7 @@ int main(int RMLUI_UNUSED_PARAMETER(argc), char** RMLUI_UNUSED_PARAMETER(argv))
 	Shell::LoadFonts("assets/");
 
 	// Load and show the demo document.
-	if (Rml::ElementDocument * document = context->LoadDocument("assets/demo.rml"))
+	if (Rml::ElementDocument * document = context->LoadDocument("/assets/index.html"))
 		document->Show();
 
 	Shell::EventLoop(GameLoop);
