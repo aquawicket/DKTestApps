@@ -58,7 +58,7 @@ Rml::String Shell::FindSamplesRoot()
 	#ifdef RMLUI_PLATFORM_LINUX
 		char arg1[20];
         sprintf(arg1, "/proc/%d/exe", getpid());
-        readlink(arg1, buf, sizeof(exepath));
+        readlink(arg1, buf, sizeof(buf));
 		appPath = Rml::String(buf);
 	#endif
 	
