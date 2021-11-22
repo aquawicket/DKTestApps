@@ -63,62 +63,24 @@ Rml::String Shell::FindSamplesRoot()
 	#endif
 	printf("appPath = %s\n", appPath.c_str());
 	
-	char real_buf[PATH_MAX + 1] = {0};
-	testPath = appPath+"/Samples";
+	testPath = appPath + "/";
+	unsigmed int b=
+	for(unsigned init i=0; i<b; i++){
+		Rml::String doPath = testPath+"Samples";
+		printf("doPath = %s\n", doPath.c_str());
+		resolved_path = realpath(testPath.c_str(), NULL);
+		if(resolved_path){
+			printf("resolved_path = %s\n", resolved_path);
+			return Rml::String(resolve_path);
+		}
+		testPath = testPath + "../";
+	}
+	
+	/*
 	memset(real_buf, 0, sizeof real_buf);
 	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
 	testPath = appPath+"/../Samples";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../Samples";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../Samples";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../../Samples";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../../../Samples";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	
-	testPath = appPath+"/../../../../../../Samples"; printf("testPath = %s\n", testPath.c_str());
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	printf("real_buf = %s\n", real_buf);
-	
-	testPath = appPath+"/../../../../../../../Samples";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../../../../../../Samples";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	
-	testPath = appPath+"/assets";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../assets";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../assets";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../assets";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../../assets";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../../../assets";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../../../../assets";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	testPath = appPath+"/../../../../../../../assets";
-	memset(real_buf, 0, sizeof real_buf);
-	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
+*/
 
     if(!resolved_path){
         printf("ERROR: could not locate assets path \n");
