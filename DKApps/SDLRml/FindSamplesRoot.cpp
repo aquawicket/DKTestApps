@@ -66,7 +66,7 @@ Rml::String Shell::FindSamplesRoot()
 		realpath("/proc/self/exe", buf);
 		appPath = Rml::String(buf);
 	#endif
-	printf("appPath = %s\n", appPath);
+	printf("appPath = %s\n", appPath.c_str());
 	
 	testPath = appPath+"/Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
