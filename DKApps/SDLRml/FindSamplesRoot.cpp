@@ -20,7 +20,7 @@ Rml::String Shell::FindSamplesRoot()
 #endif
 #ifdef RMLUI_PLATFORM_WIN32
 	if(path.empty() && PathFileExistsA("/../Samples"))
-		path = ../Samples";
+		path = "../Samples";
 	if(path.empty() && PathFileExistsA("../../Samples"))
 		path = "../../Samples";
 	if (path.empty() && PathFileExistsA("../assets"))
