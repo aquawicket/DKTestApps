@@ -51,7 +51,7 @@
 int main(int /*argc*/, char** /*argv*/)
 {
 #ifdef RMLUI_PLATFORM_WIN32
-	AllocConsole();
+	//AllocConsole();
 #endif
 	std::cout << "Current path is " << std::filesystem::current_path() << '\n';
 	std::filesystem::current_path("../../assets");
