@@ -4,9 +4,8 @@
 	#include "Shlwapi.h"
 #else
     //#include <sys/stat.h>
-    #include <unistd.h>
-	//#include <mach-o/dyld.h>
-	//#include <limits.h>
+    //#include <unistd.h>
+	#include <mach-o/dyld.h>
 	#include <limits.h>
 #endif
     
