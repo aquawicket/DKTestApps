@@ -65,10 +65,10 @@ Rml::String Shell::FindSamplesRoot()
 	
 	char real_buf[PATH_MAX + 1] = {0};
 	testPath = appPath+"/Samples";
-	real_buf = NULL;
+	real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../Samples";
-	real_buf = NULL;
+	real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../Samples";
 	real_buf = {0};
