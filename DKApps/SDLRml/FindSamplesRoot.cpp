@@ -46,7 +46,7 @@ Rml::String Shell::FindSamplesRoot()
 #ifdef RMLUI_PLATFORM_UNIX
 	Rml::String testPath = "";
 	char* resolved_path = NULL;
-	char buf[PATH_MAX + 1] = {0};
+	char buf[PATH_MAX + 1] = NULL
 	char real_buf[PATH_MAX + 1] = {0};
 	Rml::String appPath = "";
 	
@@ -65,10 +65,10 @@ Rml::String Shell::FindSamplesRoot()
 	printf("appPath = %s\n", appPath.c_str());
 	
 	testPath = appPath+"/Samples";
-	real_buf = {0};
+	real_buf = NULL;
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../Samples";
-	real_buf = {0};
+	real_buf = NULL;
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../Samples";
 	real_buf = {0};
