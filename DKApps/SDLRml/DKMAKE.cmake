@@ -14,11 +14,10 @@ DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
 DKDEPEND(rmlui rmlui_debugger)
 
+# rmlui shell
 DKINCLUDE(${RMLUI}/Samples/shell/include)
 ADD_SOURCE(${RMLUI}/Samples/shell/include/*.*)
 ADD_SOURCE(${RMLUI}/Samples/shell/src/*.*)
-ADD_SOURCE(${RMLUI}/Samples/basic/sdl2/src/RenderInterfaceSDL2.*)
-ADD_SOURCE(${RMLUI}/Samples/basic/sdl2/src/SystemInterfaceSDL2.*)
 IF(WIN)
 	ADD_SOURCE(${RMLUI}/Samples/shell/include/win32/*.*)
 	ADD_SOURCE(${RMLUI}/Samples/shell/src/win32/*.*)
@@ -31,3 +30,8 @@ IF(LINUX)
 	ADD_SOURCE(${RMLUI}/Samples/shell/include/x11/*.*)
 	ADD_SOURCE(${RMLUI}/Samples/shell/src/x11/*.*)
 ENDIF()
+
+# rmlui sdl2
+DKINCLUDE(${RMLUI}/Samples/basic/sdl2/src)
+ADD_SOURCE(${RMLUI}/Samples/basic/sdl2/src/RenderInterfaceSDL2.*)
+ADD_SOURCE(${RMLUI}/Samples/basic/sdl2/src/SystemInterfaceSDL2.*)
