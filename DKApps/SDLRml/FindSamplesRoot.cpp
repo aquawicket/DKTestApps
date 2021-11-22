@@ -43,7 +43,7 @@ Rml::String Shell::FindSamplesRoot()
 	Rml::String out(resolved_path);
 #endif
 
-
+#ifdef RMLUI_PLATFORM_UNIX
 #ifdef RMLUI_PLATFORM_MACOSX
 	Rml::String testPath = "";
 	char* resolved_path = NULL;
@@ -61,7 +61,6 @@ Rml::String Shell::FindSamplesRoot()
 	if (count != -1)
 	Rml::String appPath(buf);
 #endif
-#ifdef 	RMLUI_PLATFORM_UNIX
 	testPath = appPath+"/Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 	testPath = appPath+"/../Samples";
