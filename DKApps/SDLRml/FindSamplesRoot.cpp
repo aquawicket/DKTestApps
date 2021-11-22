@@ -57,8 +57,10 @@ Rml::String Shell::FindSamplesRoot()
 		appPath = Rml::String(buf);
 	#endif
 	#ifdef RMLUI_PLATFORM_LINUX
-		realpath("/proc/self/exe", buf);
-		appPath = Rml::String(buf);
+		if(!realpath("/proc/self/exe", buf)){
+			printf("ERROR: could not get appPath from /proc/self/exe \n")
+			appPath = Rml::String(buf);
+		}
 	#endif
 	printf("appPath = %s\n", appPath.c_str());
 	
