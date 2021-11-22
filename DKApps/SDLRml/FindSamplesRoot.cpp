@@ -34,14 +34,6 @@ Rml::String Shell::FindSamplesRoot()
 	GetFullPathName(path.c_str(), 256, resolved_path, &fileExt);
 	Rml::String out(resolved_path);
 #else
-	/*
-    char *buf;
-    buf=(char *)malloc(100*sizeof(char));
-    getcwd(buf,100);
-    printf("\n %s \n",buf);
-    Rml::String appPath(buf);
-	*/
-	
 	char buf [PATH_MAX];
 	uint32_t bufsize = PATH_MAX;
 	if(!_NSGetExecutablePath(buf, &bufsize))
@@ -138,14 +130,14 @@ Rml::String Shell::FindSamplesRoot()
 	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
-    if(std::filesystem::exists(appPath+"/../../../../../DKMAKE.cmake))
+    if(std::filesystem::exists(appPath+"/../../../../../DKMAKE.cmake"))
         path = testPath;
 	
 	testPath = appPath+"/../../../../../../Samples";
 	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
-    if(std::filesystem::exists(appPath+"/../../../../../../DKMAKE.cmake))
+    if(std::filesystem::exists(appPath+"/../../../../../../DKMAKE.cmake"))
         path = testPath;
 	
 	
