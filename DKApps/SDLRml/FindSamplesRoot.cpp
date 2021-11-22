@@ -75,6 +75,14 @@ Rml::String Shell::FindSamplesRoot()
     //if(path.empty() && (stat (appPath+"/../../../../../../../../Samples", &buffer) == 0) )
     if(std::filesystem::exists(appPath+"/../../../../../../../../Samples"))
         path = appPath+"/../../../../../../../../Samples";
+	//buffer = {};
+    //if(path.empty() && (stat (appPath+"/../../../../../../../../../Samples", &buffer) == 0) )
+    if(std::filesystem::exists(appPath+"/../../../../../../../../../Samples"))
+        path = appPath+"/../../../../../../../.././Samples";
+	//buffer = {};
+    //if(path.empty() && (stat (appPath+"/../../../../../../../../../../Samples", &buffer) == 0) )
+    if(std::filesystem::exists(appPath+"/../../../../../../../../../../Samples"))
+        path = appPath+"/../../../../../../../../../../Samples";
     //buffer = {};
     //if (path.empty() && (stat (appPath+"/../assets", &buffer) == 0) )
     if(std::filesystem::exists(appPath+"/../assets"))
