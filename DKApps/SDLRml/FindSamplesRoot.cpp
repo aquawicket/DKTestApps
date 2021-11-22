@@ -15,7 +15,7 @@ Rml::String Shell::FindSamplesRoot()
 #ifdef WIN32
     path = "";
 #else
-    path = "Users/aquamac/digitalknob/DKTestApps/DKApps/SDLRml/Samples";
+    path = "";//Users/aquamac/digitalknob/DKTestApps/DKApps/SDLRml/Samples";
     
 #endif
 #ifdef RMLUI_PLATFORM_WIN32
