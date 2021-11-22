@@ -26,6 +26,8 @@
  *
  */
 
+
+#include <RmlUi/Core/Platform.h>
 #include <RmlUi/Core.h>
 #include <RmlUi/Debugger.h>
 #include <Input.h>
@@ -59,8 +61,8 @@ int main(int RMLUI_UNUSED_PARAMETER(argc), char** RMLUI_UNUSED_PARAMETER(argv))
 	//RMLUI_UNUSED(command_line);
 	//RMLUI_UNUSED(command_show);
 //#else
-	RMLUI_UNUSED(argc);
-	RMLUI_UNUSED(argv);
+	//RMLUI_UNUSED(argc);
+	//RMLUI_UNUSED(argv);
 //#endif
 
 #ifdef RMLUI_PLATFORM_WIN32
