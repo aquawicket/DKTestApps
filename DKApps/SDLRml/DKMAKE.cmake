@@ -10,9 +10,19 @@ DKDEPEND(libjpeg-turbo)
 DKDEPEND(libwebp)
 DKDEPEND(tiff)
 DKDEPEND(glew)
-DKDEPEND(sdl2)
-DKDEPEND(sdl2_image)
+#DKDEPEND(sdl2)
+#DKDEPEND(sdl2_image)
 DKDEPEND(rmlui rmlui_debugger)
 
-DKINCLUDE(${DKPROJECT})
-DKINCLUDE(${DKPROJECT}/shell/include)
+DKINCLUDE(${RMLUI}/Samples/shell/include)
+DKSET(SRC_INCLUDE ${RMLUI}/Samples/shell/*)
+DKSET(SRC_EXCLUDE
+	App.h
+	App.cpp
+	InputMacOSX.* 
+	InputX11.*
+	X11MacroZapper.*
+	ShellRenderInterfaceExtensionsOpenGL_X11.*
+	ShellX11.*
+	ShellMacOSX.*
+	ShellRenderInterfaceExtensionsOpenGL_MacOSX.*)
