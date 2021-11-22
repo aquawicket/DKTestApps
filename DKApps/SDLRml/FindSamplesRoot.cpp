@@ -56,13 +56,6 @@ Rml::String Shell::FindSamplesRoot()
 		appPath = Rml::String(buf);
 	#endif
 	#ifdef RMLUI_PLATFORM_LINUX
-		//char arg1[20];
-        //sprintf(arg1, "/proc/%d/exe", getpid());
-        //readlink(arg1, buf, sizeof(buf));
-		//appPath = Rml::String(buf);
-		
-		//appPath = std::filesystem::canonical("/proc/self/exe");
-		
 		realpath("/proc/self/exe", buf);
 		appPath = Rml::String(buf);
 	#endif
@@ -80,8 +73,12 @@ Rml::String Shell::FindSamplesRoot()
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 	testPath = appPath+"/../../../../../Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
+	
 	testPath = appPath+"/../../../../../../Samples";
+	printf("testPath = %s\n", testPath.c_str());
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
+	printf("resolved_path = %s\n", resolved.c_str());
+	
 	testPath = appPath+"/../../../../../../../Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 	testPath = appPath+"/../../../../../../../../Samples";
@@ -105,7 +102,7 @@ Rml::String Shell::FindSamplesRoot()
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 
     if(!resolved_path){
-        printf("ERROR: could not locate assets path");
+        printf("ERROR: could not locate assets path \n");
 		return "";
 	}
     Rml::String out(resolved_path);
