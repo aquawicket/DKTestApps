@@ -5,8 +5,8 @@
 class RmlApp
 {
 public:
-	void Exit();
-	bool paused;
+	static void Exit();
+	static bool paused;
 };
 
 #endif //RmlApp_H

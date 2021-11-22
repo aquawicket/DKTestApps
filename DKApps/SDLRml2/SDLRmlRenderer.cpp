@@ -47,7 +47,7 @@ void SDLRmlRenderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int
 		//Update the texture with SDLCef::GetTexture(id);
 		///////////////////////////////////////////////////////////
 		if(RmlUtility::stringContains(texture_name[texture],"iframe_")){
-			std::string id = texture_name[texture];
+			Rml::String id = texture_name[texture];
 			RmlUtility::replace(id,"iframe_","");
 			
 			struct Texture{ SDL_Texture* texture; };
@@ -60,7 +60,7 @@ void SDLRmlRenderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int
 
 		if(!sdl_texture){ return; }
         if(SDL_GL_BindTexture(sdl_texture, &texw, &texh) == -1)
-			RMLERROR("SDL_GL_BindTexture: "+std::string(SDL_GetError())+"\n");
+			RMLERROR("SDL_GL_BindTexture: "+Rml::String(SDL_GetError())+"\n");
     }
  
     for(int  i = 0; i < num_vertices; i++) {
@@ -167,7 +167,7 @@ bool SDLRmlRenderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vector
     file_interface->Close(file_handle);
 
 #ifdef USE_SDL2_gif
-	std::string src = source;
+	Rml::String src = source;
 	if(RmlUtility::stringContains(src,".gif")){
 		animations.push_back(SDL_GIFAnimLoad_RW(SDL_RWFromMem(buffer, buffer_size), mRenderer));
 		SDL_Texture *texture = SDL_GIFTexture(animations[animations.size()-1]);

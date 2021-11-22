@@ -17,13 +17,13 @@ public:
 	static bool TestInt(int& input, int& output);
 	
 	///Send a variable to RmlClass::CallFunc("DKXXXWindow::TestString") and recieve a return value.
-	static bool TestString(std::string& input, std::string& output);
+	static bool TestString(Rml::String& input, Rml::String& output);
 	
 	///Call RmlClass::CallFunc("DKXXXWindow::TestReturnInt") and recieve a return value.
 	static bool TestReturnInt(int& output);
 	
 	///Call RmlClass::CallFunc("DKXXXWindow::TestReturnString") and recieve a return value.
-	static bool TestReturnString(std::string& output);
+	static bool TestReturnString(Rml::String& output);
 
 
 	static bool Create();
@@ -49,7 +49,7 @@ public:
 	static bool GetPixelRatio(float& ratio);
 	
 	///Get the Title of the window
-	static bool GetTitle(std::string& title);
+	static bool GetTitle(Rml::String& title);
 	*/
 
 	///Get the Width of the window
@@ -75,7 +75,7 @@ public:
 	static bool Maximize();
 
 	///Display a message box
-	static bool MessageBox(std::string& msg);
+	static bool MessageBox(Rml::String& msg);
 
 	///Minimize the window
 	static bool Minimize();
@@ -87,10 +87,10 @@ public:
 	static bool SetHeight(int& h);
 
 	///Set the Window icon
-	static bool SetIcon(std::string& file);
+	static bool SetIcon(Rml::String& file);
 
 	///Set the Window title
-	static bool SetTitle(std::string& string);
+	static bool SetTitle(Rml::String& string);
 	
 	///Set the Width of the window
 	static bool SetWidth(int& w);

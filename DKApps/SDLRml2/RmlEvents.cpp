@@ -1,33 +1,31 @@
 #include "RmlEvents.h"
-//#include "DKClass.h"
+#include "RmlUtility.h"
+//#include "RMLClass.h"
 
 std::vector<RmlEvents*> RmlEvents::events;
-std::vector<std::function<bool(const DKString&, const DKString&)> > RmlEvents::reg_funcs;
-std::vector<std::function<bool(const DKString&, const DKString&)> > RmlEvents::unreg_funcs;
-std::vector<std::function<bool(const DKString&, const DKString&, const DKString&)> > RmlEvents::send_funcs;
+std::vector<std::function<bool(const Rml::String&, const Rml::String&)> > RmlEvents::reg_funcs;
+std::vector<std::function<bool(const Rml::String&, const Rml::String&)> > RmlEvents::unreg_funcs;
+std::vector<std::function<bool(const Rml::String&, const Rml::String&, const Rml::String&)> > RmlEvents::send_funcs;
 
-bool RmlEvents::AddEvent(const DKString& id, const DKString& type, std::function<bool(RmlEvents*)> func, DKObject* object){
-	DKDEBUGFUNC(id, type, "func", "object");
-	return RmlEvents::AddEvent(id, type, "", func, object);
+bool RmlEvents::AddEvent(const Rml::String& id, const Rml::String& type, std::function<bool(RmlEvents*)> func){
+	return RmlEvents::AddEvent(id, type, "", func);
 }
 
-bool RmlEvents::AddEvent(const DKString& id, const DKString& type, const DKString& jsreturn, std::function<bool(RmlEvents*)> func, DKObject* object){
-	DKDEBUGFUNC(id, type, jsreturn, "func", "object");
-	DKString _jsreturn = jsreturn;
-	replace(_jsreturn, "() { [ecmascript code] }", ""); //remove  () { [ecmascript code] }
+bool RmlEvents::AddEvent(const Rml::String& id, const Rml::String& type, const Rml::String& jsreturn, std::function<bool(RmlEvents*)> func){
+	Rml::String _jsreturn = jsreturn;
+	RmlUtility::replace(_jsreturn, "() { [ecmascript code] }", ""); //remove  () { [ecmascript code] }
 	if(id.empty())
-		return DKERROR("("+id+","+type+","+_jsreturn+"): No Id Specified\n");
+		return RMLERROR("("+id+","+type+","+_jsreturn+"): No Id Specified\n");
 	if(type.empty())
-		return DKERROR("("+id+","+type+","+_jsreturn+"): No Type Specified\n");
+		return RMLERROR("("+id+","+type+","+_jsreturn+"): No Type Specified\n");
 	RmlEvents* event = new RmlEvents;
 	event->id = id;
 	event->type = type;
 	event->jsreturn = _jsreturn;
-	event->object = object;
 	event->event_func = func;
 	for(unsigned int i = 0; i < events.size(); ++i){
 		if(event == events[i]){
-			DKWARN("Event already Exists, Re-registering. ("+id+" : "+type+" : "+_jsreturn+")\n.");
+			RMLWARN("Event already Exists, Re-registering. ("+id+" : "+type+" : "+_jsreturn+")\n.");
 			events[i] = event;
 			for(unsigned int nn=0; nn<reg_funcs.size(); ++nn)
 				reg_funcs[nn](id, type); //External Reg Functions
@@ -40,22 +38,21 @@ bool RmlEvents::AddEvent(const DKString& id, const DKString& type, const DKStrin
 	return true;
 }
 
-bool RmlEvents::SendEvent(const DKString& id, const DKString& type, const DKString& value){
-	if(!same(id,"DKLog") && !same(type,"second") && !same(type,"mousemove")) //prevent looping messages
-		DKDEBUGFUNC(id, type, value);
+bool RmlEvents::SendEvent(const Rml::String& id, const Rml::String& type, const Rml::String& value){
+	if(!RmlUtility::stringsMatch(id,"RmlLog") && !RmlUtility::stringsMatch(type,"second") && !RmlUtility::stringsMatch(type,"mousemove")) //prevent looping messages
 	if(type.empty())
-		return DKERROR("("+id+", ,"+value+"): No Type Specified \n");
+		return RMLERROR("("+id+", ,"+value+"): No Type Specified \n");
 	if(id.empty())
-		return DKERROR("( ,"+type+","+value+"): No Id Specified \n");
+		return RMLERROR("( ,"+type+","+value+"): No Id Specified \n");
 	//call the function directly
 	for(unsigned int i = 0; i < events.size(); ++i){
-		if((same(events[i]->id, id)) && same(events[i]->type, type)){
+		if((RmlUtility::stringsMatch(events[i]->id, id)) && RmlUtility::stringsMatch(events[i]->type, type)){
 			events[i]->data.clear();
 			events[i]->data.push_back(value);
 			events[i]->event_func(events[i]); //call the function linked to the event
 			if(i < events.size())
 				events[i]->data.clear(); //clear data after send
-			if(!same(id,"window"))
+			if(!RmlUtility::stringsMatch(id,"window"))
 				return true;
 		}
 	}
@@ -64,14 +61,12 @@ bool RmlEvents::SendEvent(const DKString& id, const DKString& type, const DKStri
 	return true;
 }
 
-bool RmlEvents::RemoveEvent(const DKString& id, const DKString& type, const DKString& jsreturn){
-	DKDEBUGFUNC(id, type, jsreturn);
-	DKString _jsreturn = jsreturn;
-	replace(_jsreturn, "() { [ecmascript code] }", ""); //remove  () { [ecmascript code] }
+bool RmlEvents::RemoveEvent(const Rml::String& id, const Rml::String& type, const Rml::String& jsreturn){
+	Rml::String _jsreturn = jsreturn;
+	RmlUtility::replace(_jsreturn, "() { [ecmascript code] }", ""); //remove  () { [ecmascript code] }
 	for(unsigned int i = 0; i < events.size(); ++i){
-		if(same(events[i]->id, id) && same(events[i]->type, type) && same(events[i]->jsreturn, _jsreturn)){
+		if(RmlUtility::stringsMatch(events[i]->id, id) && RmlUtility::stringsMatch(events[i]->type, type) && RmlUtility::stringsMatch(events[i]->jsreturn, _jsreturn)){
 			events.erase(events.begin()+i);
-			//i--;
 			return true; //This event should not exist twice.
 		}
 	}
@@ -80,10 +75,9 @@ bool RmlEvents::RemoveEvent(const DKString& id, const DKString& type, const DKSt
 	return true;
 }
 
-bool RmlEvents::RemoveEvents(const DKString& id, const DKString& type){
-	DKDEBUGFUNC(id, type);
+bool RmlEvents::RemoveEvents(const Rml::String& id, const Rml::String& type){
 	for(unsigned int i = 0; i < events.size(); ++i){
-		if(same(events[i]->id,id) && same(events[i]->type,type)){
+		if(RmlUtility::stringsMatch(events[i]->id,id) && RmlUtility::stringsMatch(events[i]->type,type)){
 			events.erase(events.begin()+i);
 			i--;
 		}
@@ -91,13 +85,12 @@ bool RmlEvents::RemoveEvents(const DKString& id, const DKString& type){
 	return true;
 }
 
-bool RmlEvents::RemoveEvents(const DKString& variable){
-	DKDEBUGFUNC(variable);
+bool RmlEvents::RemoveEvents(const Rml::String& variable){
 	//variable can be id or jsreturn
-	DKString _variable = variable;
-	replace(_variable, "() { [ecmascript code] }", ""); //remove  () { [ecmascript code] }
+	Rml::String _variable = variable;
+	RmlUtility::replace(_variable, "() { [ecmascript code] }", ""); //remove  () { [ecmascript code] }
 	for(unsigned int i=0; i < events.size(); ++i){
-		if(same(events[i]->id, _variable) || same(events[i]->jsreturn, _variable)){
+		if(RmlUtility::stringsMatch(events[i]->id, _variable) || RmlUtility::stringsMatch(events[i]->jsreturn, _variable)){
 			events.erase(events.begin()+i);
 			i--;
 		}
@@ -105,50 +98,44 @@ bool RmlEvents::RemoveEvents(const DKString& variable){
 	return true;
 }
 
-bool RmlEvents::RemoveEvents(DKObject* obj){
-	DKDEBUGFUNC("DKObject* obj");
+bool RmlEvents::RemoveEvents(){
 	for(unsigned int i = 0; i < events.size(); ++i){
-		if(events[i]->object == obj){
 			events.erase(events.begin()+i);
 			i--;
-		}
 	}
 	return true;
 }
 
-DKString RmlEvents::GetType(){
-	DKDEBUGRETURN(type);
+Rml::String RmlEvents::GetType(){
 	return type;
 }
 
-DKString RmlEvents::GetJSReturn(){
-	DKDEBUGRETURN(jsreturn);
+Rml::String RmlEvents::GetJSReturn(){
 	return jsreturn;
 }
 
-DKString RmlEvents::GetId(){
-	DKDEBUGRETURN(id);
+Rml::String RmlEvents::GetId(){
 	return id;
 }
 
-DKString RmlEvents::GetValue(){
-	DKString value = toString(data, ",");
-	return value;
-}
+//Rml::String RmlEvents::GetValue(){
+//	Rml::String value = std::to_string(data, ",");
+//	return value;
+//}
 
-DKString RmlEvents::GetValue(int n){
+Rml::String RmlEvents::GetValue(int n){
 	return data[n];
 }
 
 int RmlEvents::GetKeyNum(){
 	if (data.size() < 1) 
 		return 0;
-	return toInt(data[0]);
+	//return toInt(data[0]);
 }
 
-bool RmlEvents::RenameEventId(const DKString& oldID, const DKString& newID){
+bool RmlEvents::RenameEventId(const Rml::String& oldID, const Rml::String& newID){
 	for(unsigned int i = 0; i < events.size(); ++i){
-		if(same(events[i]->id, oldID))
+		if(RmlUtility::stringsMatch(events[i]->id, oldID))
 			events[i]->id = newID;
 	}
 	return true;

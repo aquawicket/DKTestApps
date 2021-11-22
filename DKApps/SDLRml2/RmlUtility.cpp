@@ -1,18 +1,18 @@
 #include "RmlUtility.h"
 
-bool RmlUtility::stringContains(const std::string str, const std::string has)
+bool RmlUtility::stringContains(const Rml::String& str, const Rml::String& has)
 {
 	//TODO
 	return false;
 }
 
-bool RmlUtility::replace(std::string& str, const std::string& with, const std::string& newstr)
+bool RmlUtility::replace(Rml::String& str, const Rml::String& with, const Rml::String& newstr)
 {
 	//TODO
 	return false;
 }
 
-bool RmlUtility::stringsMatch(const std::string& strA, const std::string& strB)
+bool RmlUtility::stringsMatch(const Rml::String& strA, const Rml::String& strB)
 {
 	//TODO
 	return false;

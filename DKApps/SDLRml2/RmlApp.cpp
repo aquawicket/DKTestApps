@@ -1,30 +1,3 @@
-/*
- * This source file is part of RmlUi, the HTML/CSS Interface Middleware
- *
- * For the latest information, see http://github.com/mikke89/RmlUi
- *
- * Copyright (c) 2008-2010 Nuno Silva
- * Copyright (c) 2019 The RmlUi Team, and contributors
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- */
 #if defined(WIN32) || defined(MAC)
 #include <GL/glew.h>
 #endif
@@ -37,16 +10,19 @@
 #include <SDL.h>
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
+#include <RmlUi/Core/StringUtilities.h>
 #include <RmlUi/Debugger/Debugger.h>
+
+#include "RmlApp.h"
 #include "RmlMain.h"
 #include "RmlFile.h"
+#include "RmlUtility.h"
  //#include <Shell.h>
  //#include <ShellFileInterface.h>
 #include "SDLRmlSystem.h"
 #include "SDLRmlRenderer.h"
 
-
-
+bool RmlApp::paused = false;
 
 int main(int /*argc*/, char** /*argv*/)
 {
@@ -82,6 +58,7 @@ int main(int /*argc*/, char** /*argv*/)
 
 	if (err != GLEW_OK)
 		fprintf(stderr, "GLEW ERROR: %s\n", glewGetErrorString(err));
+		//RMLERROR("ERROR"+ std::to_string(glewGetErrorString(err))+"\n")
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	glMatrixMode(GL_PROJECTION | GL_MODELVIEW);
@@ -104,13 +81,14 @@ int main(int /*argc*/, char** /*argv*/)
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
 	printf("SDL_GL_CONTEXT_MINOR_VERSION = %d\n", minor);
 
-	SDLRmlRenderer(renderer, screen);
+	SDLRmlRenderer rmlSdlRenderer(renderer, screen);
 	SDLRmlSystem systemInterface;
 
-	RmlFile fileInterface(std::filesystem::current_path());
+	Rml::String assets{ std::filesystem::current_path().u8string() };
+	RmlFile fileInterface(assets);
 
 	Rml::SetFileInterface(&fileInterface);
-	Rml::SetRenderInterface(&renderer);
+	Rml::SetRenderInterface(&rmlSdlRenderer);
 	Rml::SetSystemInterface(&systemInterface);
 
 	if (!Rml::Initialise())
@@ -129,33 +107,24 @@ int main(int /*argc*/, char** /*argv*/)
 	};
 
 	for (const FontFace& face : font_faces)
-	{
-		//Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
-		Rml::LoadFontFace(face.filename, face.fallback_face); //EDIT: digitalknob
-	}
+		Rml::LoadFontFace(face.filename, face.fallback_face);
 
 	Rml::Context* Context = Rml::CreateContext("default",
 		Rml::Vector2i(window_width, window_height));
 
 	Rml::Debugger::Initialise(Context);
-
-	//Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
 	Rml::ElementDocument* Document = Context->LoadDocument("SDLRml.rml"); //EDIT: digitalknob
 
-	if (Document)
-	{
+	if (Document){
 		Document->Show();
 		fprintf(stdout, "\nDocument loaded");
 	}
-	else
-	{
+	else{
 		fprintf(stdout, "\nDocument is nullptr");
 	}
 
 	bool done = false;
-
-	while (!done)
-	{
+	while (!done){
 		SDL_Event event;
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
@@ -164,42 +133,31 @@ int main(int /*argc*/, char** /*argv*/)
 		Context->Render();
 		SDL_RenderPresent(renderer);
 
-		while (SDL_PollEvent(&event))
-		{
-			switch (event.type)
-			{
+		while (SDL_PollEvent(&event)){
+			switch (event.type){
 			case SDL_QUIT:
 				done = true;
 				break;
-
 			case SDL_MOUSEMOTION:
-				Context->ProcessMouseMove(event.motion.x, event.motion.y, SystemInterface.GetKeyModifiers());
+				Context->ProcessMouseMove(event.motion.x, event.motion.y, systemInterface.GetKeyModifiers());
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				Context->ProcessMouseButtonDown(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
+				Context->ProcessMouseButtonDown(systemInterface.TranslateMouseButton(event.button.button), systemInterface.GetKeyModifiers());
 				break;
-
 			case SDL_MOUSEBUTTONUP:
-				Context->ProcessMouseButtonUp(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
+				Context->ProcessMouseButtonUp(systemInterface.TranslateMouseButton(event.button.button), systemInterface.GetKeyModifiers());
 				break;
-
 			case SDL_MOUSEWHEEL:
-				Context->ProcessMouseWheel(float(event.wheel.y), SystemInterface.GetKeyModifiers());
+				Context->ProcessMouseWheel(float(event.wheel.y), systemInterface.GetKeyModifiers());
 				break;
-
 			case SDL_KEYDOWN:
-			{
 				// Intercept F8 key stroke to toggle RmlUi's visual debugger tool
-				if (event.key.keysym.sym == SDLK_F8)
-				{
+				if (event.key.keysym.sym == SDLK_F8){
 					Rml::Debugger::SetVisible(!Rml::Debugger::IsVisible());
 					break;
 				}
-
-				Context->ProcessKeyDown(SystemInterface.TranslateKey(event.key.keysym.sym), SystemInterface.GetKeyModifiers());
+				Context->ProcessKeyDown(systemInterface.TranslateKey(event.key.keysym.sym), systemInterface.GetKeyModifiers());
 				break;
-			}
-
 			default:
 				break;
 			}
@@ -208,16 +166,9 @@ int main(int /*argc*/, char** /*argv*/)
 	}
 
 	Rml::Shutdown();
-
 	SDL_DestroyRenderer(renderer);
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(screen);
 	SDL_Quit();
-
 	return 0;
-}
-
-
-void RmlApp::Exit() {
-
 }

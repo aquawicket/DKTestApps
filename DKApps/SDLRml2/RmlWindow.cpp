@@ -35,7 +35,7 @@ bool RmlWindow::TestInt(int& input, int& output)
 ///
 ///  If "RmlWindow::TestString()" calls a registered function, it will alter the variable and send it back.
 ///  \a see: SDLWindow.h
-bool RmlWindow::TestString(std::string& input, std::string& output)
+bool RmlWindow::TestString(Rml::String& input, Rml::String& output)
 {
 	if(RmlClass::HasFunc("SDLWindow::TestString")){
 		return RmlClass::CallFunc("SDLWindow::TestString", &input, &output);
@@ -65,7 +65,7 @@ bool RmlWindow::TestReturnInt(int& output)
 ///
 ///  If "RmlWindow::TestReturnString()" calls a registered function, it will return a variable.
 ///  \ see: SDLWindow.h
-bool RmlWindow::TestReturnString(std::string& output)
+bool RmlWindow::TestReturnString(Rml::String& output)
 {
 	if(RmlClass::HasFunc("SDLWindow::TestReturnString")){
 		return RmlClass::CallFunc("SDLWindow::TestReturnString", NULL, &output);
@@ -196,7 +196,7 @@ bool RmlWindow::GetPixelRatio(float& ratio)
 	return false;
 }
 
-bool RmlWindow::GetTitle(std::string& title)
+bool RmlWindow::GetTitle(Rml::String& title)
 {
 	if(RmlClass::HasFunc("CefWindow::GetTitle")){
 		return RmlClass::CallFunc("CefWindow::GetTitle", NULL, &title);
@@ -320,7 +320,7 @@ bool RmlWindow::Maximize()
 	return false;
 }
 
-bool RmlWindow::MessageBox(std::string& msg)
+bool RmlWindow::MessageBox(Rml::String& msg)
 {
 	if(RmlClass::HasFunc("CefWindow::MessageBox")){
 		return RmlClass::CallFunc("CefWindow::MessageBox", &msg, NULL);
@@ -380,7 +380,7 @@ bool RmlWindow::SetHeight(int& h)
 	return false;
 }
 
-bool RmlWindow::SetIcon(std::string& file)
+bool RmlWindow::SetIcon(Rml::String& file)
 {
 	if(RmlClass::HasFunc("CefWindow::SetIcon")){
 		return RmlClass::CallFunc("CefWindow::SetIcon", &file, NULL);
@@ -395,7 +395,7 @@ bool RmlWindow::SetIcon(std::string& file)
 	return false;
 }
 
-bool RmlWindow::SetTitle(std::string& string)
+bool RmlWindow::SetTitle(Rml::String& string)
 {
 	if(RmlClass::HasFunc("CefWindow::SetTitle")){
 		return RmlClass::CallFunc("CefWindow::SetTitle", &string, NULL);

@@ -68,40 +68,40 @@ bool SDLRml::Handle(SDL_Event *event) {
             break;
 #ifdef ANDROID
         case SDL_KEYDOWN:
-			//RMLINFO("SDLRml::SDL_KEYDOWN("+toString((int)event->key.keysym.sym)+")\n");
+			//RMLINFO("SDLRml::SDL_KEYDOWN("+std::to_string((int)event->key.keysym.sym)+")\n");
 			rmlMain->context->ProcessKeyDown(systemInterface->TranslateKey(event->key.keysym.sym), systemInterface->GetKeyModifiers());
 			if(event->key.keysym.sym == 13) //enter
 				rmlMain->context->ProcessTextInput("\n");
             break;
 #else
 		case SDL_KEYDOWN:{
-			//RMLINFO("SDLWindow::SDL_KEYDOWN("+toString(event->key.keysym.sym)+")\n");
+			//RMLINFO("SDLWindow::SDL_KEYDOWN("+std::to_string(event->key.keysym.sym)+")\n");
 			/*
 			if(event->key.keysym.sym == 0){ return true; }
 			if(event->key.keysym.sym > 96 && event->key.keysym.sym < 123){ //letter
 				if(event->key.keysym.mod & KMOD_SHIFT && event->key.keysym.mod & KMOD_CAPS){ //both = lowercase
-					//RmlEvent::SendEvent("window", "keypress", toString(SDLWindow::sdlCharCode[event->key.keysym.sym]));
+					//RmlEvent::SendEvent("window", "keypress", std::to_string(SDLWindow::sdlCharCode[event->key.keysym.sym]));
 					rmlMain->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
 				}
 				else if(event->key.keysym.mod & KMOD_SHIFT || event->key.keysym.mod & KMOD_CAPS){ //1 = uppercase
-					//RmlEvent::SendEvent("window", "keypress", toString(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]));
+					//RmlEvent::SendEvent("window", "keypress", std::to_string(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]));
 					rmlMain->context->ProcessTextInput(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]);
 				}
 				else{
-					//RmlEvent::SendEvent("window", "keypress", toString(SDLWindow::sdlCharCode[event->key.keysym.sym])); //lowercase
+					//RmlEvent::SendEvent("window", "keypress", std::to_string(SDLWindow::sdlCharCode[event->key.keysym.sym])); //lowercase
 					rmlMain->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
 				}
 			}
 			else if(event->key.keysym.mod & KMOD_SHIFT){ //other character keys
-				//RmlEvent::SendEvent("window", "keypress", toString(SDLWindow::sdlShiftCharCode[event->key.keysym.sym])); //shifted symbol
+				//RmlEvent::SendEvent("window", "keypress", std::to_string(SDLWindow::sdlShiftCharCode[event->key.keysym.sym])); //shifted symbol
 				rmlMain->context->ProcessTextInput(SDLWindow::sdlShiftCharCode[event->key.keysym.sym]);
 			}
 			else{
-				//RmlEvent::SendEvent("window", "keypress", toString(SDLWindow::sdlCharCode[event->key.keysym.sym])); //symbol
+				//RmlEvent::SendEvent("window", "keypress", std::to_string(SDLWindow::sdlCharCode[event->key.keysym.sym])); //symbol
 				rmlMain->context->ProcessTextInput(SDLWindow::sdlCharCode[event->key.keysym.sym]);
 			}
 			*/
-			//RmlEvent::SendEvent("window", "keydown", toString(SDLWindow::sdlKeyCode[event->key.keysym.sym])); //keycode
+			//RmlEvent::SendEvent("window", "keydown", std::to_string(SDLWindow::sdlKeyCode[event->key.keysym.sym])); //keycode
 			//rmlMain->context->ProcessKeyDown((Rml::Input::KeyIdentifier)SDLWindow::sdlKeyCode[event->key.keysym.sym], systemInterface->GetKeyModifiers());
 			rmlMain->context->ProcessKeyDown(systemInterface->TranslateKey(event->key.keysym.sym), systemInterface->GetKeyModifiers());
 			//TODO: If enter is pressed, send enter event on ProcessTextInput

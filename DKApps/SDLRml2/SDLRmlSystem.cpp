@@ -397,25 +397,25 @@ bool SDLRmlSystem::LogMessage(Rml::Log::Type type, const Rml::String& message){
 		type = Rml::Log::LT_DEBUG;
 	switch(type){
 	case Rml::Log::LT_ALWAYS:
-		RMLINFO("[Rml] "+std::string(message)+"\n");
+		RMLINFO("[Rml] "+Rml::String(message)+"\n");
 		break;
 	case Rml::Log::LT_ERROR:
-		RMLERROR("[Rml] "+std::string(message)+"\n");
+		RMLERROR("[Rml] "+Rml::String(message)+"\n");
 		break;
 	case Rml::Log::LT_ASSERT:
-		RMLASSERT("[Rml] "+std::string(message)+"\n");
+		RMLASSERT("[Rml] "+Rml::String(message)+"\n");
 		break;
 	case Rml::Log::LT_WARNING:
-		RMLWARN("[Rml] "+std::string(message)+"\n");
+		RMLWARN("[Rml] "+Rml::String(message)+"\n");
 		break;
 	case Rml::Log::LT_INFO:
-		RMLINFO("[Rml] "+std::string(message)+"\n");
+		RMLINFO("[Rml] "+Rml::String(message)+"\n");
 		break;
 	case Rml::Log::LT_DEBUG:
-		RMLDEBUG("[Rml] "+std::string(message)+"\n");
+		RMLDEBUG("[Rml] "+Rml::String(message)+"\n");
 		break;
     case Rml::Log::LT_MAX:
-        RMLVERBOSE("[Rml] "+std::string(message)+"\n");
+        RMLVERBOSE("[Rml] "+Rml::String(message)+"\n");
         break;
 	};
 	return true;

@@ -8,31 +8,33 @@
 class RmlFile : public Rml::FileInterface 
 {
 public:
+	RmlFile(const Rml::String& assets);
 	static RmlFile* Get();
-	static bool ChDir(const std::string& path);
-	static bool pathExists(const std::string path);
-	static bool MakeDir(const std::string path);
-	static bool PathExists(const std::string path);
-	static bool GetFilename(const std::string path, std::string& filename);
-	static bool VerifyPath(std::string& path);
-	static bool FileToString(const std::string file, std::string& str);
-	static bool GetDirectoryContents(const std::string& path, RmlStringArray& contents);
-	static bool IsDirectory(const std::string& path);
-	static bool GetExtention(const std::string& path, std::string& ext);
-	static bool GetExeName(std::string& path);
-	static bool GetExePath(std::string& path);
-	static bool GetModifiedTime(const std::string& file, std::string& time);
-	static bool RemoveExtention(std::string& file);
+	static bool ChDir(const Rml::String& path);
+	static bool pathExists(const Rml::String path);
+	static bool MakeDir(const Rml::String path);
+	static bool PathExists(const Rml::String path);
+	static bool GetFilename(const Rml::String path, Rml::String& filename);
+	static bool VerifyPath(Rml::String& path);
+	static bool FileToString(const Rml::String file, Rml::String& str);
+	static bool GetDirectoryContents(const Rml::String& path, Rml::StringList& contents);
+	static bool IsDirectory(const Rml::String& path);
+	static bool GetExtention(const Rml::String& path, Rml::String& ext);
+	static bool GetExeName(Rml::String& path);
+	static bool GetExePath(Rml::String& path);
+	static bool GetModifiedTime(const Rml::String& file, Rml::String& time);
+	static bool RemoveExtention(Rml::String& file);
 
-	bool FileInterface(const std::filesystem::path& root);
+	bool FileInterface(const Rml::String& root);
 	virtual Rml::FileHandle Open(const Rml::String& path);
 	virtual void Close(Rml::FileHandle file);
 	virtual size_t Read(void* buffer, size_t size, Rml::FileHandle file);
 	virtual bool Seek(Rml::FileHandle file, long offset, int origin);
 	virtual size_t Tell(Rml::FileHandle file);
-	bool PathExists(const std::string& path);
-	static RmlFile* rmlFile;
-	std::string _root;
+	bool PathExists(const Rml::String& path);
+	
+	Rml::String _assets;
+	static RmlFile* instance;
 };
 
 #endif //RmlFile_H

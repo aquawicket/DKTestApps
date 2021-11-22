@@ -3,107 +3,113 @@
 #include "RmlUtility.h"
 
 
+RmlFile::RmlFile(const Rml::String& assets) {
+	instance = this;
+	_assets = assets;
+}
+
 RmlFile* RmlFile::Get() {
-	return rmlFile;
+	return instance;
 }
 
-bool RmlFile::ChDir(const std::string& path)
+bool RmlFile::ChDir(const Rml::String& path)
 {
 	//TODO
 	return false;
 }
 
-bool RmlFile::pathExists(const std::string path)
+bool RmlFile::pathExists(const Rml::String path)
 {
 	//TODO
 	return false;
 }
 
-bool RmlFile::MakeDir(const std::string path)
+bool RmlFile::MakeDir(const Rml::String path)
 {
 	//TODO
 	return false;
 }
 
-bool RmlFile::PathExists(const std::string path)
+bool RmlFile::PathExists(const Rml::String path)
 {
 	//TODO
 	return false;
 }
 
-bool RmlFile::GetFilename(const std::string path, std::string& filename)
+bool RmlFile::GetFilename(const Rml::String path, Rml::String& filename)
 {
 	//TODO
 	return false;
 }
 
-bool RmlFile::VerifyPath(std::string& path)
-{
-	//TODO
-	return false;
-}
-
-
-bool RmlFile::GetDirectoryContents(const std::string& path, RmlStringArray& contents)
-{
-	//TODO
-	return false;
-}
-
-bool RmlFile::IsDirectory(const std::string& path) 
-{
-	//TODO
-	return false;
-}
-
-bool RmlFile::GetExtention(const std::string& path, std::string& ext)
-{
-	//TODO
-	return false;
-}
-
-bool RmlFile::GetExeName(std::string& path)
-{
-	//TODO
-	return false;
-}
-
-bool RmlFile::GetExePath(std::string& path)
-{
-	//TODO
-	return false;
-}
-
-bool RmlFile::GetModifiedTime(const std::string & file, std::string & time)
-{
-	//TODO
-	return false;
-}
-
-bool RmlFile::RemoveExtention(std::string& file)
+bool RmlFile::VerifyPath(Rml::String& path)
 {
 	//TODO
 	return false;
 }
 
 
-
-
-bool RmlFile::FileToString(const std::string file, std::string& str)
+bool RmlFile::GetDirectoryContents(const Rml::String& path, Rml::StringList& contents)
 {
 	//TODO
 	return false;
 }
 
-bool RmlFile::FileInterface(const std::filesystem::path& root)
+bool RmlFile::IsDirectory(const Rml::String& path) 
 {
-	rmlFile = this;
-	std::string _root{ root.u8string() };
+	//TODO
+	return false;
+}
+
+bool RmlFile::GetExtention(const Rml::String& path, Rml::String& ext)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::GetExeName(Rml::String& path)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::GetExePath(Rml::String& path)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::GetModifiedTime(const Rml::String & file, Rml::String & time)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::RemoveExtention(Rml::String& file)
+{
+	//TODO
+	return false;
+}
+
+
+
+
+bool RmlFile::FileToString(const Rml::String file, Rml::String& str)
+{
+	//TODO
+	return false;
+}
+
+bool RmlFile::FileInterface(const Rml::String& assets)
+{
+	instance = this;
+	_assets = assets;
+	return true;
 }
 
 Rml::FileHandle RmlFile::Open(const Rml::String& path)
 {
-	std::string _path = path;
+	Rml::String _path = path;
 	//if (RmlUtility::stringContains(_path, ":/")) { //could be http:// , https:// or C:/
 		//absolute path
 	//}
@@ -117,13 +123,13 @@ Rml::FileHandle RmlFile::Open(const Rml::String& path)
 		else if(!RmlFile::VerifyPath(_path)){
 			return RMLERROR("could not locate path ("+_path+")");
 		}
-		//if(_path.find("/home") == std::string::npos) //url may have unix home directory
+		//if(_path.find("/home") == Rml::String::npos) //url may have unix home directory
 		//	_path = RmlMain::Get()->workingPath+_path;
 		//return ERROR("RmlMain::LoadUrl(): cannot load relative paths\n");
 	//}
 	if(RmlUtility::stringContains(_path,"://")){
-		RmlFile::MakeDir(_root+"/Cache");
-		std::string filename;
+		RmlFile::MakeDir(_assets+"/Cache");
+		Rml::String filename;
 		RmlFile::GetFilename(_path, filename);
 		//remove everything after ? in the filename if there is one
 		unsigned long found = filename.rfind("?");
@@ -171,7 +177,8 @@ size_t RmlFile::Tell(Rml::FileHandle file){
 }
 
 
-bool RmlFile::PathExists(const std::string& path)
+bool RmlFile::PathExists(const Rml::String& path)
 {
 	//TODO
+	return false;
 }

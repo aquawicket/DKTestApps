@@ -10,14 +10,13 @@
 class SDLWindow
 {
 public:
-	bool Init();
+	SDLWindow();
 	bool End();
 	static SDLWindow* Get();
 	bool TestInt(const void* input, void* output);
 	bool TestString(const void* input, void* output);
 	bool TestReturnInt(const void* input, void* output);
 	bool TestReturnString(const void* input, void* output);
-
 	bool Fullscreen(const void* input, void* output);
 	bool GetClipboard(const void* input, void* output);
 	bool GetHandle(const void* input, void* output);
@@ -57,15 +56,15 @@ public:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	//SDL_GLContext context;
-	std::string gl_major_version;
-	std::string gl_minor_version;
-	std::string gl_version;
-	std::string gl_vendor;
-	std::string gl_renderer;
-	//std::string gl_shading;
-	std::string gl_extensions;
+	Rml::String gl_major_version;
+	Rml::String gl_minor_version;
+	Rml::String gl_version;
+	Rml::String gl_vendor;
+	Rml::String gl_renderer;
+	//Rml::String gl_shading;
+	Rml::String gl_extensions;
 
-	std::string mTitle;
+	Rml::String mTitle;
 	int winX;
 	int winY;
 	unsigned int width;
@@ -96,6 +95,8 @@ public:
 	static void AddUpdateFunc(void (T::* func)(), T* _this){
 		update_funcs.push_back(std::bind(func, _this));
 	}
+
+	static SDLWindow* sdlWindow;
 };
 
 #endif //SDLWindow_H
