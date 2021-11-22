@@ -65,60 +65,60 @@ Rml::String Shell::FindSamplesRoot()
 	
 	char real_buf[PATH_MAX + 1] = {0};
 	testPath = appPath+"/Samples";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../Samples";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../Samples";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../Samples";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../../Samples";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../../../Samples";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	
 	testPath = appPath+"/../../../../../../Samples";
 	printf("testPath = %s\n", testPath.c_str());
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	printf("resolved_path = %s\n", resolved_path);
 	
 	testPath = appPath+"/../../../../../../../Samples";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../../../../../../Samples";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	
 	testPath = appPath+"/assets";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../assets";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../assets";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../assets";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../../assets";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../../../assets";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../../../../assets";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 	testPath = appPath+"/../../../../../../../assets";
-	real_buf = {0};
+	//real_buf = {0};
 	if(realpath(testPath.c_str(), real_buf)) { return Rml::String(real_buf); }
 
     if(!real_buf){
