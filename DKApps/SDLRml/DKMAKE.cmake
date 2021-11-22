@@ -15,15 +15,19 @@ DKDEPEND(sdl2_image)
 DKDEPEND(rmlui rmlui_debugger)
 
 DKINCLUDE(${RMLUI}/Samples/shell/include)
-ADD_SOURCE(${RMLUI}/Samples/shell/*)
-REMOVE_SOURCE(
-	App.h
-	App.cpp
-	InputMacOSX.* 
-	InputX11.*
-	X11MacroZapper.*
-	ShellRenderInterfaceExtensionsOpenGL_X11.*
-	ShellX11.*
-	ShellMacOSX.*
-	ShellRenderInterfaceExtensionsOpenGL_MacOSX.*
-)
+ADD_SOURCE(${RMLUI}/Samples/shell/include/*.*)
+ADD_SOURCE(${RMLUI}/Samples/shell/src/*.*)
+ADD_SOURCE(${RMLUI}/Samples/basic/sdl2/src/RenderInterfaceSDL2.*)
+ADD_SOURCE(${RMLUI}/Samples/basic/sdl2/src/SystemInterfaceSDL2.*)
+IF(WIN)
+	ADD_SOURCE(${RMLUI}/Samples/shell/include/win32/*.*)
+	ADD_SOURCE(${RMLUI}/Samples/shell/src/win32/*.*)
+ENDIF()
+IF(MAC OR IOS)
+	ADD_SOURCE(${RMLUI}/Samples/shell/include/macosx/*.*)
+	ADD_SOURCE(${RMLUI}/Samples/shell/src/macosx/*.*)
+ENDIF()
+IF(LINUX)
+	ADD_SOURCE(${RMLUI}/Samples/shell/include/x11/*.*)
+	ADD_SOURCE(${RMLUI}/Samples/shell/src/x11/*.*)
+ENDIF()
