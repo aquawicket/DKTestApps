@@ -1,6 +1,6 @@
 DKDEPEND(opengl)
 DKDEPEND(agl)
-#DKDEPEND(xquartz)
+DKDEPEND(xquartz)
 DKDEPEND(libx11-dev)
 DKDEPEND(shlwapi.lib)
 DKDEPEND(zlib)
@@ -10,13 +10,13 @@ DKDEPEND(libjpeg-turbo)
 DKDEPEND(libwebp)
 DKDEPEND(tiff)
 DKDEPEND(glew)
-#DKDEPEND(sdl2)
-#DKDEPEND(sdl2_image)
+DKDEPEND(sdl2)
+DKDEPEND(sdl2_image)
 DKDEPEND(rmlui rmlui_debugger)
 
 DKINCLUDE(${RMLUI}/Samples/shell/include)
-DKSET(SRC_INCLUDE ${RMLUI}/Samples/shell/*)
-DKSET(SRC_EXCLUDE
+ADD_SOURCE(${RMLUI}/Samples/shell/*)
+REMOVE_SOURCE(
 	App.h
 	App.cpp
 	InputMacOSX.* 
@@ -25,4 +25,5 @@ DKSET(SRC_EXCLUDE
 	ShellRenderInterfaceExtensionsOpenGL_X11.*
 	ShellX11.*
 	ShellMacOSX.*
-	ShellRenderInterfaceExtensionsOpenGL_MacOSX.*)
+	ShellRenderInterfaceExtensionsOpenGL_MacOSX.*
+)
