@@ -39,7 +39,7 @@ Rml::String Shell::FindSamplesRoot()
 	Rml::String out(resolved_path);
 #else
 	Rml::String testPath = "";
-	char* resolved_path = "";
+	char* resolved_path = NULL;
 	char buf [PATH_MAX];
 	uint32_t bufsize = PATH_MAX;
 	if(!_NSGetExecutablePath(buf, &bufsize))
@@ -63,6 +63,8 @@ Rml::String Shell::FindSamplesRoot()
 	testPath = appPath+"/../../../../../../../Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 	testPath = appPath+"/../../../../../../../../Samples";
+	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
+	
 	testPath = appPath+"/assets";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 	testPath = appPath+"/../assets";
@@ -79,11 +81,10 @@ Rml::String Shell::FindSamplesRoot()
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 	testPath = appPath+"/../../../../../../../assets";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
-	testPath = appPath+"/../../../../../../../../assets";
 
     if(!resolved_path){
-		printf()
-        return "ERROR: could not locate assets path";
+        printf("ERROR: could not locate assets path");
+		return "";
 	}
     Rml::String out(resolved_path);
 #endif
