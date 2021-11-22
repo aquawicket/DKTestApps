@@ -1,12 +1,12 @@
 #include <RmlUi/Core.h>
 #include "Shell.h"
-#include "Shlwapi.h"
 
 Rml::String Shell::FindSamplesRoot() 
 {
 	Rml::String path = "";
 	
 #ifdef RMLUI_PLATFORM_WIN32
+#include "Shlwapi.h"
 	if(path.empty() && PathFileExistsA("../Samples"))
 		path = "../Samples";
 	if(path.empty() && PathFileExistsA("../../Samples"))
