@@ -44,23 +44,22 @@ Rml::String Shell::FindSamplesRoot()
 #endif
 
 #ifdef RMLUI_PLATFORM_UNIX
-#ifdef RMLUI_PLATFORM_MACOSX
 	Rml::String testPath = "";
 	char* resolved_path = NULL;
 	char buf [PATH_MAX];
-	uint32_t bufsize = PATH_MAX;
-	if(!_NSGetExecutablePath(buf, &bufsize))
-    puts(buf);
-	Rml::String appPath(buf);
-#endif
-#ifdef RMLUI_PLATFORM_LINUX
-	Rml::String testPath = "";
-	char* resolved_path = NULL;
-	char buf [PATH_MAX];
-	ssize_t count = readlink("/proc/self/exe", buf, PATH_MAX);
-	if (count != -1)
-	Rml::String appPath(buf);
-#endif
+	
+	#ifdef RMLUI_PLATFORM_MACOSX
+		uint32_t bufsize = PATH_MAX;
+		if(!_NSGetExecutablePath(buf, &bufsize))
+			puts(buf);
+		Rml::String appPath(buf);
+	#endif
+	#ifdef RMLUI_PLATFORM_LINUX
+		ssize_t count = readlink("/proc/self/exe", buf, PATH_MAX);
+		if (count != -1)
+			Rml::String appPath(buf);
+	#endif
+	
 	testPath = appPath+"/Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 	testPath = appPath+"/../Samples";
