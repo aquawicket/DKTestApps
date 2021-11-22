@@ -6,6 +6,8 @@
 #else
     #include <sys/stat.h>
     #include <unistd.h>
+	#include <mach-o/dyld.h>
+	#include <limits.h>
 #endif
     
 
@@ -32,11 +34,19 @@ Rml::String Shell::FindSamplesRoot()
 	GetFullPathName(path.c_str(), 256, resolved_path, &fileExt);
 	Rml::String out(resolved_path);
 #else
+	/*
     char *buf;
     buf=(char *)malloc(100*sizeof(char));
     getcwd(buf,100);
     printf("\n %s \n",buf);
     Rml::String appPath(buf);
+	*/
+	
+	char buf [PATH_MAX];
+	uint32_t bufsize = PATH_MAX;
+	if(!_NSGetExecutablePath(buf, &bufsize))
+    puts(buf);
+	Rml::String appPath(buf);
     
     struct stat buffer = {};
     if(!path.empty() && stat (path.c_str(), &buffer) != 0){
