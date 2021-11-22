@@ -57,7 +57,7 @@ Rml::String Shell::FindSamplesRoot()
 	Rml::String testPath = "";
 	char* resolved_path = NULL;
 	char buf [PATH_MAX];
-	ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+	ssize_t count = readlink("/proc/self/exe", buf, PATH_MAX);
 	if (count != -1)
 	Rml::String appPath(buf);
 #endif
