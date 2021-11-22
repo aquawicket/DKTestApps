@@ -96,20 +96,6 @@ int main(int /*argc*/, char** /*argv*/)
 	Rml::SetFileInterface(&FileInterface);
 	Rml::SetRenderInterface(&Renderer);
 	Rml::SetSystemInterface(&SystemInterface);
-
-	//print opengl and sdl info
-	printf("OpenGL Vendor:   %s\n", glGetString(GL_VENDOR));
-	printf("OpenGL Renderer: %s\n", glGetString(GL_RENDERER));
-	printf("OpenGL Version:  %s\n", glGetString(GL_VERSION));
-	int profile;
-	SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
-	printf("SDL_GL_CONTEXT_PROFILE_MASK = %d\n", profile);
-	int major;
-	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major);
-	printf("SDL_GL_CONTEXT_MAJOR_VERSION = %d\n", major);
-	int minor;
-	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
-	printf("SDL_GL_CONTEXT_MINOR_VERSION = %d\n", minor);
 	
 	if (!Rml::Initialise())
 		return 1;
@@ -150,6 +136,20 @@ int main(int /*argc*/, char** /*argv*/)
 
 	bool done = false;
 
+	//print opengl and sdl info
+	printf("OpenGL Vendor:   %s\n", glGetString(GL_VENDOR));
+	printf("OpenGL Renderer: %s\n", glGetString(GL_RENDERER));
+	printf("OpenGL Version:  %s\n", glGetString(GL_VERSION));
+	int profile;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
+	printf("SDL_GL_CONTEXT_PROFILE_MASK = %d\n", profile);
+	int major;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major);
+	printf("SDL_GL_CONTEXT_MAJOR_VERSION = %d\n", major);
+	int minor;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
+	printf("SDL_GL_CONTEXT_MINOR_VERSION = %d\n", minor);
+	
 	while (!done)
 	{
 		SDL_Event event;
