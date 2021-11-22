@@ -65,7 +65,7 @@ Rml::String Shell::FindSamplesRoot()
 	
 	testPath = appPath + "/";
 	unsigmed int b=
-	for(unsigned init i=0; i<10; i++){
+	for(unsigned int i=0; i<10; i++){
 		Rml::String doPath = testPath+"Samples";
 		printf("doPath = %s\n", doPath.c_str());
 		resolved_path = realpath(testPath.c_str(), NULL);
