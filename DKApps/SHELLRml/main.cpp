@@ -45,22 +45,22 @@ void GameLoop()
 	shell_renderer->PresentRenderBuffer();
 }
 
-#if defined RMLUI_PLATFORM_WIN32
-#include <windows.h>
-int APIENTRY WinMain(HINSTANCE RMLUI_UNUSED_PARAMETER(instance_handle), HINSTANCE RMLUI_UNUSED_PARAMETER(previous_instance_handle), char* RMLUI_UNUSED_PARAMETER(command_line), int RMLUI_UNUSED_PARAMETER(command_show))
-#else
+//#if defined RMLUI_PLATFORM_WIN32
+//#include <windows.h>
+//int APIENTRY WinMain(HINSTANCE RMLUI_UNUSED_PARAMETER(instance_handle), HINSTANCE RMLUI_UNUSED_PARAMETER(previous_instance_handle), char* RMLUI_UNUSED_PARAMETER(command_line), int RMLUI_UNUSED_PARAMETER(command_show))
+//#else
 int main(int RMLUI_UNUSED_PARAMETER(argc), char** RMLUI_UNUSED_PARAMETER(argv))
-#endif
+//#endif
 {
-#ifdef RMLUI_PLATFORM_WIN32
-	RMLUI_UNUSED(instance_handle);
-	RMLUI_UNUSED(previous_instance_handle);
-	RMLUI_UNUSED(command_line);
-	RMLUI_UNUSED(command_show);
-#else
+//#ifdef RMLUI_PLATFORM_WIN32
+	//RMLUI_UNUSED(instance_handle);
+	//RMLUI_UNUSED(previous_instance_handle);
+	//RMLUI_UNUSED(command_line);
+	//RMLUI_UNUSED(command_show);
+//#else
 	RMLUI_UNUSED(argc);
 	RMLUI_UNUSED(argv);
-#endif
+//#endif
 
 #ifdef RMLUI_PLATFORM_WIN32
         AllocConsole();
