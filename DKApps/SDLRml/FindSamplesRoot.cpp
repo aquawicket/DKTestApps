@@ -1,19 +1,20 @@
 #include <RmlUi/Core.h>
 #include "Shell.h"
-
-#include <windows.h>
-#include <tchar.h>
-#include <stdio.h>
+#include "Shlwapi.h"
 
 Rml::String Shell::FindSamplesRoot() 
 {
 	Rml::String path = "";
 	
-#ifdef WIN32
-	if(PathFileExistsA("../Samples")
+#ifdef RMLUI_PLATFORM_WIN32
+	if(path.empty() && PathFileExistsA("../Samples"))
 		path = "../Samples";
-	if(PathFileExistsA("../../Samples")
+	if(path.empty() && PathFileExistsA("../../Samples"))
 		path = "../../Samples";
+	if (path.empty() && PathFileExistsA("../assets"))
+		path = "../assets";
+	if (path.empty() && PathFileExistsA("../../assets"))
+		path = "../../assets";
 	char *fileExt;
 	char resolved_path[256];
 	GetFullPathName(path.c_str(), 256, resolved_path, &fileExt);
