@@ -32,5 +32,4 @@ ENDIF()
 
 # rmlui sfml
 DKINCLUDE(${RMLUI}/Samples/basic/sfml2/src)
-ADD_SOURCE(${RMLUI}/Samples/basic/sfml2/src/RenderInterfaceSFML.*)
-ADD_SOURCE(${RMLUI}/Samples/basic/sfml2/src/SystemInterfaceSFML.*)
+ADD_SOURCE(${RMLUI}/Samples/basic/sfml2/src/*.*)

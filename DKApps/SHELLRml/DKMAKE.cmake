@@ -28,3 +28,4 @@ IF(LINUX)
 	ADD_SOURCE(${RMLUI}/Samples/shell/include/x11/*.*)
 	ADD_SOURCE(${RMLUI}/Samples/shell/src/x11/*.*)
 ENDIF()
+#ADD_SOURCE(${RMLUI}/Samples/basic/loaddocument/src/*.*) # main.cpp
