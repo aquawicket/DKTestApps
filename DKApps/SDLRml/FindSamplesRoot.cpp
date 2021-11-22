@@ -83,11 +83,10 @@ Rml::String Shell::FindSamplesRoot()
 	memset(real_buf, 0, sizeof real_buf);
 	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
 	
-	testPath = appPath+"/../../../../../../Samples";
-	printf("testPath = %s\n", testPath.c_str());
+	testPath = appPath+"/../../../../../../Samples"; printf("testPath = %s\n", testPath.c_str());
 	memset(real_buf, 0, sizeof real_buf);
 	if(resolved_path = realpath(testPath.c_str(), real_buf)) { return Rml::String(resolved_path); }
-	printf("resolved_path = %s\n", resolved_path);
+	printf("real_buf = %s\n", real_buf);
 	
 	testPath = appPath+"/../../../../../../../Samples";
 	memset(real_buf, 0, sizeof real_buf);
