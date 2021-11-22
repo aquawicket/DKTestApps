@@ -47,17 +47,18 @@ Rml::String Shell::FindSamplesRoot()
 	Rml::String testPath = "";
 	char* resolved_path = NULL;
 	char buf [PATH_MAX];
+	Rml::String appPath = "";
 	
 	#ifdef RMLUI_PLATFORM_MACOSX
 		uint32_t bufsize = PATH_MAX;
 		if(!_NSGetExecutablePath(buf, &bufsize))
 			puts(buf);
-		Rml::String appPath(buf);
+		appPath = Rml::String(buf);
 	#endif
 	#ifdef RMLUI_PLATFORM_LINUX
 		ssize_t count = readlink("/proc/self/exe", buf, PATH_MAX);
 		if (count != -1)
-			Rml::String appPath(buf);
+			appPath = Rml::String(buf);
 	#endif
 	
 	testPath = appPath+"/Samples";
