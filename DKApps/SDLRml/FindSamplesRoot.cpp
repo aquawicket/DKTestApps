@@ -79,7 +79,6 @@ Rml::String Shell::FindSamplesRoot()
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
 	testPath = appPath+"/../../../../../../../assets";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
-	testPath = appPath+"/../../../../../../../../assets";
 
     if(!resolved_path){
         printf("ERROR: could not locate assets path");
