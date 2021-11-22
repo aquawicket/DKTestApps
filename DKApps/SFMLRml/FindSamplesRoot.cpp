@@ -2,11 +2,15 @@
 #include "Shell.h"
 #ifdef RMLUI_PLATFORM_WIN32
 	#include "Shlwapi.h"
-#else
-    //#include <sys/stat.h>
-    //#include <unistd.h>
+#endif
+#ifdef RMLUI_PLATFORM_MACOSX
 	#include <mach-o/dyld.h>
 	#include <limits.h>
+#endif
+#ifdef RMLUI_PLATFORM_LINUX
+	#include <libgen.h>         // dirname
+	#include <unistd.h>         // readlink
+	#include <linux/limits.h>   // PATH_MAX
 #endif
     
 
@@ -17,8 +21,9 @@ Rml::String Shell::FindSamplesRoot()
     path = "";
 #else
     path = "";
-    
 #endif
+
+
 #ifdef RMLUI_PLATFORM_WIN32
 	if(path.empty() && PathFileExistsA("../Samples"))
 		path = "../Samples";
@@ -36,14 +41,24 @@ Rml::String Shell::FindSamplesRoot()
 	char resolved_path[256];
 	GetFullPathName(path.c_str(), 256, resolved_path, &fileExt);
 	Rml::String out(resolved_path);
-#else
+#endif
+
+#ifdef RMLUI_PLATFORM_UNIX
 	Rml::String testPath = "";
 	char* resolved_path = NULL;
 	char buf [PATH_MAX];
-	uint32_t bufsize = PATH_MAX;
-	if(!_NSGetExecutablePath(buf, &bufsize))
-    puts(buf);
-	Rml::String appPath(buf);
+	
+	#ifdef RMLUI_PLATFORM_MACOSX
+		uint32_t bufsize = PATH_MAX;
+		if(!_NSGetExecutablePath(buf, &bufsize))
+			puts(buf);
+		Rml::String appPath(buf);
+	#endif
+	#ifdef RMLUI_PLATFORM_LINUX
+		ssize_t count = readlink("/proc/self/exe", buf, PATH_MAX);
+		if (count != -1)
+			Rml::String appPath(buf);
+	#endif
 	
 	testPath = appPath+"/Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
@@ -87,6 +102,8 @@ Rml::String Shell::FindSamplesRoot()
 	}
     Rml::String out(resolved_path);
 #endif
+
+
 	printf("out = %s\n", out.c_str());
 	return out+"/";
 }
