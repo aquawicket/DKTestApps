@@ -26,7 +26,6 @@ REMOVE_SOURCE(ShellRenderInterfaceOpenGL.*)
 REMOVE_SOURCE(ShellRenderInterfaceExtensions.*)
 REMOVE_SOURCE(ShellSystemInterface.*)
 
-
 # rmlui sfml
 DKINCLUDE(${RMLUI}/Samples/basic/sfml2/src)
 ADD_SOURCE(${RMLUI}/Samples/basic/sfml2/src/*.*)
