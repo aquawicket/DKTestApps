@@ -17,7 +17,7 @@ bool SDLRml::Init(){
 	sdlWindow = SDLWindow::Get();
 	rmlMain = RmlMain::Get();
 	if(!sdlWindow || !rmlMain)
-		return ERROR("SDLRml::Init(): INVALID OBJECTS\n");
+		return RMLERROR("SDLRml::Init(): INVALID OBJECTS\n");
 #ifdef RML_SHELL_RENDER
 	renderer = new ShellRenderInterfaceOpenGL();
 #else
@@ -38,7 +38,7 @@ bool SDLRml::End(){
 
 bool SDLRml::Handle(SDL_Event *event) {
 	if(!rmlMain->document)
-		return ERROR("rmlMain->document invalid");
+		return RMLERROR("rmlMain->document invalid");
 	Rml::Element* hover;
 	switch(event->type){
 		case SDL_MOUSEMOTION:
@@ -64,7 +64,7 @@ bool SDLRml::Handle(SDL_Event *event) {
 			}
 			break;
         case SDL_MOUSEWHEEL:
-            rmlMain->context->ProcessMouseWheel(event->wheel.y * -1, systemInterface->GetKeyModifiers());
+            rmlMain->context->ProcessMouseWheel(event->wheel.y * (float)- 1.0, systemInterface->GetKeyModifiers());
             break;
 #ifdef ANDROID
         case SDL_KEYDOWN:

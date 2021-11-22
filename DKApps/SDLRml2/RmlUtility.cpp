@@ -23,3 +23,10 @@ void RmlUtility::Sleep(unsigned int milliseconds)
 	//TODO
 	return;
 }
+
+bool RmlUtility::Log(const char* file, int line, const char* func, const Rml::String& message, const int lvl) {
+	printf("%s: %d: %s, %s, %d", file, line, func, message.c_str(), lvl);
+	if (lvl == LOGERROR)
+		return false;
+	return true;
+}

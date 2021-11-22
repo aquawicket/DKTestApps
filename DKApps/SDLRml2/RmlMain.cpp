@@ -19,7 +19,7 @@
 RmlMain* RmlMain::rmlMain = NULL;
 RmlFile* RmlMain::rmlFile = NULL;
 
-bool RmlMain::Init(){
+RmlMain::RmlMain(){
 	//RmlClass::RmlCreate("RmlMainJS");
 	//RmlClass::RmlCreate("RmlMainV8");
 	SDLRml* sdlRml = NULL;
@@ -34,12 +34,20 @@ bool RmlMain::Init(){
 	//if(RmlClass::DKAvailable("SDLRml")){
 	SDLRml* sldRml = new SDLRml();
 	if(sdlRml){
-		if(!Rml::Initialise())
-			return RMLERROR("Rml::Initialise(): failed\n");
+		if (!Rml::Initialise()) {
+			RMLERROR("Rml::Initialise(): failed\n");
+			return;
+		}
 		int w;
-		if(!RmlWindow::GetWidth(w)){ return false; }
+		if(!RmlWindow::GetWidth(w)){
+			RMLERROR("Can't get window width\n");
+			return; 
+		}
 		int h;
-		if(!RmlWindow::GetHeight(h)){ return false; }
+		if(!RmlWindow::GetHeight(h)) {
+			RMLERROR("Can't get window height\n");
+			return;
+		}
 		context = Rml::CreateContext("default", Rml::Vector2i(w, h));
 	}
 	//else if(RmlClass::RmlAvailable("SFMLRml")){
@@ -47,11 +55,13 @@ bool RmlMain::Init(){
 	//}
 	else{
 		RMLERROR("No window types registered\n");
-		return false;
+		return;
 	}
 #ifdef USE_rmlui_debugger
-	if (!Rml::Debugger::Initialise(context))
-		return RMLERROR("Rml::Debugger::Initialise(): failed\n");
+	if (!Rml::Debugger::Initialise(context)) {
+		RMLERROR("Rml::Debugger::Initialise(): failed\n");
+		return;
+	}
 #endif
 	//Add missing stylesheet properties
 	//TODO - https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat
@@ -87,10 +97,9 @@ bool RmlMain::Init(){
 	RmlFile::FileToString(workingPath +"RmlMain/blank.html", html);
 	RmlFile::ChDir(workingPath);
 	LoadHtml(html);
-	return true;
 }
 
-bool RmlMain::End(){
+RmlMain::~RmlMain(){
 	if(context){
 		Rml::ReleaseTextures();
 		Rml::Shutdown();
@@ -103,7 +112,6 @@ bool RmlMain::End(){
 	//RmlEvents::RemoveRegisterEventFunc(&RmlMain::RegisterEvent, this);
 	//RmlEvents::RemoveUnegisterEventFunc(&RmlMain::UnregisterEvent, this);
 	//RmlEvents::RemoveSendEventFunc(&RmlMain::SendEvent, this);
-	return true;
 }
 
 RmlMain* RmlMain::Get()
@@ -111,6 +119,7 @@ RmlMain* RmlMain::Get()
 	return rmlMain;
 }
 
+/*
 bool RmlMain::GetSourceCode(Rml::String& source_code) {
 	source_code = document->GetContext()->GetRootElement()->GetInnerRML();
 	RMLINFO("######################## CODE FROM RmlUi #########################\n");
@@ -129,6 +138,7 @@ bool RmlMain::GetSourceCode(Rml::String& source_code) {
 	RMLINFO("#################################################################\n");
 	return true;
 }
+*/
 
 bool RmlMain::LoadFont(const Rml::String& file){
 	if(!Rml::LoadFontFace(file.c_str()))
@@ -282,6 +292,7 @@ bool RmlMain::LoadUrl(const Rml::String& url){
 	return true;
 }
 
+/*
 void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	//TODO - make rmlEvent accessable through javascript
 	//1. Create Javascript Event object that references the rmlEvent
@@ -302,14 +313,13 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	//TODO: implement this
     //int phase = (int)rmlEvent.GetPhase(); //{ None, Capture = 1, Target = 2, Bubble = 4 };
 	
-    /*
 	// Send this event back to duktape to be processed in javascript
-	Rml::String evnt = "{type:'"+type+"', eventPhase:"+std::to_string(phase)+"}";
-	Rml::String code = "EventFromCPP('"+ currentElementAddress +"',"+evnt+");";
-	Rml::String rval;
-	DKDuktape::Get()->RunDuktape(code, rval);
-	if(!rval.empty()){ RMLINFO("RmlMain::ProcessEvent(): rval = "+rval+"\n"); }
-	*/
+	//Rml::String evnt = "{type:'"+type+"', eventPhase:"+std::to_string(phase)+"}";
+	//Rml::String code = "EventFromCPP('"+ currentElementAddress +"',"+evnt+");";
+	//Rml::String rval;
+	//DKDuktape::Get()->RunDuktape(code, rval);
+	//if(!rval.empty()){ RMLINFO("RmlMain::ProcessEvent(): rval = "+rval+"\n"); }
+	
 	// If the event bubbles up, ignore elements underneith 
 	Rml::Context* context = document->GetContext();
 	Rml::Element* hoverElement = NULL;
@@ -321,16 +331,16 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 	if (hoverParent)
 		hover = hoverParent;
 	//if(rmlEvent.GetPhase() == 1 && currentElement != hover){ return; }
-	/*
+	
 	//Event Monitor
-	Rml::String tag = currentElement->GetTagName();
-	Rml::String id = currentElement->GetId();
-	Rml::String target_id = targetElement->GetId();
-	Rml::String target_tag = targetElement->GetTagName();
-	Rml::String hover_id = hover->GetId();
-	Rml::String string = "EVENT: " + type + " (current) " + tag + "> " + id + " (target) " + target_tag + "> " + target_id + "(hover)" + hover_id + "\n";
-	RMLINFO(string + "\n");
-	*/
+	//Rml::String tag = currentElement->GetTagName();
+	//Rml::String id = currentElement->GetId();
+	//Rml::String target_id = targetElement->GetId();
+	//Rml::String target_tag = targetElement->GetTagName();
+	//Rml::String hover_id = hover->GetId();
+	//Rml::String string = "EVENT: " + type + " (current) " + tag + "> " + id + " (target) " + target_tag + "> " + target_id + "(hover)" + hover_id + "\n";
+	//RMLINFO(string + "\n");
+	
 #ifdef ANDROID
 	//Toggle Keyboard on text element click
 	if (type == "mousedown") {
@@ -362,17 +372,17 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 			ev->data.clear();
 			ev->data.push_back(rmlEventAddress);
 			//ev->rEvent = &rmlEvent;
-			/*
+			
 			//pass the value
-			if (RmlUtility::stringsMatch(type, "keydown") || RmlUtility::stringsMatch(type, "keyup")) {
-				ev->data.clear();
-				ev->data.push_back(std::to_string(rmlEvent.GetParameter<int>("key_identifier", 0)));
-			}
-			if (RmlUtility::stringsMatch(type, "mousedown") || RmlUtility::stringsMatch(type, "mouseup")) {
-				ev->data.clear();
-				ev->data.push_back(std::to_string(rmlEvent.GetParameter<int>("button", 0)));
-			}
-			*/
+			//if (RmlUtility::stringsMatch(type, "keydown") || RmlUtility::stringsMatch(type, "keyup")) {
+			//	ev->data.clear();
+			///	ev->data.push_back(std::to_string(rmlEvent.GetParameter<int>("key_identifier", 0)));
+			//}
+			//if (RmlUtility::stringsMatch(type, "mousedown") || RmlUtility::stringsMatch(type, "mouseup")) {
+			//	ev->data.clear();
+			//	ev->data.push_back(std::to_string(rmlEvent.GetParameter<int>("button", 0)));
+			//}
+			
 			//FIXME - we run the risk of having event function pointers that point to nowhere
 			if (!ev->event_func(ev)){
 				RMLERROR("RmlMain::ProcessEvent failed \n");
@@ -382,22 +392,24 @@ void RmlMain::ProcessEvent(Rml::Event& rmlEvent){
 			//RMLINFO("Event: "+ev->type+", "+ev->id+"\n");
 			//FIXME - StopPropagation() on a mousedown even will bock the elements ability to drag
 			// we need to find a way to stop propagation of the event, while allowing drag events.
-/*
-#ifdef DRAG_FIX
-			if (!RmlUtility::stringsMatch(type, "mousedown")) {
-#endif
-				if (!RmlUtility::stringsMatch(type, "keydown")) 
-					rmlEvent.StopPropagation();
-#ifdef DRAG_FIX
-			}
-#endif
-*/
+
+//#ifdef DRAG_FIX
+//			if (!RmlUtility::stringsMatch(type, "mousedown")) {
+//#endif
+//				if (!RmlUtility::stringsMatch(type, "keydown")) 
+//					rmlEvent.StopPropagation();
+//#ifdef DRAG_FIX
+//			}
+//#endif
+
 			//ev->rEvent = NULL;
 			return;
 		}
 	}
 }
+*/
 
+/*
 bool RmlMain::RegisterEvent(const Rml::String& elementAddress, const Rml::String& type){
 	if(elementAddress.empty())
 		return RMLERROR("RmlMain::RegisterEvent(): elementAddress empty\n"); 
@@ -430,7 +442,9 @@ bool RmlMain::RegisterEvent(const Rml::String& elementAddress, const Rml::String
 #endif
 	return true;
 }
+*/
 
+/*
 bool RmlMain::SendEvent(const Rml::String& elementAddress, const Rml::String& type, const Rml::String& value){
 	if(elementAddress.empty())
 		return RMLERROR("elementAddress invalid");
@@ -448,6 +462,7 @@ bool RmlMain::SendEvent(const Rml::String& elementAddress, const Rml::String& ty
 	element->DispatchEvent(type.c_str(), parameters, false);
 	return true;
 }
+*/
 
 bool RmlMain::DebuggerOff(){
 #ifdef USE_rmlui_debugger
@@ -481,6 +496,7 @@ bool RmlMain::DebuggerToggle(){
 	return true;
 }
 
+/*
 bool RmlMain::UnregisterEvent(const Rml::String& elementAddress, const Rml::String& type){
 	if(elementAddress.empty())
 		return RMLERROR("elementAddress invalid");
@@ -500,6 +516,7 @@ bool RmlMain::UnregisterEvent(const Rml::String& elementAddress, const Rml::Stri
 	element->RemoveEventListener(_type.c_str(), this, false);
 	return true;
 }
+*/
 
 /*
 Rml::Event* RmlMain::addressToEvent(const Rml::String& address){

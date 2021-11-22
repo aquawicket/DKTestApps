@@ -4,8 +4,6 @@
 
 #include <RmlUi/Core.h>
 #include <SDL.h>
-//#include "DK/DK.h"
-
 
 class SDLRmlSystem : public Rml::SystemInterface
 {
