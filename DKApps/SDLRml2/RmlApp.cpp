@@ -29,9 +29,6 @@ int main(int /*argc*/, char** /*argv*/)
 #ifdef RMLUI_PLATFORM_WIN32
 	//AllocConsole();
 #endif
-	std::cout << "Current path is " << std::filesystem::current_path() << '\n';
-	std::filesystem::current_path("../../assets");
-	std::cout << "Current path is " << std::filesystem::current_path() << '\n';
 
 	int window_width = 1024;
 	int window_height = 768;
@@ -41,24 +38,21 @@ int main(int /*argc*/, char** /*argv*/)
 	SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
 	int oglIdx = -1;
 	int nRD = SDL_GetNumRenderDrivers();
-	for (int i = 0; i < nRD; i++)
-	{
+	for (int i = 0; i < nRD; i++){
 		SDL_RendererInfo info;
-		if (!SDL_GetRenderDriverInfo(i, &info))
-		{
+		if (!SDL_GetRenderDriverInfo(i, &info)){
 			if (!strcmp(info.name, "opengl"))
-			{
 				oglIdx = i;
-			}
 		}
 	}
 	SDL_Renderer* renderer = SDL_CreateRenderer(screen, oglIdx, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 	GLenum err = glewInit();
 
-	if (err != GLEW_OK)
+	if (err != GLEW_OK){
 		fprintf(stderr, "GLEW ERROR: %s\n", glewGetErrorString(err));
 		//RMLERROR("ERROR"+ std::to_string(glewGetErrorString(err))+"\n")
+	}
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	glMatrixMode(GL_PROJECTION | GL_MODELVIEW);
