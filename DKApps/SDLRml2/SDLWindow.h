@@ -2,7 +2,6 @@
 #ifndef SDLWindow_H
 #define SDLWindow_H
 
-#include "RmlApp.h"
 #include "SDL.h"
 #include <map>
 

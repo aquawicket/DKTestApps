@@ -102,12 +102,14 @@ bool RmlFile::FileToString(const Rml::String file, Rml::String& str)
 	return false;
 }
 
+/*
 bool RmlFile::FileInterface(const Rml::String& assets)
 {
 	instance = this;
 	_assets = assets;
 	return true;
 }
+*/
 
 Rml::FileHandle RmlFile::Open(const Rml::String& path)
 {

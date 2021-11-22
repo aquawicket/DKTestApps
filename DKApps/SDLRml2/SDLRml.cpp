@@ -129,7 +129,6 @@ bool SDLRml::Handle(SDL_Event *event) {
 }
 
 void SDLRml::Render(){
-    //DEBUGFUNC();
 	if(sdlWindow->width != rmlMain->context->GetDimensions().x || sdlWindow->height != rmlMain->context->GetDimensions().y){
 		rmlMain->context->SetDimensions(Rml::Vector2i(sdlWindow->width, sdlWindow->height));
 		// Reset blending and draw a fake point just outside the screen to let SDL know that it needs to reset its state in case it wants to render a texture 

@@ -12,7 +12,6 @@
 	#include <GL/glew.h>
 #endif
 
-#include "RmlApp.h"
 #include "RmlMain.h"
 #include "RmlFile.h"
 #include "RmlUtility.h"

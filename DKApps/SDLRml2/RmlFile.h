@@ -25,7 +25,7 @@ public:
 	static bool GetModifiedTime(const Rml::String& file, Rml::String& time);
 	static bool RemoveExtention(Rml::String& file);
 
-	bool FileInterface(const Rml::String& root);
+	//bool FileInterface(const Rml::String& root);
 	virtual Rml::FileHandle Open(const Rml::String& path);
 	virtual void Close(Rml::FileHandle file);
 	virtual size_t Read(void* buffer, size_t size, Rml::FileHandle file);
