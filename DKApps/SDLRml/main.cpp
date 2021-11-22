@@ -56,6 +56,7 @@ int main(int /*argc*/, char** /*argv*/)
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Window* screen = SDL_CreateWindow("LibRmlUi SDL2 test", 20, 20, window_width, window_height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
+
 	int oglIdx = -1;
 	int nRD = SDL_GetNumRenderDrivers();
 	for (int i = 0; i < nRD; i++)
@@ -70,6 +71,11 @@ int main(int /*argc*/, char** /*argv*/)
 		}
 	}
 	SDL_Renderer* renderer = SDL_CreateRenderer(screen, oglIdx, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	
+	//Added
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 
 	GLenum err = glewInit();
 
@@ -91,6 +97,20 @@ int main(int /*argc*/, char** /*argv*/)
 	Rml::SetRenderInterface(&Renderer);
 	Rml::SetSystemInterface(&SystemInterface);
 
+	//print opengl and sdl info
+	printf("OpenGL Vendor:   %s\n", glGetString(GL_VENDOR));
+	printf("OpenGL Renderer: %s\n", glGetString(GL_RENDERER));
+	printf("OpenGL Version:  %s\n", glGetString(GL_VERSION));
+	int profile;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
+	printf("SDL_GL_CONTEXT_PROFILE_MASK = %d\n", profile);
+	int major;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &major);
+	printf("SDL_GL_CONTEXT_MAJOR_VERSION = %d\n", major);
+	int minor;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
+	printf("SDL_GL_CONTEXT_MINOR_VERSION = %d\n", minor);
+	
 	if (!Rml::Initialise())
 		return 1;
 

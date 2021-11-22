@@ -108,6 +108,11 @@ int main(int RMLUI_UNUSED_PARAMETER(argc), char** RMLUI_UNUSED_PARAMETER(argv))
 	if (Rml::ElementDocument * document = context->LoadDocument("/assets/demo.rml"))
 		document->Show();
 
+	//print opengl info
+	printf("OpenGL Vendor:   %s\n", glGetString(GL_VENDOR));
+	printf("OpenGL Renderer: %s\n", glGetString(GL_RENDERER));
+	printf("OpenGL Version:  %s\n", glGetString(GL_VERSION));
+	
 	Shell::EventLoop(GameLoop);
 
 	// Shutdown RmlUi.
