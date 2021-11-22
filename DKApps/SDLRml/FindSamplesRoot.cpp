@@ -61,6 +61,7 @@ Rml::String Shell::FindSamplesRoot()
         readlink(arg1, buf, sizeof(buf));
 		appPath = Rml::String(buf);
 	#endif
+	printf("appPath = %s\n", appPath);
 	
 	testPath = appPath+"/Samples";
 	if(!resolved_path) resolved_path = realpath(testPath.c_str(), NULL);
