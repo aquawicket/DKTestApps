@@ -1,12 +1,12 @@
 #include <RmlUi/Core.h>
 #include "Shell.h"
-#include <filesystem>
 #ifdef RMLUI_PLATFORM_WIN32
 	#include "Shlwapi.h"
 #else
-    #include <sys/stat.h>
+    //#include <sys/stat.h>
     #include <unistd.h>
-	#include <mach-o/dyld.h>
+	//#include <mach-o/dyld.h>
+	//#include <limits.h>
 	#include <limits.h>
 #endif
     
