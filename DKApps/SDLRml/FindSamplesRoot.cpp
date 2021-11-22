@@ -1,5 +1,6 @@
 #include <RmlUi/Core.h>
 #include "Shell.h"
+#include <filesystem>
 #ifdef RMLUI_PLATFORM_WIN32
 	#include "Shlwapi.h"
 #else
@@ -14,7 +15,7 @@ Rml::String Shell::FindSamplesRoot()
 #ifdef WIN32
     path = "";
 #else
-    path = "/Users/aquamac/digitalknob/DKTestApps/DKApps/SDLRml/Samples";
+    path = "Users/aquamac/digitalknob/DKTestApps/DKApps/SDLRml/Samples";
     
 #endif
 #ifdef RMLUI_PLATFORM_WIN32
@@ -42,47 +43,47 @@ Rml::String Shell::FindSamplesRoot()
         path = "PATH IS INVALID\n";
         printf("--> %s", path.c_str());
     }
-    buffer = {};
+    //buffer = {};
     //if(path.empty() && (stat (("/../Samples"), &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../Samples"))
         path = "../Samples";
-    buffer = {};
+    //buffer = {};
     //if(path.empty() && (stat ("/../../Samples", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../../Samples"))
         path = "/../../Samples";
-    buffer = {};
+    //buffer = {};
     //if(path.empty() && (stat ("/../../../Samples", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../../../Samples"))
         path = "/../../../Samples";
-    buffer = {};
+    //buffer = {};
     //if(path.empty() && (stat ("../../../../Samples", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../../../../Samples"))
         path = "../../../../Samples";
-    buffer = {};
+    //buffer = {};
     //if(path.empty() && (stat ("../../../../../Samples", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../../../../../Samples"))
         path = "../../../../../Samples";
-    buffer = {};
+    //buffer = {};
     //if(path.empty() && (stat ("../../../../../../Samples", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../../../../../../Samples"))
         path = "../../../../../../Samples";
-    buffer = {};
+    //buffer = {};
     //if(path.empty() && (stat ("../../../../../../../Samples", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../../../../../../../Samples"))
         path = "../../../../../../../Samples";
-    buffer = {};
+    //buffer = {};
     //if(path.empty() && (stat ("../../../../../../../../Samples", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../../../../../../../../Samples"))
         path = "../../../../../../../../Samples";
-    buffer = {};
+    //buffer = {};
     //if (path.empty() && (stat ("/../assets", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../assets"))
         path = "/../assets";
-    buffer = {};
+    //buffer = {};
     //if (path.empty() && (stat ("/../../assets", &buffer) == 0) )
-    if(std::filesystem::exists("/../Samples"))
+    if(std::filesystem::exists("../../assets"))
         path = "/../../assets";
-    buffer = {};
+    //buffer = {};
 	char *resolved_path = realpath(path.c_str(), NULL);
     if(!resolved_path)
         return "";
