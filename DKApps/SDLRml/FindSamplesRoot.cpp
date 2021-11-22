@@ -17,8 +17,7 @@ Rml::String Shell::FindSamplesRoot()
 #ifdef WIN32
     path = "";
 #else
-    //path = "";//Users/aquamac/digitalknob/DKTestApps/DKApps/SDLRml/Samples";
-	path = appPath+"/../../../../../Samples/";
+    path = "";//Users/aquamac/digitalknob/DKTestApps/DKApps/SDLRml/Samples";
     
 #endif
 #ifdef RMLUI_PLATFORM_WIN32
@@ -160,6 +159,8 @@ Rml::String Shell::FindSamplesRoot()
     //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
     if(std::filesystem::exists(appPath+"/../../../../../../../../DKMAKE.cmake"))
         path = testPath;
+	
+	path = appPath+"/../../../../../Samples/";
 	
 	char *resolved_path = realpath(path.c_str(), NULL);
     if(!resolved_path)
