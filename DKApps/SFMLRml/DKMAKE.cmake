@@ -17,18 +17,15 @@ DKDEPEND(rmlui rmlui_debugger)
 DKINCLUDE(${RMLUI}/Samples/shell/include)
 ADD_SOURCE(${RMLUI}/Samples/shell/include/*.*)
 ADD_SOURCE(${RMLUI}/Samples/shell/src/*.*)
-IF(WIN)
-	ADD_SOURCE(${RMLUI}/Samples/shell/include/win32/*.*)
-	ADD_SOURCE(${RMLUI}/Samples/shell/src/win32/*.*)
-ENDIF()
-IF(MAC OR IOS)
-	ADD_SOURCE(${RMLUI}/Samples/shell/include/macosx/*.*)
-	ADD_SOURCE(${RMLUI}/Samples/shell/src/macosx/*.*)
-ENDIF()
-IF(LINUX)
-	ADD_SOURCE(${RMLUI}/Samples/shell/include/x11/*.*)
-	ADD_SOURCE(${RMLUI}/Samples/shell/src/x11/*.*)
-ENDIF()
+
+# rmlui unused shell when using sdl2
+REMOVE_SOURCE(Input.*)
+REMOVE_SOURCE(precompiled.*)
+REMOVE_SOURCE(ShellOpenGL.*)
+REMOVE_SOURCE(ShellRenderInterfaceOpenGL.*)
+REMOVE_SOURCE(ShellRenderInterfaceExtensions.*)
+REMOVE_SOURCE(ShellSystemInterface.*)
+
 
 # rmlui sfml
 DKINCLUDE(${RMLUI}/Samples/basic/sfml2/src)
