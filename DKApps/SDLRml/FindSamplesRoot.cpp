@@ -1,5 +1,8 @@
 #include <RmlUi/Core.h>
 #include "Shell.h"
+#ifdef RMLUI_PLATFORM_WIN32
+	#include "Shlwapi.h"
+#endif
 
 Rml::String Shell::FindSamplesRoot() 
 {
