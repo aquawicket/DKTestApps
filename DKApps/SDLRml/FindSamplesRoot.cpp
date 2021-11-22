@@ -125,7 +125,13 @@ Rml::String Shell::FindSamplesRoot()
         path = testPath;
 
 
-
+	testPath = appPath+"/../../../../Samples";
+	printf("testPath = %s\n", testPath.c_str());
+	//buffer = {};
+    //if(path.empty() && (stat ((testPath.c_str()), &buffer) == 0) )
+    if(std::filesystem::exists(appPath+"/../../../../DKMAKE.cmake"))
+        path = testPath;
+	
 	testPath = appPath+"/../../../../../Samples";
 	printf("testPath = %s\n", testPath.c_str());
 	//buffer = {};
