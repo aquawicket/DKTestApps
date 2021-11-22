@@ -40,7 +40,7 @@ Rml::String Shell::FindSamplesRoot()
 	char *fileExt;
 	char resolved_path[256];
 	GetFullPathName(path.c_str(), 256, resolved_path, &fileExt);
-	Rml::String out(resolved_path);
+	return Rml::String(resolved_path);
 #endif
 
 #ifdef RMLUI_PLATFORM_UNIX
@@ -112,6 +112,6 @@ Rml::String Shell::FindSamplesRoot()
 #endif
 
 
-	printf("out = %s\n", out.c_str());
-	return out+"/";
+	//printf("out = %s\n", out.c_str());
+	//return out+"/";
 }
