@@ -39,7 +39,7 @@ Rml::String Shell::FindSamplesRoot()
 	Rml::String out(resolved_path);
 #else
 	Rml::String testPath = "";
-	char *resolved_path = "";
+	char* resolved_path = "";
 	char buf [PATH_MAX];
 	uint32_t bufsize = PATH_MAX;
 	if(!_NSGetExecutablePath(buf, &bufsize))
