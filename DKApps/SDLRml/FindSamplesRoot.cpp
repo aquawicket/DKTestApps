@@ -1,37 +1,36 @@
-#include <RmlUi/Core.h>
-#include <RmlUi/Core/StringUtilities.h>
+//#include <RmlUi/Core.h>
+#include <RmlUi/Core/StringUtilities.h> //Rml::StringUtilities::Replace
 #include "Shell.h"
 
 #ifdef RMLUI_PLATFORM_WIN32
-	#include "Shlwapi.h"        // GetFullPathName
-	#include <stdlib.h>         // realpath
+	#include "Shlwapi.h"            // GetModuleFileName
 #endif
 #ifdef RMLUI_PLATFORM_MACOSX
-	#include <mach-o/dyld.h>    // _NSGetExecutablePath
+	#include <mach-o/dyld.h>      // _NSGetExecutablePath
 	#include <limits.h>			// PATH_MAX
-	#include <sys/stat.h>       // directory
+	//#include <sys/stat.h>         // directory
 #endif
 #ifdef RMLUI_PLATFORM_LINUX
-	#include <libgen.h>         // dirname
-	#include <unistd.h>         // readlink
-	#include <linux/limits.h>   // PATH_MAX
+	//#include <libgen.h>           // dirname
+	//#include <unistd.h>           // readlink
+	#include <linux/limits.h>     // PATH_MAX
 #endif
 
 #ifndef __has_include
-static_assert(false, "__has_include not supported");
+	static_assert(false, "__has_include not supported");
 #else
-#if /*__cplusplus >= 201703L &&*/ __has_include(<filesystem>)
-#include <filesystem>
-namespace fs = std::filesystem;
-#elif __has_include(<experimental/filesystem>)
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#elif __has_include(<boost/filesystem.hpp>)
-#include <boost/filesystem.hpp>
-namespace fs = boost::filesystem;
-#else
-static_assert(false, "filesystem unavalable");
-#endif
+	#if /*__cplusplus >= 201703L &&*/ __has_include(<filesystem>)
+		#include <filesystem>
+		namespace fs = std::filesystem;
+	#elif __has_include(<experimental/filesystem>)
+		#include <experimental/filesystem>
+		namespace fs = std::experimental::filesystem;
+	#elif __has_include(<boost/filesystem.hpp>)
+		#include <boost/filesystem.hpp>
+		namespace fs = boost::filesystem;
+	#else
+		static_assert(false, "filesystem unavalable");
+	#endif
 #endif
 
 //#define BUFSIZE 4096
@@ -66,7 +65,6 @@ Rml::String Shell::FindSamplesRoot()
 	appPath = Rml::String(buf);
 #endif // RMLUI_PLATFORM_LINUX
 
-
 	printf("appPath = %s\n", appPath.c_str());
 	printf("current_path = %s\n", fs::current_path().string().c_str());
 	Rml::String basePath = appPath + "/";
@@ -87,6 +85,7 @@ Rml::String Shell::FindSamplesRoot()
 			printf("realPath is: %s\n", realPath.c_str());
 			if (fs::exists(realPath)) {
 				printf("	PATH FOUND\n");
+				fs::current_path(realPath);
 				return realPath;
 			}
 		}
@@ -101,6 +100,7 @@ Rml::String Shell::FindSamplesRoot()
 			printf("realPath is: %s\n", realPath);
 			if (fs::exists(realPath)) {
 				printf("	PATH FOUND\n");
+				fs::current_path(realPath);
 				return (Rml::String(realPath)+"/");
 			}
 		}
@@ -118,6 +118,7 @@ Rml::String Shell::FindSamplesRoot()
 				printf("realPath is: %s\n", realPath);
 				if (fs::exists(realPath)) {
 					printf("	PATH FOUND\n");
+					fs::current_path(realPath);
 					return Rml::String(realPath);
 				}
 			//}
