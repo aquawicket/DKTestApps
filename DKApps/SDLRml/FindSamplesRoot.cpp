@@ -79,12 +79,12 @@ Rml::String Shell::FindSamplesRoot()
 		std::string realPath = fs::absolute(tryPath).string();
 		realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 		printf("realPath = %s\n", realPath.c_str());
-		if(fs::exists(realPath)){
+		if (fs::exists(realPath)) {
 			printf("	PATH FOUND\n");
 			realPath = Rml::StringUtilities::Replace(realPath, "\\", "/");
 			return realPath + "/";
 		}
-		else
+		else {
 			printf("  not found\n");
 			basePath = basePath + "../";
 			continue;
@@ -120,8 +120,7 @@ Rml::String Shell::FindSamplesRoot()
 			basePath = basePath + "../";
 			continue;
 		}
-	}
-}
+
 #endif // RMLUI_PLATFORM_MACOSX
 #ifdef RMLUI_PLATFORM_LINUX
 		/*
@@ -154,7 +153,7 @@ Rml::String Shell::FindSamplesRoot()
 			continue;
 		}
 #endif // RMLUI_PLATFORM_LINUX
-	
+	}
 	printf("ERROR: could not locate assets path \n");
 	return "";
 }
