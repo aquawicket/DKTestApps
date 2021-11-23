@@ -3,11 +3,12 @@
 #include "Shell.h"
 
 #ifdef RMLUI_PLATFORM_WIN32
-	#include "Shlwapi.h"
+	#include "Shlwapi.h"        // GetFullPathName
 #endif
 #ifdef RMLUI_PLATFORM_MACOSX
-	#include <mach-o/dyld.h>
-	#include <limits.h>
+	#include <mach-o/dyld.h>    // _NSGetExecutablePath
+	#include <limits.h>			// PATH_MAX
+	#include <sys/stat.h>       // directory
 #endif
 #ifdef RMLUI_PLATFORM_LINUX
 	#include <libgen.h>         // dirname
