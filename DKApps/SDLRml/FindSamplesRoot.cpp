@@ -72,7 +72,7 @@ Rml::String Shell::FindSamplesRoot()
 	basePath = Rml::StringUtilities::Replace(basePath, '\\', '/');
 
 	for (unsigned int i = 0; i < 15; i++) {
-		Rml::String tryPath = basePath + "Samples/";
+		Rml::String tryPath = basePath + "Samples";
 		printf("tryPath = %s\n", tryPath.c_str());
 
 #ifdef RMLUI_PLATFORM_WIN32
