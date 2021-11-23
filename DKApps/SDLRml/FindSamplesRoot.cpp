@@ -114,13 +114,13 @@ Rml::String Shell::FindSamplesRoot()
 		if (realpath(tryPath.c_str(), fullPath) != NULL) {
 			printf("fullPath is: %s\n", fullPath);
 			Rml::String realPath = Rml::String(fullPath);
-			if (realPath) {
+			//if (realPath) {
 				printf("realPath is: %s\n", realPath);
 				if (fs::exists(realPath)) {
 					printf("	PATH FOUND\n");
 					return Rml::String(realPath);
 				}
-			}
+			//}
 		}
 		printf("  not found\n");
 		basePath = basePath + "../";
