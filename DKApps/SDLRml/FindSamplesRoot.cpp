@@ -12,8 +12,9 @@
 	#include <linux/limits.h>     // PATH_MAX
 #endif
 
+#defind USE_filesystem 1
 
-#ifndef __has_include
+#ifndef __has_include && defined(USE_filesysten)
 	static_assert(false, "__has_include not supported");
 #else
 	#if /*__cplusplus >= 201703L &&*/ __has_include(<filesystem>)
@@ -31,11 +32,15 @@
 #endif
 
 #include <sys/stat.h>
-bool pathExists(const std::string& file) {
-    //struct stat buf;
-    //return (stat(file.c_str(), &buf) == 0);
-	return fs::exists(file);
-}
+	bool pathExists(const std::string& file) {
+		#ifdef USE_filesystem
+			return fs::exists(file);
+		#else
+			struct stat buf;
+			return (stat(file.c_str(), &buf) == 0);
+		#endif
+	}
+endif()
 
 
 Rml::String Shell::FindSamplesRoot()
