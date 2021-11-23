@@ -94,48 +94,33 @@ Rml::String Shell::FindSamplesRoot()
 		basePath = basePath + "../";
 		continue;
 #	endif // RMLUI_PLATFORM_WIN32
+
 #	ifdef RMLUI_PLATFORM_MACOSX
 		char* realPath = realpath(tryPath.c_str(), NULL);
-		printf("realPath is: %s\n", realPath);
-		if (fs::exists(realPath)) {
-			printf("	PATH FOUND\n");
-			return Rml::String(realPath);
+		if (realPath) {
+			printf("realPath is: %s\n", realPath);
+			if (fs::exists(realPath)) {
+				printf("	PATH FOUND\n");
+				return Rml::String(realPath);
+			}
 		}
 		printf("  not found\n");
 		basePath = basePath + "../";
 		continue;
 #	endif // RMLUI_PLATFORM_MACOSX
+
 #	ifdef RMLUI_PLATFORM_LINUX
-		/*
-		char* realPath = NULL;
-		struct stat info;
-		if (stat(tryPath.c_str(), &info) != 0) {
-			printf("  PATH FOUND");
-			realPath = realpath(tryPath.c_str(), buf);
-			if (realPath) {
-				printf("realPath = %s\n", realPath);
+		char* realPath = realpath(tryPath.c_str(), NULL);
+		if (realPath) {
+			printf("realPath is: %s\n", realPath);
+			if (fs::exists(realPath)) {
+				printf("	PATH FOUND\n");
 				return Rml::String(realPath);
-			}
-		}
-		else {
-			printf("  not found");
-			basePath = basePath + "../";
-		}
-		*/
-		//std::string realPath = fs::absolute(tryPath).string();
-		std::string realPath = fs::canonical(tryPath).string();
-		//realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
-		printf("realPath = %s\n", realPath.c_str());
-		if (fs::exists(realPath)) {
-			printf("	PATH FOUND\n");
-			//realPath = Rml::StringUtilities::Replace(realPath, "\\", "/");
-			return realPath;// +"/";
-		}
-		else {
-			printf("  not found\n");
-			basePath = basePath + "../";
-			continue;
-		}
+	}
+}
+		printf("  not found\n");
+		basePath = basePath + "../";
+		continue;
 #	endif // RMLUI_PLATFORM_LINUX
 	}
 
