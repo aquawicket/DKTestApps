@@ -4,61 +4,26 @@
 
 #ifdef RMLUI_PLATFORM_WIN32
 	#include "Shlwapi.h"          // GetModuleFileName
+	#include <direct.h>           // chdir
 #endif
 #ifdef RMLUI_PLATFORM_MACOSX
 	#include <mach-o/dyld.h>      // _NSGetExecutablePath
 	#include <limits.h>			  // PATH_MAX
+	#include "unistd.h"
 #endif
 #ifdef RMLUI_PLATFORM_LINUX
 	#include <linux/limits.h>     // PATH_MAX
+	#include "unistd.h"
 #endif
 
 #include <sys/stat.h>
-#include <direct.h>
-#include "unistd.h"
+
 
 bool pathExists(const std::string& file) {
 	struct stat buf;
 	return (stat(file.c_str(), &buf) == 0);
 }
 
-
-//#define USE_filesystem 1
-/*
-#ifdef USE_filesystem
-#ifndef __has_include
-	static_assert(false, "__has_include not supported");
-#else
-	#if __cplusplus >= 201703L && __has_include(<filesystem>)
-		#include <filesystem>
-		namespace fs = std::filesystem;
-	#elif __has_include(<experimental/filesystem>)
-		#include <experimental/filesystem>
-		namespace fs = std::experimental::filesystem;
-	#elif __has_include(<boost/filesystem.hpp>)
-		#include <boost/filesystem.hpp>
-		namespace fs = boost::filesystem;
-	#else
-		static_assert(false, "filesystem unavalable");
-	#endif
-#endif
-#endif
-*/
-
-
-
-
-/*
-#ifdef _WIN32
-	
-	#define cwd _getcwd
-	#define cd _chdir
-#else
-	
-	#define cwd getcwd
-	#define cd chdir
-#endif
-*/
 
 
 
