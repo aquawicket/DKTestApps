@@ -155,14 +155,14 @@ Rml::String Shell::FindSamplesRoot()
 		if (fs::exists(tryPath)) {
 			printf("	PATH FOUND\n");
 			std::error_code ec;
-			std::string realPath = fs::absolute(tryPath, ec).u8string();
-			if (ec)
-				printf("ERROR: fs::absolute(): %s\n", ec.message().c_str());
-			else {
+			std::string realPath = fs::absolute(tryPath);// , ec).u8string();
+			//if (ec)
+			//	printf("ERROR: fs::absolute(): %s\n");, ec.message().c_str());
+			//else {
 				realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 				printf("realPath = %s\n", realPath.c_str());
 				return realPath + "/";
-			}
+			//}
 		}
 		else {
 			printf("  not found\n");
