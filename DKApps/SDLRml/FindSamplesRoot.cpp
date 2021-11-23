@@ -15,7 +15,23 @@
 	#include <unistd.h>         // readlink
 	#include <linux/limits.h>   // PATH_MAX
 #endif
+
+#ifndef __has_include
+static_assert(false, "__has_include not supported");
+#else
+#if /*__cplusplus >= 201703L &&*/ __has_include(<filesystem>)
 #include <filesystem>
+namespace fs = std::filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#elif __has_include(<boost/filesystem.hpp>)
+#include <boost/filesystem.hpp>
+namespace fs = boost::filesystem;
+#else
+static_assert(false, "filesystem unavalable");
+#endif
+#endif
 
 #define BUFSIZE 4096
 
@@ -61,14 +77,14 @@ Rml::String Shell::FindSamplesRoot()
 
 #ifdef RMLUI_PLATFORM_WIN32
 		//if (PathFileExistsA(tryPath.c_str())) {
-		if(std::filesystem::exists(tryPath)){
+		if(fs::exists(tryPath)){
 			printf("	PATH FOUND\n");
 			tryPath = Rml::StringUtilities::Replace(tryPath, "\\", "/");
 			//char realPath[256];
 			//TCHAR** lppPart = { NULL };
 			//if (GetFullPathName(tryPath.c_str(), BUFSIZE, realPath, lppPart)) {
 			std::error_code ec;
-			std::string realPath = std::filesystem::absolute(tryPath, ec).u8string();
+			std::string realPath = fs::absolute(tryPath, ec).u8string();
 			if (ec) 
 				printf("ERROR: GetFullPathName(): %s\n", ec.message().c_str());
 			else{
@@ -101,12 +117,12 @@ Rml::String Shell::FindSamplesRoot()
 		}
 		*/
 
-		if (std::filesystem::exists(tryPath)) {
+		if (fs::exists(tryPath)) {
 			printf("	PATH FOUND\n");
 			std::error_code ec;
-			std::string realPath = std::filesystem::absolute(tryPath, ec).u8string();
+			std::string realPath = fs::absolute(tryPath, ec).u8string();
 			if (ec)
-				printf("ERROR: std::filesystem::absolute(): %s\n", ec.message().c_str());
+				printf("ERROR: fs::absolute(): %s\n", ec.message().c_str());
 			else {
 				realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 				printf("realPath = %s\n", realPath.c_str());
@@ -136,12 +152,12 @@ Rml::String Shell::FindSamplesRoot()
 			testPath = testPath + "../";
 		}
 		*/
-		if (std::filesystem::exists(tryPath)) {
+		if (fs::exists(tryPath)) {
 			printf("	PATH FOUND\n");
 			std::error_code ec;
-			std::string realPath = std::filesystem::absolute(tryPath, ec).u8string();
+			std::string realPath = fs::absolute(tryPath, ec).u8string();
 			if (ec)
-				printf("ERROR: std::filesystem::absolute(): %s\n", ec.message().c_str());
+				printf("ERROR: fs::absolute(): %s\n", ec.message().c_str());
 			else {
 				realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 				printf("realPath = %s\n", realPath.c_str());
