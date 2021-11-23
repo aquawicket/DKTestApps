@@ -1,5 +1,5 @@
 DKDEPEND(opengl)
-DKDEPEND(agl)
+#DKDEPEND(agl)
 DKDEPEND(xquartz)
 DKDEPEND(libx11-dev)
 DKDEPEND(shlwapi.lib)
