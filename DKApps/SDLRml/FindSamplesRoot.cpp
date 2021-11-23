@@ -71,6 +71,9 @@ Rml::String Shell::FindSamplesRoot()
 #endif // RMLUI_PLATFORM_LINUX
 
 	printf("appPath = %s\n", appPath.c_str());
+	std::size_t found = appPath.find_last_of("/");
+	appPath = appPath.substr(0,found);
+	
 	printf("current_path = %s\n", fs::current_path().string().c_str());
 
 	Rml::String basePath = appPath + "/";
