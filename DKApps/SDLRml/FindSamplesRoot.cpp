@@ -153,7 +153,7 @@ Rml::String Shell::FindSamplesRoot()
 			if (pathExists(realPath)) {
 				printf("	PATH FOUND\n");
 				//fs::current_path(realPath);
-				cd(realPath);
+				cd(realPath.c_str());
 				return Rml::String(realPath);
 			}
 		}
