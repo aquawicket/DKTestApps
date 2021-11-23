@@ -72,13 +72,13 @@ Rml::String Shell::FindSamplesRoot()
 		}
 		#else		
 			resolved_path = realpath(testPath.c_str(), NULL);
+				
+			if(resolved_path){
+				printf("resolved_path = %s\n", resolved_path);
+				return Rml::String(resolved_path)+"/";
+			}
+			testPath = testPath + "../";
 		#endif
-		
-		if(resolved_path){
-			printf("resolved_path = %s\n", resolved_path);
-			return Rml::String(resolved_path);
-		}
-		testPath = testPath + "../";
 	}
 	
 	printf("ERROR: could not locate assets path \n");
