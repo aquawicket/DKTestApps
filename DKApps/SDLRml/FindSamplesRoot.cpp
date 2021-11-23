@@ -15,17 +15,7 @@
 	#include <linux/limits.h>     // PATH_MAX
 	#include "unistd.h"
 #endif
-
 #include <sys/stat.h>
-
-
-bool pathExists(const std::string& file) {
-	struct stat buf;
-	return (stat(file.c_str(), &buf) == 0);
-}
-
-
-
 
 Rml::String Shell::FindSamplesRoot()
 {
@@ -36,7 +26,7 @@ Rml::String Shell::FindSamplesRoot()
 	char buffer[MAX_PATH];
 	GetModuleFileName(NULL, buffer, MAX_PATH);
 	appPath = Rml::String(buffer);
-#endif // RMLUI_PLATFORM_WIN32
+#endif
 
 #ifdef RMLUI_PLATFORM_MACOSX
 	char buf[PATH_MAX + 1] = { 0 };
@@ -44,15 +34,14 @@ Rml::String Shell::FindSamplesRoot()
 	if (!_NSGetExecutablePath(buf, &bufsize))
 		puts(buf);
 	appPath = Rml::String(buf);
-#endif // RMLUI_PLATFORM_MACOSX
+#endif
 
 #ifdef RMLUI_PLATFORM_LINUX
 	char buf[PATH_MAX + 1] = { 0 };
 	if (!realpath("/proc/self/exe", buf))
 		printf("ERROR: could not get appPath from /proc/self/exe \n");
 	appPath = Rml::String(buf);
-#endif // RMLUI_PLATFORM_LINUX
-
+#endif
 
 	printf("appPath = %s\n", appPath.c_str());
 	std::size_t found = appPath.find_last_of("/");
@@ -61,7 +50,7 @@ Rml::String Shell::FindSamplesRoot()
 	Rml::String basePath = appPath + "/";
 	basePath = Rml::StringUtilities::Replace(basePath, '\\', '/'); //normalize windows backslashes 
 
-	for (unsigned int i = 0; i < 15; i++) { //Start at the top and go back N levels in search of out assets location
+	for (unsigned int i = 0; i < 15; i++) { //Start at the top and go back N levels in search of our assets location
 		Rml::String tryPath = basePath + "Samples";
 
 #ifdef RMLUI_PLATFORM_WIN32
@@ -70,7 +59,6 @@ Rml::String Shell::FindSamplesRoot()
 		if (_fullpath(full, tryPath.c_str(), _MAX_PATH) != NULL) {
 			Rml::String realPath = Rml::String(full);
 			realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
-			//if (pathExists(realPath)) {
 			struct stat buf;
 			if(stat(realPath.c_str(), &buf) == 0){ //does path exist?
 				if(_chdir(realPath.c_str()) != 0){
@@ -85,7 +73,6 @@ Rml::String Shell::FindSamplesRoot()
 #ifdef RMLUI_PLATFORM_MACOSX
 		char* realPath = realpath(tryPath.c_str(), NULL);
 		if (realPath) {
-			//if (pathExists(realPath)) {
 			struct stat buf;
 			if(stat(realPath, &buf) == 0){ //does path exist?
 				if( chdir(realPath) != 0){
@@ -101,7 +88,6 @@ Rml::String Shell::FindSamplesRoot()
 		char* fullPath = (char*)malloc(PATH_MAX);
 		if (realpath(tryPath.c_str(), fullPath) != NULL) {
 			Rml::String realPath = Rml::String(fullPath);
-			//if (pathExists(realPath)) {
 			struct stat buf;
 			if(stat(realPath.c_str(), &buf) == 0){ //does path exist?
 				if( chdir(realPath.c_str()) != 0){
