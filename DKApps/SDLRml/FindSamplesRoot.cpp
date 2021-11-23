@@ -104,35 +104,6 @@ Rml::String Shell::FindSamplesRoot()
 		printf("  not found\n");
 		basePath = basePath + "../";
 		continue;
-		//struct stat info;
-		/*
-		if ((stat(realPath, &info) != 0) && (info.st_mode & S_IFDIR)) {
-			printf("  PATH FOUND\n");
-			if (realPath) {
-				printf("realPath = %s\n", realPath);
-				return Rml::String(realPath) + "/";
-			}
-		}
-		else {
-			printf("  not found\n");
-			basePath = basePath + "../";
-		}
-		*/
-		//std::string realPath = fs::absolute(tryPath).string();
-		std::string realPath = fs::canonical(tryPath).string();
-		//realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
-		printf("realPath = %s\n", realPath.c_str());
-		if (fs::exists(realPath)) {
-			printf("	PATH FOUND\n");
-			//realPath = Rml::StringUtilities::Replace(realPath, "\\", "/");
-			return realPath;// +"/";
-		}
-		else {
-			printf("  not found\n");
-			basePath = basePath + "../";
-			continue;
-		}
-
 #	endif // RMLUI_PLATFORM_MACOSX
 #	ifdef RMLUI_PLATFORM_LINUX
 		/*
