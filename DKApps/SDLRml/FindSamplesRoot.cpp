@@ -72,10 +72,13 @@ Rml::String Shell::FindSamplesRoot()
 		#endif
 		#ifdef RMLUI_PLATFORM_MACOSX
 			char* resolved_path = NULL;
-			resolved_path = realpath(testPath.c_str(), NULL);	
-			if(resolved_path){
-				printf("resolved_path = %s\n", resolved_path);
-				return Rml::String(resolved_path)+"/";
+			struct stat info;
+			if (stat(doPath.c_str(), &info) != 0) {
+				resolved_path = realpath(doPath.c_str(), NULL);
+				if (resolved_path) {
+					printf("resolved_path = %s\n", resolved_path);
+					return Rml::String(resolved_path) + "/";
+				}
 			}
 			testPath = testPath + "../";
 		#endif
