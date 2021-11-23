@@ -93,7 +93,7 @@ Rml::String Shell::FindSamplesRoot()
 				return realPath + "/";
 			}
 		}
-		else {
+		else
 			printf("  not found\n");
 			testPath = testPath + "../";
 			continue;
