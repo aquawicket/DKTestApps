@@ -108,7 +108,8 @@ Rml::String Shell::FindSamplesRoot()
 			basePath = basePath + "../";
 		}
 		*/
-		std::string realPath = fs::absolute(tryPath).string();
+		//std::string realPath = fs::absolute(tryPath).string();
+		std::string realPath = fs::canonical(tryPath).string();
 		//realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 		printf("realPath = %s\n", realPath.c_str());
 		if (fs::exists(realPath)) {
