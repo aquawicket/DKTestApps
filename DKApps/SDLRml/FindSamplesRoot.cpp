@@ -13,6 +13,16 @@
 	#include <linux/limits.h>     // PATH_MAX
 #endif
 
+#include <sys/stat.h>
+#include <direct.h>
+#include "unistd.h"
+
+bool pathExists(const std::string& file) {
+	struct stat buf;
+	return (stat(file.c_str(), &buf) == 0);
+}
+
+
 //#define USE_filesystem 1
 /*
 #ifdef USE_filesystem
@@ -35,23 +45,16 @@
 #endif
 */
 
-#include <sys/stat.h>
-bool pathExists(const std::string& file) {
-//#	ifdef USE_filesystem
-//		return fs::exists(file);
-//#	else
-		struct stat buf;
-		return (stat(file.c_str(), &buf) == 0);
-//#	endif
-}
+
+
 
 /*
 #ifdef _WIN32
-	#include <direct.h>
+	
 	#define cwd _getcwd
 	#define cd _chdir
 #else
-	#include "unistd.h"
+	
 	#define cwd getcwd
 	#define cd chdir
 #endif
