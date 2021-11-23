@@ -45,6 +45,7 @@ bool pathExists(const std::string& file) {
 //#	endif
 }
 
+/*
 #ifdef _WIN32
 	#include <direct.h>
 	#define cwd _getcwd
@@ -54,7 +55,7 @@ bool pathExists(const std::string& file) {
 	#define cwd getcwd
 	#define cd chdir
 #endif
-
+*/
 
 
 
@@ -106,54 +107,44 @@ Rml::String Shell::FindSamplesRoot()
 			printf("realPath is: %s\n", realPath.c_str());
 			if (pathExists(realPath)) {
 				printf("	PATH FOUND\n");
-				//fs::current_path(realPath);
-				cd(realPath.c_str());
+				if(_chdir(realPath.c_str()) != 0){
+					printf("ERROR: _chdir failed");
+					return "";
+				}
 				return realPath;
 			}
 		}
-		printf("  not found\n");
-		basePath = basePath + "../";
-		continue;
-#	endif // RMLUI_PLATFORM_WIN32
+		//basePath = basePath + "../";
+		//continue;
+#	endif
 
 #	ifdef RMLUI_PLATFORM_MACOSX
 		char* realPath = realpath(tryPath.c_str(), NULL);
 		if (realPath) {
 			printf("realPath is: %s\n", realPath);
 			if (pathExists(realPath)) {
-				printf("	PATH FOUND\n");
-				//fs::current_path(realPath);
-				cd(realPath);
+				if( chdir(realPath) != 0){
+					printf("ERROR: chdir failed");
+					return "";
+				}
 				return (Rml::String(realPath)+"/");
 			}
 		}
-		printf("  not found\n");
-		basePath = basePath + "../";
-		continue;
-#	endif // RMLUI_PLATFORM_MACOSX
+		//basePath = basePath + "../";
+		//continue;
+#	endif
 
 #	ifdef RMLUI_PLATFORM_LINUX
-		//Rml::StringUtilities::Replace(tryPath, fs::current_path().string(), "");
-		
-		/*
-		long size;
-		char *buf;
-		char *ptr;
-		size = pathconf(".", _PC_PATH_MAX);
-		if ((buf = (char *)malloc((size_t)size)) != NULL)
-		ptr = getcwd(buf, (size_t)size);
-		Rml::StringUtilities::Replace(tryPath, Rml::String(ptr), "");
-		*/
-		
 		char* fullPath = (char*)malloc(PATH_MAX);
 		if (realpath(tryPath.c_str(), fullPath) != NULL) {
 			printf("fullPath is: %s\n", fullPath);
 			Rml::String realPath = Rml::String(fullPath);
 			printf("realPath is: %s\n", realPath.c_str());
 			if (pathExists(realPath)) {
-				printf("	PATH FOUND\n");
-				//fs::current_path(realPath);
-				cd(realPath.c_str());
+				if( chdir(realPath.c_str()) != 0){
+					printf("ERROR: chdir failed");
+					return "";
+				}
 				return Rml::String(realPath);
 			}
 		}
@@ -161,11 +152,9 @@ Rml::String Shell::FindSamplesRoot()
 			if (errno)
 				std::cout << "ERROR: realpath():  " << std::strerror(errno) << '\n';
 		}
-		printf("  not found\n");
+#	endif
 		basePath = basePath + "../";
 		continue;
-#	endif // RMLUI_PLATFORM_LINUX
-
 	}
 	printf("ERROR: could not locate assets path \n");
 	return "";
