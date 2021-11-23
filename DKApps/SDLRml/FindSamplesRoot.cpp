@@ -34,8 +34,8 @@ Rml::String Shell::FindSamplesRoot()
 	#endif
 	
 	#ifdef RMLUI_PLATFORM_MACOSX
-		char buf[MAX_PATH + 1] = {0};
-		uint32_t bufsize = MAX_PATH; //PATH_MAX;
+		char buf[PATH_MAX + 1] = {0};
+		uint32_t bufsize = PATH_MAX;
 		if(!_NSGetExecutablePath(buf, &bufsize))
 			puts(buf);
 		appPath = Rml::String(buf);
