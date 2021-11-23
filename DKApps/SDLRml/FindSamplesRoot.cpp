@@ -82,7 +82,7 @@ Rml::String Shell::FindSamplesRoot()
 		if (fs::exists(realPath)) {
 			printf("	PATH FOUND\n");
 			realPath = Rml::StringUtilities::Replace(realPath, "\\", "/");
-			return realPath + "/";
+			return realPath;// +"/";
 		}
 		else {
 			printf("  not found\n");
@@ -108,12 +108,12 @@ Rml::String Shell::FindSamplesRoot()
 		}
 		*/
 		std::string realPath = fs::absolute(tryPath).string();
-		realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
+		//realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 		printf("realPath = %s\n", realPath.c_str());
 		if (fs::exists(realPath)) {
 			printf("	PATH FOUND\n");
-			realPath = Rml::StringUtilities::Replace(realPath, "\\", "/");
-			return realPath + "/";
+			//realPath = Rml::StringUtilities::Replace(realPath, "\\", "/");
+			return realPath;// +"/";
 		}
 		else {
 			printf("  not found\n");
@@ -140,12 +140,12 @@ Rml::String Shell::FindSamplesRoot()
 		}
 		*/
 		std::string realPath = fs::absolute(tryPath).string();
-		realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
+		//realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 		printf("realPath = %s\n", realPath.c_str());
 		if (fs::exists(realPath)) {
 			printf("	PATH FOUND\n");
-			realPath = Rml::StringUtilities::Replace(realPath, "\\", "/");
-			return realPath + "/";
+			//realPath = Rml::StringUtilities::Replace(realPath, "\\", "/");
+			return realPath;// +"/";
 		}
 		else {
 			printf("  not found\n");
