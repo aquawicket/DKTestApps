@@ -12,9 +12,10 @@
 	#include <linux/limits.h>     // PATH_MAX
 #endif
 
-#defind USE_filesystem 1
+#define USE_filesystem 1
 
-#ifndef __has_include && defined(USE_filesysten)
+#ifdef USE_filesystem
+#ifndef __has_include
 	static_assert(false, "__has_include not supported");
 #else
 	#if /*__cplusplus >= 201703L &&*/ __has_include(<filesystem>)
@@ -30,17 +31,29 @@
 		static_assert(false, "filesystem unavalable");
 	#endif
 #endif
+#endif
 
 #include <sys/stat.h>
-	bool pathExists(const std::string& file) {
-		#ifdef USE_filesystem
-			return fs::exists(file);
-		#else
-			struct stat buf;
-			return (stat(file.c_str(), &buf) == 0);
-		#endif
-	}
-endif()
+bool pathExists(const std::string& file) {
+#	ifdef USE_filesystem
+		return fs::exists(file);
+#	else
+		struct stat buf;
+		return (stat(file.c_str(), &buf) == 0);
+#	endif
+}
+
+#ifdef _WIN32
+	#include <direct.h>
+	#define cwd _getcwd
+	#define cd _chdir
+#else
+	#include "unistd.h"
+	#define cwd getcwd
+	#define cd chdir
+#endif
+
+
 
 
 Rml::String Shell::FindSamplesRoot()
@@ -69,7 +82,7 @@ Rml::String Shell::FindSamplesRoot()
 	appPath = Rml::String(buf);
 #endif // RMLUI_PLATFORM_LINUX
 
-	printf("current_path = %s\n", fs::current_path().string().c_str()); //we are here
+	//printf("current_path = %s\n", fs::current_path().string().c_str()); //we are here
 	printf("appPath = %s\n", appPath.c_str());
 	std::size_t found = appPath.find_last_of("/");
 	appPath = appPath.substr(0,found); //point the path to the app folder by removing the executbale from the end
@@ -91,7 +104,8 @@ Rml::String Shell::FindSamplesRoot()
 			printf("realPath is: %s\n", realPath.c_str());
 			if (pathExists(realPath)) {
 				printf("	PATH FOUND\n");
-				fs::current_path(realPath);
+				//fs::current_path(realPath);
+				cd(realPath.c_str());
 				return realPath;
 			}
 		}
