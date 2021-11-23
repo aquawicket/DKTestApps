@@ -71,15 +71,13 @@ Rml::String Shell::FindSamplesRoot()
 #endif // RMLUI_PLATFORM_LINUX
 
 	printf("appPath = %s\n", appPath.c_str());
-	appPath = Rml::StringUtilities::Replace(appPath, "/SDLRml", "");
 	printf("current_path = %s\n", fs::current_path().string().c_str());
-	fs::current_path(appPath);
 
 	Rml::String basePath = appPath + "/";
 	basePath = Rml::StringUtilities::Replace(basePath, '\\', '/');
 
 	for (unsigned int i = 0; i < 15; i++) {
-		Rml::String tryPath = basePath + "Samples/";
+		Rml::String tryPath = basePath + "Samples";
 		printf("tryPath = %s\n", tryPath.c_str());
 
 #	ifdef RMLUI_PLATFORM_WIN32
