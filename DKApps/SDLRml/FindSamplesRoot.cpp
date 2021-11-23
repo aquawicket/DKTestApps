@@ -18,7 +18,7 @@
 #endif
 #ifdef RMLUI_PLATFORM_LINUX
 	//#include <libgen.h>           // dirname
-	//#include <unistd.h>           // readlink
+	#include <unistd.h>           // chdir, readlink
 	#include <linux/limits.h>     // PATH_MAX
 	#include <sys/stat.h>          // S_ISDIR
 #endif
