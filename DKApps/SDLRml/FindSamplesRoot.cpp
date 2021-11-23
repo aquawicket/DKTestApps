@@ -114,7 +114,7 @@ Rml::String Shell::FindSamplesRoot()
 
 #	ifdef RMLUI_PLATFORM_LINUX
 		char* fullPath = (char*)malloc(PATH_MAX);
-		if (realpath(tryPath.c_str(), fullPath) != NULL) {
+		if (_realpath(tryPath.c_str(), fullPath) != NULL) {
 			printf("fullPath is: %s\n", fullPath);
 			Rml::String realPath = Rml::String(fullPath);
 			//if (realPath) {
