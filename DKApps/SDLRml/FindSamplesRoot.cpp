@@ -123,6 +123,10 @@ Rml::String Shell::FindSamplesRoot()
 				}
 			//}
 		}
+		else {
+			if (errno)
+				std::cout << "ERROR: realpath():  " << std::strerror(errno) << '\n';
+		}
 		printf("  not found\n");
 		basePath = basePath + "../";
 		continue;
