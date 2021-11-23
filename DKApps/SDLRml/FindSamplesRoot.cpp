@@ -1,27 +1,17 @@
-#include <RmlUi/Core.h>
-#include <RmlUi/Core/StringUtilities.h> //Rml::StringUtilities::Replace
+#include <RmlUi/Core/StringUtilities.h>  //Rml::StringUtilities::Replace
 #include "Shell.h"
 
-#include <iostream>
-#include <cmath>
-#include <cerrno>
-#include <cstring>
-#include <clocale>
-
 #ifdef RMLUI_PLATFORM_WIN32
-	#include "Shlwapi.h"            // GetModuleFileName
+	#include "Shlwapi.h"          // GetModuleFileName
 #endif
 #ifdef RMLUI_PLATFORM_MACOSX
 	#include <mach-o/dyld.h>      // _NSGetExecutablePath
-	#include <limits.h>			// PATH_MAX
-	//#include <sys/stat.h>         // directory
+	#include <limits.h>			  // PATH_MAX
 #endif
 #ifdef RMLUI_PLATFORM_LINUX
-	//#include <libgen.h>           // dirname
-	#include <unistd.h>           // chdir, readlink
 	#include <linux/limits.h>     // PATH_MAX
-	#include <sys/stat.h>          // S_ISDIR
 #endif
+
 
 #ifndef __has_include
 	static_assert(false, "__has_include not supported");
@@ -40,15 +30,17 @@
 	#endif
 #endif
 
+#include <sys/stat.h>
+bool pathExists(const std::string& file) {
+    //struct stat buf;
+    //return (stat(file.c_str(), &buf) == 0);
+	return fs::exists(file);
+}
+
+
 Rml::String Shell::FindSamplesRoot()
 {
 	Rml::String path = "";
-#ifdef WIN32
-	path = "";
-#else
-	path = "";
-#endif	
-
 	Rml::String appPath = "";
 
 #ifdef RMLUI_PLATFORM_WIN32
@@ -56,6 +48,7 @@ Rml::String Shell::FindSamplesRoot()
 	GetModuleFileName(NULL, buffer, MAX_PATH);
 	appPath = Rml::String(buffer);
 #endif // RMLUI_PLATFORM_WIN32
+
 #ifdef RMLUI_PLATFORM_MACOSX
 	char buf[PATH_MAX + 1] = { 0 };
 	uint32_t bufsize = PATH_MAX;
@@ -63,6 +56,7 @@ Rml::String Shell::FindSamplesRoot()
 		puts(buf);
 	appPath = Rml::String(buf);
 #endif // RMLUI_PLATFORM_MACOSX
+
 #ifdef RMLUI_PLATFORM_LINUX
 	char buf[PATH_MAX + 1] = { 0 };
 	if (!realpath("/proc/self/exe", buf))
@@ -70,16 +64,15 @@ Rml::String Shell::FindSamplesRoot()
 	appPath = Rml::String(buf);
 #endif // RMLUI_PLATFORM_LINUX
 
+	printf("current_path = %s\n", fs::current_path().string().c_str()); //we are here
 	printf("appPath = %s\n", appPath.c_str());
 	std::size_t found = appPath.find_last_of("/");
-	appPath = appPath.substr(0,found);
+	appPath = appPath.substr(0,found); //point the path to the app folder by removing the executbale from the end
 	
-	printf("current_path = %s\n", fs::current_path().string().c_str());
-
 	Rml::String basePath = appPath + "/";
-	basePath = Rml::StringUtilities::Replace(basePath, '\\', '/');
+	basePath = Rml::StringUtilities::Replace(basePath, '\\', '/'); //normalize windows backslashes 
 
-	for (unsigned int i = 0; i < 15; i++) {
+	for (unsigned int i = 0; i < 15; i++) { //Start at the top and go back N levels in search of out assets location
 		Rml::String tryPath = basePath + "Samples";
 		printf("tryPath = %s\n", tryPath.c_str());
 
@@ -91,7 +84,7 @@ Rml::String Shell::FindSamplesRoot()
 			Rml::String realPath = Rml::String(full);
 			realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 			printf("realPath is: %s\n", realPath.c_str());
-			if (fs::exists(realPath)) {
+			if (pathExists(realPath)) {
 				printf("	PATH FOUND\n");
 				fs::current_path(realPath);
 				return realPath;
@@ -106,7 +99,7 @@ Rml::String Shell::FindSamplesRoot()
 		char* realPath = realpath(tryPath.c_str(), NULL);
 		if (realPath) {
 			printf("realPath is: %s\n", realPath);
-			if (fs::exists(realPath)) {
+			if (pathExists(realPath)) {
 				printf("	PATH FOUND\n");
 				fs::current_path(realPath);
 				return (Rml::String(realPath)+"/");
@@ -118,21 +111,17 @@ Rml::String Shell::FindSamplesRoot()
 #	endif // RMLUI_PLATFORM_MACOSX
 
 #	ifdef RMLUI_PLATFORM_LINUX
-	
-
 		Rml::StringUtilities::Replace(tryPath, fs::current_path().string(), "");
 		char* fullPath = (char*)malloc(PATH_MAX);
 		if (::realpath(tryPath.c_str(), fullPath) != NULL) {
 			printf("fullPath is: %s\n", fullPath);
 			Rml::String realPath = Rml::String(fullPath);
-			//if (realPath) {
-				printf("realPath is: %s\n", realPath);
-				if (fs::exists(realPath)) {
-					printf("	PATH FOUND\n");
-					fs::current_path(realPath);
-					return Rml::String(realPath);
-				}
-			//}
+			printf("realPath is: %s\n", realPath);
+			if (pathExists(realPath)) {
+				printf("	PATH FOUND\n");
+				fs::current_path(realPath);
+				return Rml::String(realPath);
+			}
 		}
 		else {
 			if (errno)
