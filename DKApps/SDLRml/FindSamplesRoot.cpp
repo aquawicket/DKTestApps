@@ -1,4 +1,4 @@
-//#include <RmlUi/Core.h>
+#include <RmlUi/Core.h>
 #include <RmlUi/Core/StringUtilities.h> //Rml::StringUtilities::Replace
 #include "Shell.h"
 
@@ -14,6 +14,7 @@
 	//#include <libgen.h>           // dirname
 	//#include <unistd.h>           // readlink
 	#include <linux/limits.h>     // PATH_MAX
+	#include <sys/stat.h>          // S_ISDIR
 #endif
 
 #ifndef __has_include
@@ -33,7 +34,10 @@
 	#endif
 #endif
 
-//#define BUFSIZE 4096
+// //https://insanecoding.blogspot.com/2007/11/implementing-realpath-in-c.html
+#ifdef RMLUI_PLATFORM_LINUX
+	bool _realpath(const std::string& path, std::string& resolved_path, bool resolve_link = true);
+#endif
 
 Rml::String Shell::FindSamplesRoot()
 {
@@ -73,7 +77,6 @@ Rml::String Shell::FindSamplesRoot()
 	for (unsigned int i = 0; i < 15; i++) {
 		Rml::String tryPath = basePath + "Samples/";
 		printf("tryPath = %s\n", tryPath.c_str());
-
 
 #	ifdef RMLUI_PLATFORM_WIN32
 		Rml::String realPath;
@@ -133,3 +136,19 @@ Rml::String Shell::FindSamplesRoot()
 	printf("ERROR: could not locate assets path \n");
 	return "";
 }
+
+
+#ifdef RMLUI_PLATFORM_LINUX
+// https://insanecoding.blogspot.com/2007/11/implementing-realpath-in-c.html
+bool _realpath(const std::string& path, std::string& resolved_path, bool resolve_link = true) {
+	bool success = false;
+	if (path.size()) {
+		struct stat sb;
+		if (!stat(path.c_str(), &sb)) {
+			bool (*rp)(const std::string&, std::string&) = resolve_link ? symlink_resolve : realpath_file;
+			success = S_ISDIR(sb.st_mode) ? chdir_getcwd(path, resolved_path) : rp(path, resolved_path);
+		}
+	}
+	return(success);
+}
+#endif //RMLUI_PLATFORM_LINUX
