@@ -103,7 +103,7 @@ Rml::String Shell::FindSamplesRoot()
 			Rml::String realPath = Rml::String(fullPath);
 			//if (pathExists(realPath)) {
 			struct stat buf;
-			if(stat(realPath, &buf) == 0){ //does path exist?
+			if(stat(realPath.c_str(), &buf) == 0){ //does path exist?
 				if( chdir(realPath.c_str()) != 0){
 					printf("ERROR: chdir failed");
 					return "";
