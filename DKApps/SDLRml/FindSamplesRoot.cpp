@@ -13,13 +13,13 @@
 	#include <linux/limits.h>     // PATH_MAX
 #endif
 
-#define USE_filesystem 1
-
+//#define USE_filesystem 1
+/*
 #ifdef USE_filesystem
 #ifndef __has_include
 	static_assert(false, "__has_include not supported");
 #else
-	#if /*__cplusplus >= 201703L &&*/ __has_include(<filesystem>)
+	#if __cplusplus >= 201703L && __has_include(<filesystem>)
 		#include <filesystem>
 		namespace fs = std::filesystem;
 	#elif __has_include(<experimental/filesystem>)
@@ -33,15 +33,16 @@
 	#endif
 #endif
 #endif
+*/
 
 #include <sys/stat.h>
 bool pathExists(const std::string& file) {
-#	ifdef USE_filesystem
-		return fs::exists(file);
-#	else
+//#	ifdef USE_filesystem
+//		return fs::exists(file);
+//#	else
 		struct stat buf;
 		return (stat(file.c_str(), &buf) == 0);
-#	endif
+//#	endif
 }
 
 #ifdef _WIN32
@@ -121,7 +122,8 @@ Rml::String Shell::FindSamplesRoot()
 			printf("realPath is: %s\n", realPath);
 			if (pathExists(realPath)) {
 				printf("	PATH FOUND\n");
-				fs::current_path(realPath);
+				//fs::current_path(realPath);
+				cd(realPath.c_str);
 				return (Rml::String(realPath)+"/");
 			}
 		}
@@ -131,7 +133,8 @@ Rml::String Shell::FindSamplesRoot()
 #	endif // RMLUI_PLATFORM_MACOSX
 
 #	ifdef RMLUI_PLATFORM_LINUX
-		Rml::StringUtilities::Replace(tryPath, fs::current_path().string(), "");
+		//Rml::StringUtilities::Replace(tryPath, fs::current_path().string(), "");
+		Rml::StringUtilities::Replace(tryPath, Rml::String(cdw()), "");
 		char* fullPath = (char*)malloc(PATH_MAX);
 		if (::realpath(tryPath.c_str(), fullPath) != NULL) {
 			printf("fullPath is: %s\n", fullPath);
@@ -153,7 +156,6 @@ Rml::String Shell::FindSamplesRoot()
 #	endif // RMLUI_PLATFORM_LINUX
 
 	}
-
 	printf("ERROR: could not locate assets path \n");
 	return "";
 }
