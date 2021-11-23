@@ -98,7 +98,7 @@ Rml::String Shell::FindSamplesRoot()
 #	endif // RMLUI_PLATFORM_WIN32
 
 #	ifdef RMLUI_PLATFORM_MACOSX
-		char* realPath = realpath(tryPath.c_str(), NULL);
+		char* realPath = _realpath(tryPath.c_str(), NULL);
 		if (realPath) {
 			printf("realPath is: %s\n", realPath);
 			if (fs::exists(realPath)) {
