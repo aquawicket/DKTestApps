@@ -67,7 +67,7 @@ Rml::String Shell::FindSamplesRoot()
 
 
 	printf("appPath = %s\n", appPath.c_str());
-	printf("current_path = %s\n", fs::current_path());
+	printf("current_path = %s\n", fs::current_path().string().c_str());
 	Rml::String basePath = appPath + "/";
 	basePath = Rml::StringUtilities::Replace(basePath, '\\', '/');
 
