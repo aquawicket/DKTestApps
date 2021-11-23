@@ -51,14 +51,13 @@ Rml::String Shell::FindSamplesRoot()
 
 	Rml::String testPath = appPath +"/";
 	testPath = Rml::StringUtilities::Replace(testPath, '\\', '/');
-	char resolved_path[256];
-	//char* resolved_path = NULL;
 	
 	for (unsigned int i = 0; i < 15; i++) {
 		Rml::String doPath = testPath + "Samples";
 		printf("doPath = %s\n", doPath.c_str());
 
 		#ifdef RMLUI_PLATFORM_WIN32
+		char resolved_path[256];
 			char* fileExt;
 			if (PathFileExistsA(doPath.c_str())) {
 				doPath = Rml::StringUtilities::Replace(doPath, "\\", "/");
@@ -72,6 +71,7 @@ Rml::String Shell::FindSamplesRoot()
 			}
 		#endif
 		#ifdef RMLUI_PLATFORM_MACOSX
+			char* resolved_path = NULL;
 			resolved_path = realpath(testPath.c_str(), NULL);	
 			if(resolved_path){
 				printf("resolved_path = %s\n", resolved_path);
@@ -80,6 +80,7 @@ Rml::String Shell::FindSamplesRoot()
 			testPath = testPath + "../";
 		#endif
 		#ifdef RMLUI_PLATFORM_LINUX
+			char* resolved_path = NULL;
 			resolved_path = realpath(testPath.c_str(), buf);
 			if (resolved_path) {
 				printf("resolved_path = %s\n", resolved_path);
