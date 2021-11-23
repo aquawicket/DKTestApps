@@ -1,5 +1,6 @@
 #include <RmlUi/Core/StringUtilities.h>  //Rml::StringUtilities::Replace
 #include "Shell.h"
+#include <iostream>
 
 #ifdef RMLUI_PLATFORM_WIN32
 	#include "Shlwapi.h"          // GetModuleFileName
