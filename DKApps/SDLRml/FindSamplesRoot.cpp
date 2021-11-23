@@ -110,18 +110,23 @@ Rml::String Shell::FindSamplesRoot()
 #	endif // RMLUI_PLATFORM_MACOSX
 
 #	ifdef RMLUI_PLATFORM_LINUX
-		char* realPath = realpath(tryPath.c_str(), NULL);
-		if (realPath) {
-			printf("realPath is: %s\n", realPath);
-			if (fs::exists(realPath)) {
-				printf("	PATH FOUND\n");
-				return Rml::String(realPath);
-	}
-}
+		char* fullPath = (char*)malloc(PATH_MAX);
+		if (realpath(tryPath.c_str(), fullPath) != NULL) {
+			printf("fullPath is: %s\n", fullPath);
+			Rml::String realPath = Rml::String(fullPath);
+			if (realPath) {
+				printf("realPath is: %s\n", realPath);
+				if (fs::exists(realPath)) {
+					printf("	PATH FOUND\n");
+					return Rml::String(realPath);
+				}
+			}
+		}
 		printf("  not found\n");
 		basePath = basePath + "../";
 		continue;
 #	endif // RMLUI_PLATFORM_LINUX
+
 	}
 
 	printf("ERROR: could not locate assets path \n");
