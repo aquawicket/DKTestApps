@@ -70,7 +70,7 @@ Rml::String Shell::FindSamplesRoot()
 			std::error_code ec;
 			std::string realPath = std::filesystem::absolute(tryPath, ec).u8string();
 			if (ec) 
-				printf("ERROR: GetFullPathName(): %s\n", ec.message());
+				printf("ERROR: GetFullPathName(): %s\n", ec.message().c_str());
 			else{
 				realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 				printf("realPath = %s\n", realPath.c_str());
@@ -100,20 +100,16 @@ Rml::String Shell::FindSamplesRoot()
 			testPath = testPath + "../";
 		}
 		*/
-		//if (PathFileExistsA(tryPath.c_str())) {
+
 		if (std::filesystem::exists(tryPath)) {
 			printf("	PATH FOUND\n");
-			//tryPath = Rml::StringUtilities::Replace(tryPath, "\\", "/");
-			//char realPath[256];
-			//TCHAR** lppPart = { NULL };
-			//if (GetFullPathName(tryPath.c_str(), BUFSIZE, realPath, lppPart)) {
 			std::error_code ec;
 			std::string realPath = std::filesystem::absolute(tryPath, ec).u8string();
 			if (ec)
-				printf("ERROR: GetFullPathName(): %s\n", ec.message());
+				printf("ERROR: std::filesystem::absolute(): %s\n", ec.message().c_str());
 			else {
 				realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
-				//printf("realPath = %s\n", realPath.c_str());
+				printf("realPath = %s\n", realPath.c_str());
 				return realPath + "/";
 			}
 		}
@@ -124,6 +120,7 @@ Rml::String Shell::FindSamplesRoot()
 		}
 #endif
 #ifdef RMLUI_PLATFORM_LINUX
+		/*
 		char* realPath = NULL;
 		struct stat info;
 		if (stat(tryPath.c_str(), &info) != 0) {
@@ -137,6 +134,24 @@ Rml::String Shell::FindSamplesRoot()
 		else {
 			printf("  not found");
 			testPath = testPath + "../";
+		}
+		*/
+		if (std::filesystem::exists(tryPath)) {
+			printf("	PATH FOUND\n");
+			std::error_code ec;
+			std::string realPath = std::filesystem::absolute(tryPath, ec).u8string();
+			if (ec)
+				printf("ERROR: std::filesystem::absolute(): %s\n", ec.message().c_str());
+			else {
+				realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
+				printf("realPath = %s\n", realPath.c_str());
+				return realPath + "/";
+			}
+		}
+		else {
+			printf("  not found\n");
+			testPath = testPath + "../";
+			continue;
 		}
 #endif
 	}
