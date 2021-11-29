@@ -10,7 +10,7 @@ DKDEPEND(libjpeg-turbo)
 DKDEPEND(libwebp)
 DKDEPEND(tiff)
 DKDEPEND(glew)
-DKDEPEND(rmlui rmlui_debugger)
+DKDEPEND(rmlui)
 
 # rmlui shell
 DKINCLUDE(${RMLUI}/Samples/shell/include)

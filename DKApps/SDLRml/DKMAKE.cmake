@@ -12,7 +12,7 @@ DKDEPEND(tiff)
 DKDEPEND(glew)
 DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
-DKDEPEND(rmlui rmlui_debugger)
+DKDEPEND(rmlui)
 
 # rmlui shell
 DKINCLUDE(${RMLUI}/Samples/shell/include)
