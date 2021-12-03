@@ -4,7 +4,6 @@
 int main(int argc, char** argv)
 {
 	//put your SDL / game code here
-
 	SDL_Window *window;                    // Declare a pointer
 
 	SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
