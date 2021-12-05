@@ -1,6 +1,8 @@
 // This will allow you to print out the predefined macros in Microsoft Visual C++
-// To print C predefiend macros:    cl.exe /B1Macros.exe macros.c  
-// To print C++ predefiend macros:  cl.exe /BxMacros.exe macros.cpp
+// To print C predefiend macros:    cl.exe /B1VCMacros.exe macros.c  
+// To print C++ predefiend macros:  cl.exe /BxVCMacros.exe macros.cpp
+// Example: 
+// C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\bin\Hostx86\x86\cl.exe /BxC:\Users\Administrator\digitalknob\DKTestApps\DKApps\VCMacros\win32\Release\VCMacros.exe macros.cpp
 // https://stackoverflow.com/a/3672331/688352
 
 // The Microsoft C/C++ compiler allows an alternative compiler front-end to be invoked using the /B1 and /Bx 
