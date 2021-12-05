@@ -30,7 +30,7 @@
 #include <RmlUi/Core.h>
 #include "ShellFileInterface.h"
 #include "macosx/InputMacOSX.h"
-#include <Carbon/Carbon.h>
+//#include <Carbon/Carbon.h>
 #include <AGL/agl.h>
 #include <sys/time.h>
 #include <stdio.h>
@@ -55,7 +55,7 @@ static const EventTypeSpec WINDOW_EVENTS[] = {
 
 static Rml::Context* context = nullptr;
 static ShellRenderInterfaceExtensions* shell_renderer;
-static UniquePtr<ShellFileInterface> file_interface;
+static Rml::UniquePtr<ShellFileInterface> file_interface;
 
 static WindowRef window;
 static timeval start_time;
@@ -127,14 +127,17 @@ bool Shell::OpenWindow(const char* name, ShellRenderInterfaceExtensions *_shell_
 	window_width = width;
 	window_height = height;
 
+    /*
 	OSStatus result = CreateNewWindow(kDocumentWindowClass,
 									  (allow_resize ? (kWindowStandardDocumentAttributes | kWindowLiveResizeAttribute) :
 									   kWindowCloseBoxAttribute) | kWindowStandardHandlerAttribute,
 									  &content_bounds,
 									  &window);
+    
+    
 	if (result != noErr)
 		return false;
-
+    
 	CFStringRef window_title = CFStringCreateWithCString(nullptr, name, kCFStringEncodingUTF8);
 	if (result != noErr)
 		return false;
@@ -153,6 +156,7 @@ bool Shell::OpenWindow(const char* name, ShellRenderInterfaceExtensions *_shell_
 	if(shell_renderer != nullptr) {
 		shell_renderer->AttachToNative(window);
 	}
+    */
     return true;
 }
 
