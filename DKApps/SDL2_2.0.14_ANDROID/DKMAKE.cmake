@@ -1,0 +1,3 @@
+DKDEPEND(sdl2vs)
+DKDEPEND(sdl2)
+DKDEPEND(sdl2_ttf)
