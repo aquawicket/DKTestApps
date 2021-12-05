@@ -14,6 +14,7 @@ DKDEPEND(rmlui)
 DKDEPEND(libglfw3-dev)
 
 # rmlui shell
+DKINCLUDE(usr/local/include)
 DKINCLUDE(${DKPROJECT}/Samples/shell/include)
 ADD_SOURCE(${DKPROJECT}/Samples/shell/include/*.*)
 ADD_SOURCE(${DKPROJECT}/Samples/shell/src/*.*)
