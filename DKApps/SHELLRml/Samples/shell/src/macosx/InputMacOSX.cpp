@@ -86,13 +86,14 @@ OSStatus InputMacOSX::EventHandler(EventHandlerCallRef next_handler, EventRef ev
 				{
 					EventMouseWheelAxis axis;
 					SInt32 delta;
-
+                    /*
 					if (GetEventParameter(event, kEventParamMouseWheelAxis, typeMouseWheelAxis, nullptr, sizeof(EventMouseWheelAxis), nullptr, &axis) == noErr &&
 						GetEventParameter(event, kEventParamMouseWheelDelta, typeLongInteger, nullptr, sizeof(SInt32), nullptr, &delta) == noErr)
 					{
 						if (axis == kEventMouseWheelAxisY)
 							context->ProcessMouseWheel(-delta, GetKeyModifierState(event));
 					}
+                    */
 				}
 				break;
 

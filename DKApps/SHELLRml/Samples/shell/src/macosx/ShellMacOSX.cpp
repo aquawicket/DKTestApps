@@ -35,6 +35,7 @@
 #include <sys/time.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include "ShellOpenGl.h" ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static const EventTypeSpec INPUT_EVENTS[] = {
 	{ kEventClassKeyboard, kEventRawKeyDown },
@@ -57,7 +58,9 @@ static Rml::Context* context = nullptr;
 static ShellRenderInterfaceExtensions* shell_renderer;
 static Rml::UniquePtr<ShellFileInterface> file_interface;
 
-static WindowRef window;
+//static WindowRef window;
+GLFWwindow* window; //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static timeval start_time;
 static Rml::String clipboard_text;
 static int window_width = 0;
@@ -65,6 +68,13 @@ static int window_height = 0;
 
 static void IdleTimerCallback(EventLoopTimerRef timer, EventLoopIdleTimerMessage inState, void* p);
 static OSStatus EventHandler(EventHandlerCallRef next_handler, EventRef event, void* p);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void errorCallback(int error, const char* description)
+{
+    fputs(description, stderr);
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void UpdateWindowDimensions(int width = 0, int height = 0)
 {
@@ -89,6 +99,19 @@ bool Shell::Initialise()
 	file_interface = Rml::MakeUnique<ShellFileInterface>(root);
 	Rml::SetFileInterface(file_interface.get());
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Set callback for errors
+    glfwSetErrorCallback(errorCallback);
+    // Initialize the library
+    if (!glfwInit())
+        return -1;
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    // Without these two hints, nothing above OpenGL version 2.1 is supported
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
 	return true;
 }
 
@@ -123,10 +146,18 @@ Rml::String Shell::FindSamplesRoot()
 bool Shell::OpenWindow(const char* name, ShellRenderInterfaceExtensions *_shell_renderer, unsigned int width, unsigned int height, bool allow_resize)
 {
 	shell_renderer = _shell_renderer;
-	Rect content_bounds = { 60, 20, 60 + height, 20 + width };
+    //Rect content_bounds = { 60, 20, 60 + height, 20 + width };
 	window_width = width;
 	window_height = height;
-
+    
+    // Create a windowed mode window and its OpenGL context
+    window = glfwCreateWindow(window_width, window_height, "RmlUi OpenGL Mac", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return -1;
+    }
+    
     /*
 	OSStatus result = CreateNewWindow(kDocumentWindowClass,
 									  (allow_resize ? (kWindowStandardDocumentAttributes | kWindowLiveResizeAttribute) :
@@ -152,11 +183,11 @@ bool Shell::OpenWindow(const char* name, ShellRenderInterfaceExtensions *_shell_
 	CFRelease(window_title);
 
 	ShowWindow(window);
+    */
     
 	if(shell_renderer != nullptr) {
 		shell_renderer->AttachToNative(window);
 	}
-    */
     return true;
 }
 
@@ -165,10 +196,12 @@ void Shell::CloseWindow()
 	if(shell_renderer) {
 		shell_renderer->DetachFromNative();
 	}
-
+    
+    /*
 	// Close the window.
 	HideWindow(window);
 	ReleaseWindow(window);
+    */
 }
 
 void Shell::EventLoop(ShellIdleFunction idle_function)
@@ -182,6 +215,7 @@ void Shell::EventLoop(ShellIdleFunction idle_function)
 	if (error != noErr)
 		DisplayError("Unable to install handler for input events, error: %d.", error);
 
+    /*
 	error = InstallWindowEventHandler(window,
 									  NewEventHandlerUPP(EventHandler),
 									  GetEventTypeCount(WINDOW_EVENTS),
@@ -203,6 +237,7 @@ void Shell::EventLoop(ShellIdleFunction idle_function)
 		DisplayError("Unable to install Carbon event loop timer, error: %d.", error);
 
 	RunApplicationEventLoop();
+    */
 }
 
 void Shell::RequestExit()

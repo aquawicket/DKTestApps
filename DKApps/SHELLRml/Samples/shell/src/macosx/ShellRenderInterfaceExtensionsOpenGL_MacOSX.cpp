@@ -43,10 +43,10 @@ void ShellRenderInterfaceOpenGL::SetViewport(int width, int height)
 		glViewport(0, 0, width, height);
 		projection = Rml::Matrix4f::ProjectOrtho(0, (float)width, (float)height, 0, -10000, 10000);
 		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf(projection);
+		//glLoadMatrixf(projection);
 		view = Rml::Matrix4f::Identity();
 		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(view);
+		//ÍglLoadMatrixf(view);
 
 		aglUpdateContext(gl_context);
 	}
@@ -70,6 +70,7 @@ bool ShellRenderInterfaceOpenGL::AttachToNative(void *nativeWindow)
 	if (pixel_format == nullptr)
 		return false;
 	
+    /*
 	CGrafPtr window_port = GetWindowPort(window);
 	if (window_port == nullptr)
 		return false;
@@ -79,7 +80,8 @@ bool ShellRenderInterfaceOpenGL::AttachToNative(void *nativeWindow)
 		return false;
 	
 	aglSetDrawable(this->gl_context, window_port);
-	aglSetCurrentContext(this->gl_context);
+	*/
+    aglSetCurrentContext(this->gl_context);
 	
 	aglDestroyPixelFormat(pixel_format);
 	
@@ -94,7 +96,7 @@ bool ShellRenderInterfaceOpenGL::AttachToNative(void *nativeWindow)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	Rect crect;
-	GetWindowBounds(window, kWindowContentRgn, &crect);
+	//GetWindowBounds(window, kWindowContentRgn, &crect);
 	glOrtho(0, (crect.right - crect.left), (crect.bottom - crect.top), 0, -1, 1);
 	
 	glMatrixMode(GL_MODELVIEW);
