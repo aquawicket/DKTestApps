@@ -37,9 +37,14 @@
 #include <gl/Glu.h>
 #elif defined RMLUI_PLATFORM_MACOSX
 #include <AGL/agl.h>
-#include <OpenGL/gl.h>
+//#include <OpenGL/gl.h>
+#include <GLFW/glfw3.h>
+#include <OpenGL/gl3.h>
+#include <OpenGL/glext.h>
 #include <OpenGL/glu.h>
 #include <OpenGL/glext.h>
+
+
 #elif defined RMLUI_PLATFORM_UNIX
 #include <GL/glx.h>
 #include <GL/gl.h>
