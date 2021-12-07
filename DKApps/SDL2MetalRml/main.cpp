@@ -37,7 +37,12 @@
 #include "RenderInterfaceSDL2.h"
 
 #ifdef RMLUI_PLATFORM_WIN32
-#include <windows.h>
+	#include <windows.h>
+#endif
+#idfef RMLUI_PLATFORM_MAC
+	#include <SDL.h>
+	#import <Metal/Metal.h>
+	#import <QuartzCore/CAMetalLayer.h>
 #endif
 
 #include <SDL.h>
@@ -48,11 +53,8 @@ int main(int /*argc*/, char** /*argv*/)
 {
 #ifdef RMLUI_PLATFORM_WIN32
 	AllocConsole();
-#endif
-
 	int window_width = 1024;
 	int window_height = 768;
-
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Window* screen = SDL_CreateWindow("LibRmlUi SDL2 test", 20, 20, window_width, window_height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
@@ -70,30 +72,22 @@ int main(int /*argc*/, char** /*argv*/)
 		}
 	}
 	SDL_Renderer* renderer = SDL_CreateRenderer(screen, oglIdx, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
 	GLenum err = glewInit();
-
 	if (err != GLEW_OK)
 		fprintf(stderr, "GLEW ERROR: %s\n", glewGetErrorString(err));
-
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	glMatrixMode(GL_PROJECTION | GL_MODELVIEW);
 	glLoadIdentity();
 	glOrtho(0, window_width, window_height, 0, 0, 1);
-
 	RmlUiSDL2Renderer Renderer(renderer, screen);
 	RmlUiSDL2SystemInterface SystemInterface;
-
 	Rml::String root = Shell::FindSamplesRoot();
 	ShellFileInterface FileInterface(root);
-
 	Rml::SetFileInterface(&FileInterface);
 	Rml::SetRenderInterface(&Renderer);
 	Rml::SetSystemInterface(&SystemInterface);
-
 	if (!Rml::Initialise())
 		return 1;
-
 	struct FontFace {
 		Rml::String filename;
 		bool fallback_face;
@@ -105,19 +99,14 @@ int main(int /*argc*/, char** /*argv*/)
 		{ "LatoLatin-BoldItalic.ttf", false },
 		{ "NotoEmoji-Regular.ttf",    true  },
 	};
-
 	for (const FontFace& face : font_faces)
 	{
 		Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
 	}
-
 	Rml::Context* Context = Rml::CreateContext("default",
 		Rml::Vector2i(window_width, window_height));
-
 	Rml::Debugger::Initialise(Context);
-
 	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
-
 	if (Document)
 	{
 		Document->Show();
@@ -127,19 +116,14 @@ int main(int /*argc*/, char** /*argv*/)
 	{
 		fprintf(stdout, "\nDocument is nullptr");
 	}
-
 	bool done = false;
-
 	while (!done)
 	{
 		SDL_Event event;
-
 		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 		SDL_RenderClear(renderer);
-
 		Context->Render();
 		SDL_RenderPresent(renderer);
-
 		while (SDL_PollEvent(&event))
 		{
 			switch (event.type)
@@ -147,22 +131,18 @@ int main(int /*argc*/, char** /*argv*/)
 			case SDL_QUIT:
 				done = true;
 				break;
-
 			case SDL_MOUSEMOTION:
 				Context->ProcessMouseMove(event.motion.x, event.motion.y, SystemInterface.GetKeyModifiers());
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				Context->ProcessMouseButtonDown(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
 				break;
-
 			case SDL_MOUSEBUTTONUP:
 				Context->ProcessMouseButtonUp(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
 				break;
-
 			case SDL_MOUSEWHEEL:
 				Context->ProcessMouseWheel(float(event.wheel.y), SystemInterface.GetKeyModifiers());
 				break;
-
 			case SDL_KEYDOWN:
 			{
 				// Intercept F8 key stroke to toggle RmlUi's visual debugger tool
@@ -171,24 +151,67 @@ int main(int /*argc*/, char** /*argv*/)
 					Rml::Debugger::SetVisible(!Rml::Debugger::IsVisible());
 					break;
 				}
-
 				Context->ProcessKeyDown(SystemInterface.TranslateKey(event.key.keysym.sym), SystemInterface.GetKeyModifiers());
 				break;
 			}
-
 			default:
 				break;
 			}
 		}
 		Context->Update();
 	}
-
 	Rml::Shutdown();
-
 	SDL_DestroyRenderer(renderer);
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(screen);
 	SDL_Quit();
+#endif
 
+
+#ifdef RMLUI_PLATFORM_MAC
+	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "metal");
+    SDL_InitSubSystem(SDL_INIT_VIDEO);
+    SDL_Window *window = SDL_CreateWindow("SDL Metal", -1, -1, 640, 480, SDL_WINDOW_ALLOW_HIGHDPI);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+    const CAMetalLayer *swapchain = (__bridge CAMetalLayer *)SDL_RenderGetMetalLayer(renderer);
+    const id<MTLDevice> gpu = swapchain.device;
+    const id<MTLCommandQueue> queue = [gpu newCommandQueue];
+
+    MTLClearColor color = MTLClearColorMake(0, 0, 0, 1);
+    bool quit = false;
+    SDL_Event e;
+
+    while (!quit) {
+        while (SDL_PollEvent(&e) != 0) {
+            switch (e.type) {
+                case SDL_QUIT: quit = true; break;
+            }
+        }
+
+        @autoreleasepool {
+            id<CAMetalDrawable> surface = [swapchain nextDrawable];
+
+            color.red = (color.red > 1.0) ? 0 : color.red + 0.01;
+
+            MTLRenderPassDescriptor *pass = [MTLRenderPassDescriptor renderPassDescriptor];
+            pass.colorAttachments[0].clearColor = color;
+            pass.colorAttachments[0].loadAction  = MTLLoadActionClear;
+            pass.colorAttachments[0].storeAction = MTLStoreActionStore;
+            pass.colorAttachments[0].texture = surface.texture;
+
+            id<MTLCommandBuffer> buffer = [queue commandBuffer];
+            id<MTLRenderCommandEncoder> encoder = [buffer renderCommandEncoderWithDescriptor:pass];
+            [encoder endEncoding];
+            [buffer presentDrawable:surface];
+            [buffer commit];
+        }
+    }
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
+#endif
 	return 0;
 }
