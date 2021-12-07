@@ -1,11 +1,11 @@
-def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY');
-def buildAsApplication = !buildAsLibrary
-if (buildAsApplication) {
+//def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY');
+//def buildAsApplication = !buildAsLibrary
+//if (buildAsApplication) {
     apply plugin: 'com.android.application'
-}
-else {
-    apply plugin: 'com.android.library'
-}
+//}
+//else {
+//    apply plugin: 'com.android.library'
+//}
 
 android {
     compileSdkVersion 26
