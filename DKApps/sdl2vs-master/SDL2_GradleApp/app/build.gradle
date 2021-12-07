@@ -24,7 +24,7 @@ android {
             debuggable = true
         }
     }
-
+    
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
