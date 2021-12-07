@@ -90,7 +90,8 @@ protected:
 	bool m_transform_enabled;
 	
 #if defined(RMLUI_PLATFORM_MACOSX)
-	AGLContext gl_context;
+	//AGLContext gl_context;
+    GLFWwindow* gl_context;
 #elif defined(RMLUI_PLATFORM_LINUX)
 	struct __X11NativeWindowData nwData;
 	GLXContext gl_context;

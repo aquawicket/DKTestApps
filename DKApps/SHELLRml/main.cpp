@@ -41,6 +41,25 @@ ShellRenderInterfaceExtensions *shell_renderer;
 
 void GameLoop()
 {
+    /*
+    // Resize the viewport
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+    glViewport(0, 0, width, height);
+
+    // OpenGL Rendering related code
+    glClear(GL_COLOR_BUFFER_BIT);
+    glUseProgram(shaderProgram);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    // Swap front and back buffers
+    glfwSwapBuffers(window);
+
+    // Poll for and process events
+    glfwPollEvents();
+     */
+    
 	context->Update();
 
 	shell_renderer->PrepareRenderBuffer();

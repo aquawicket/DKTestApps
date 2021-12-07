@@ -43,47 +43,53 @@ void ShellRenderInterfaceOpenGL::SetViewport(int width, int height)
 		glViewport(0, 0, width, height);
 		projection = Rml::Matrix4f::ProjectOrtho(0, (float)width, (float)height, 0, -10000, 10000);
 		glMatrixMode(GL_PROJECTION);
-		//glLoadMatrixf(projection);
+        //glLoadMatrixf(projection);
 		view = Rml::Matrix4f::Identity();
 		glMatrixMode(GL_MODELVIEW);
-		//ÍglLoadMatrixf(view);
+        //glLoadMatrixf(view);
 
-		aglUpdateContext(gl_context);
+		//aglUpdateContext(gl_context);
+        
 	}
 }
 
 bool ShellRenderInterfaceOpenGL::AttachToNative(void *nativeWindow)
 {
+    /*
 	WindowRef window = (WindowRef)nativeWindow;
 	static GLint attributes[] =
 	{
-		AGL_RGBA,
-		AGL_DOUBLEBUFFER,
-		AGL_ALPHA_SIZE, 8,
-		AGL_DEPTH_SIZE, 24,
-		AGL_STENCIL_SIZE, 8,
-		AGL_ACCELERATED,
-		AGL_NONE
+		GL_RGBA,
+		GL_DOUBLEBUFFER,
+		GLFW_ALPHA_BITS, 8,
+        GLFW_DEPTH_BITS, 24,
+		GLFW_STENCIL_BITS, 8,
+		GLFW_ACCELERATED,
+		GL_NONE
 	};
 	
 	AGLPixelFormat pixel_format = aglChoosePixelFormat(nullptr, 0, attributes);
 	if (pixel_format == nullptr)
 		return false;
 	
-    /*
-	CGrafPtr window_port = GetWindowPort(window);
-	if (window_port == nullptr)
-		return false;
-	
-	this->gl_context = aglCreateContext(pixel_format, nullptr);
-	if (this->gl_context == nullptr)
-		return false;
-	
-	aglSetDrawable(this->gl_context, window_port);
+    //CGrafPtr window_port = window;//GetWindowPort(window);
+	//if (window_port == nullptr)
+	//	return false;
 	*/
-    aglSetCurrentContext(this->gl_context);
+	//this->gl_context = aglCreateContext(pixel_format, nullptr);
+    this->gl_context = (GLFWwindow*)nativeWindow;
+    if (this->gl_context == nullptr)
+		return false;
 	
-	aglDestroyPixelFormat(pixel_format);
+	//aglSetDrawable(this->gl_context, window_port);
+    //aglSetCurrentContext(this->gl_context);
+    glfwMakeContextCurrent(this->gl_context);
+    
+	//aglDestroyPixelFormat(pixel_format);
+
+    // Used to avoid screen tearing
+    glfwSwapInterval(1);
+
 	
 	// Set up the GL state.
 	glClearColor(0, 0, 0, 1);
@@ -95,9 +101,12 @@ bool ShellRenderInterfaceOpenGL::AttachToNative(void *nativeWindow)
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	Rect crect;
+    
+    int left, top, right, bottom;
+    glfwGetWindowFrameSize((GLFWwindow*)nativeWindow, &left, &top, &right, &bottom);
+	//Rect crect;
 	//GetWindowBounds(window, kWindowContentRgn, &crect);
-	glOrtho(0, (crect.right - crect.left), (crect.bottom - crect.top), 0, -1, 1);
+	glOrtho(0, (right - left), (bottom - top), 0, -1, 1);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -106,9 +115,11 @@ bool ShellRenderInterfaceOpenGL::AttachToNative(void *nativeWindow)
 void ShellRenderInterfaceOpenGL::DetachFromNative()
 {
 	// Shutdown OpenGL if necessary.
-	aglSetCurrentContext(nullptr);
-	aglSetDrawable(this->gl_context, nullptr);
-	aglDestroyContext(this->gl_context);
+	//aglSetCurrentContext(nullptr);
+    glfwMakeContextCurrent(nullptr);
+    
+	//aglSetDrawable(this->gl_context, nullptr);
+	//aglDestroyContext(this->gl_context);
 }
 
 void ShellRenderInterfaceOpenGL::PrepareRenderBuffer()
@@ -119,5 +130,6 @@ void ShellRenderInterfaceOpenGL::PrepareRenderBuffer()
 void ShellRenderInterfaceOpenGL::PresentRenderBuffer()
 {
 	// Flips the OpenGL buffers.
-	aglSwapBuffers(this->gl_context);
+	//aglSwapBuffers(this->gl_context);
+    glfwSwapBuffers(this->gl_context);
 }

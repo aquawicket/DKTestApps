@@ -74,6 +74,16 @@ void errorCallback(int error, const char* description)
 {
     fputs(description, stderr);
 }
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
+void frameBufferResizeCallback(GLFWwindow* window, int width, int height){
+   glViewport(0, 0, width, height);
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void UpdateWindowDimensions(int width = 0, int height = 0)
@@ -98,19 +108,6 @@ bool Shell::Initialise()
 
 	file_interface = Rml::MakeUnique<ShellFileInterface>(root);
 	Rml::SetFileInterface(file_interface.get());
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Set callback for errors
-    glfwSetErrorCallback(errorCallback);
-    // Initialize the library
-    if (!glfwInit())
-        return -1;
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    // Without these two hints, nothing above OpenGL version 2.1 is supported
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
 	return true;
 }
@@ -143,20 +140,117 @@ Rml::String Shell::FindSamplesRoot()
 	return (executable_path + "../../../" + path);
 }
 
-bool Shell::OpenWindow(const char* name, ShellRenderInterfaceExtensions *_shell_renderer, unsigned int width, unsigned int height, bool allow_resize)
+bool Shell::OpenWindow(const char* name, ShellRenderInterfaceExtensions* _shell_renderer, unsigned int width, unsigned int height, bool allow_resize)
 {
 	shell_renderer = _shell_renderer;
-    //Rect content_bounds = { 60, 20, 60 + height, 20 + width };
+    //Rml::Rect content_bounds = { 60, 20, 60 + height, 20 + width };
 	window_width = width;
 	window_height = height;
     
+    GLFWwindow* window;
+
+    // Set callback for errors
+    glfwSetErrorCallback(errorCallback);
+
+    // Initialize the library
+    if (!glfwInit())
+        return -1;
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+
+    // Without these two hints, nothing above OpenGL version 2.1 is supported
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     // Create a windowed mode window and its OpenGL context
-    window = glfwCreateWindow(window_width, window_height, "RmlUi OpenGL Mac", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Running OpenGL on Mac", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
         return -1;
     }
+    // Set callback for window
+    glfwSetKeyCallback(window, keyCallback);
+
+    // Set callback fro framebuffer
+    glfwSetFramebufferSizeCallback(window, frameBufferResizeCallback);
+
+    
+    // Vertex array object
+    /*
+    unsigned int VAO;
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
+    // Vertex data and buffer
+    float vertices[] = {
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f,  0.5f, 0.0f
+    };
+    unsigned int VBO;
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    // Vertex shader
+    const char* vertexShaderSource = "#version 410 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
+    unsigned int vertexShader;
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glCompileShader(vertexShader);
+    int  success;
+    char infoLog[512];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if(!success)
+    {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        fputs(infoLog, stderr);
+    }
+
+    // Fragment shader
+    const char* fragmentShaderSource = "#version 410 core\n"
+    "out vec4 FragColor;\n"
+    "void main()\n"
+    "{\n"
+    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "}\0";
+    unsigned int fragmentShader;
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glCompileShader(fragmentShader);
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if(!success)
+    {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        fputs(infoLog, stderr);
+    }
+
+    // Shader program
+    unsigned int shaderProgram;
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if(!success) {
+      glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+      fputs(infoLog, stderr);
+    }
+    glUseProgram(shaderProgram);
+
+    // Binding the buffers
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+     */
     
     /*
 	OSStatus result = CreateNewWindow(kDocumentWindowClass,
@@ -164,8 +258,6 @@ bool Shell::OpenWindow(const char* name, ShellRenderInterfaceExtensions *_shell_
 									   kWindowCloseBoxAttribute) | kWindowStandardHandlerAttribute,
 									  &content_bounds,
 									  &window);
-    
-    
 	if (result != noErr)
 		return false;
     
@@ -184,7 +276,6 @@ bool Shell::OpenWindow(const char* name, ShellRenderInterfaceExtensions *_shell_
 
 	ShowWindow(window);
     */
-    
 	if(shell_renderer != nullptr) {
 		shell_renderer->AttachToNative(window);
 	}
@@ -197,15 +288,17 @@ void Shell::CloseWindow()
 		shell_renderer->DetachFromNative();
 	}
     
-    /*
 	// Close the window.
-	HideWindow(window);
-	ReleaseWindow(window);
-    */
+	//HideWindow(window);
+	//ReleaseWindow(window);
+    
+    glfwDestroyWindow(window);
+    glfwTerminate();
 }
 
 void Shell::EventLoop(ShellIdleFunction idle_function)
 {
+    /*
 	OSStatus error;
 	error = InstallApplicationEventHandler(NewEventHandlerUPP(InputMacOSX::EventHandler),
 										   GetEventTypeCount(INPUT_EVENTS),
@@ -215,7 +308,6 @@ void Shell::EventLoop(ShellIdleFunction idle_function)
 	if (error != noErr)
 		DisplayError("Unable to install handler for input events, error: %d.", error);
 
-    /*
 	error = InstallWindowEventHandler(window,
 									  NewEventHandlerUPP(EventHandler),
 									  GetEventTypeCount(WINDOW_EVENTS),
@@ -226,7 +318,7 @@ void Shell::EventLoop(ShellIdleFunction idle_function)
 		DisplayError("Unable to install handler for window events, error: %d.", error);
 
 	EventLoopTimerRef timer;
-	error = InstallEventLoopIdleTimer(GetMainEventLoop(),							// inEventLoop
+    error = InstallEventLoopIdleTimer(GetMainEventLoop(),	// inEventLoop
 									  0,											// inFireDelay
 									  5 * kEventDurationMillisecond,				// inInterval (200 Hz)
 									  NewEventLoopIdleTimerUPP(IdleTimerCallback),	// inTimerProc
@@ -352,6 +444,7 @@ static OSStatus EventHandler(EventHandlerCallRef next_handler, EventRef event, v
 					UInt32 attributes;
 					GetEventParameter(event, kEventParamAttributes, typeUInt32, nullptr, sizeof(UInt32), nullptr, &attributes);
 
+                    /*
 					if(attributes & kWindowBoundsChangeSizeChanged)
 					{
 						Rect bounds;
@@ -363,6 +456,7 @@ static OSStatus EventHandler(EventHandlerCallRef next_handler, EventRef event, v
 						UpdateWindowDimensions((int)width, (int)height);
 					}
 					break;
+                     */
 			}
 		}
 		break;
