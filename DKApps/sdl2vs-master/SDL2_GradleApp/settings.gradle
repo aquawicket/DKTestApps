@@ -1,1 +1,1 @@
-include ':app' $(AarDependenciesSettings)
+include ':app' 
