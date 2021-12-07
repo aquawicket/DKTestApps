@@ -1,3 +1,5 @@
+// https://gist.github.com/gcatlin/b89e0efed78dd91364609ca4095da346
+
 //
 // cc sdl-metal-example.m `sdl2-config --cflags --libs` -framework Metal -framework QuartzCore && ./a.out
 //

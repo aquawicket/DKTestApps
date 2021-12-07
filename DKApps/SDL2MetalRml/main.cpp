@@ -167,7 +167,7 @@ int main(int /*argc*/, char** /*argv*/)
 	SDL_Quit();
 #endif
 
-
+// https://gist.github.com/gcatlin/b89e0efed78dd91364609ca4095da346
 #ifdef RMLUI_PLATFORM_MACOSX
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "metal");
     SDL_InitSubSystem(SDL_INIT_VIDEO);
