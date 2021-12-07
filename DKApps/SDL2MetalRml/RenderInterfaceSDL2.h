@@ -25,8 +25,8 @@
  * THE SOFTWARE.
  *
  */
-#ifndef RENDERINTERFACESDL2_H
-#define RENDERINTERFACESDL2_H
+#ifndef RenderInterfaceSDL2_H
+#define RenderInterfaceSDL2_H
 
 #include <RmlUi/Core/RenderInterface.h>
 
