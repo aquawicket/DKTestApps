@@ -1,11 +1,11 @@
-//def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY');
-//def buildAsApplication = !buildAsLibrary
-//if (buildAsApplication) {
+def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY');
+def buildAsApplication = !buildAsLibrary
+if (buildAsApplication) {
     apply plugin: 'com.android.application'
-//}
-//else {
-//    apply plugin: 'com.android.library'
-//}
+}
+else {
+    apply plugin: 'com.android.library'
+}
 
 android {
     compileSdkVersion 26
@@ -17,7 +17,8 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        externalNativeBuild {
+        /*
+		externalNativeBuild {
             ndkBuild {
                 arguments "APP_PLATFORM=android-26"
                 abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
@@ -28,6 +29,7 @@ android {
             //     abiFilters 'arm64-v8a'
             // }
         }
+		*/
     }
     buildTypes {
         release {
@@ -40,12 +42,12 @@ android {
             jniLibs.srcDir 'libs'
         }
         externalNativeBuild {
-            ndkBuild {
-                path 'jni/Android.mk'
-            }
-            //cmake {
-            //    path 'CMakeLists.txt'
+            //ndkBuild {
+            //    path 'jni/Android.mk'
             //}
+            cmake {
+                path 'CMakeLists.txt'
+            }
         }
        
     }
