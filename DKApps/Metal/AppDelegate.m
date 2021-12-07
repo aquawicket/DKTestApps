@@ -61,7 +61,12 @@ static matrix_float4x4 rotationMatrix2D(float radians)
     /*
      * Metal setup: Library
      */
-    NSString* librarySrc = [NSString stringWithContentsOfFile:@"library.metal" encoding:NSUTF8StringEncoding error:&error];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"library" ofType:@"metal"];
+    NSString* librarySrc = [NSString stringWithContentsOfFile:path
+                                                  encoding:NSUTF8StringEncoding
+                                                     error:&error];
+    
+    //NSString* librarySrc = [NSString stringWithContentsOfFile:@"library.metal" encoding:NSUTF8StringEncoding error:&error];
     if(!librarySrc) {
         [NSException raise:@"Failed to read shaders" format:@"%@", [error localizedDescription]];
     }
