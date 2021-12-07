@@ -11,6 +11,7 @@ DKDEPEND(glew)
 DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
+DKDEPEND(metal)
 
 # import rmlui shell sample source
 DKCOPY(${RMLUI}/Samples/shell/include/Shell.h ${DKPROJECT}/Shell.h FALSE)
