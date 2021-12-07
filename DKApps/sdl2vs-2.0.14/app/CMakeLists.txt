@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.4.1)
-message(STATUS "********  Running CMakeLists.txt   ********")
 set(SDL2 C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2-2.0.14)
 set(SDL2_TTF C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2_ttf-2.0.15)
 set(FREETYPE C:/Users/Administrator/digitalknob/DK/3rdParty/freetype-2.5.5)
