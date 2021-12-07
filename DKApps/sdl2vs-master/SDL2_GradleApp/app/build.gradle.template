@@ -1,4 +1,5 @@
-apply plugin: 'com.android.model.$(ConfigurationType)'
+apply plugin: 'com.android.application'
+//apply plugin: 'com.android.$(ConfigurationType)'
 
 model {
     android {
