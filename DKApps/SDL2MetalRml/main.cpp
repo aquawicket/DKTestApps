@@ -39,7 +39,7 @@
 #ifdef RMLUI_PLATFORM_WIN32
 	#include <windows.h>
 #endif
-#ifdef RMLUI_PLATFORM_MAC
+#ifdef RMLUI_PLATFORM_MACOSX
 	#include <SDL.h>
 	#import <Metal/Metal.h>
 	#import <QuartzCore/CAMetalLayer.h>
@@ -168,7 +168,7 @@ int main(int /*argc*/, char** /*argv*/)
 #endif
 
 
-#ifdef RMLUI_PLATFORM_MAC
+#ifdef RMLUI_PLATFORM_MACOSX
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "metal");
     SDL_InitSubSystem(SDL_INIT_VIDEO);
     SDL_Window *window = SDL_CreateWindow("SDL Metal", -1, -1, 640, 480, SDL_WINDOW_ALLOW_HIGHDPI);
