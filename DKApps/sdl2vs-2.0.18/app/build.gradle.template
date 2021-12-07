@@ -8,23 +8,23 @@ else {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 26
     defaultConfig {
         if (buildAsApplication) {
             applicationId "org.libsdl.app"
         }
-        minSdkVersion 30
-        targetSdkVersion 30
+        minSdkVersion 26
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         /*
 		externalNativeBuild {
             ndkBuild {
-                arguments "APP_PLATFORM=android-30"
+                arguments "APP_PLATFORM=android-26"
                 abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
             }
             //cmake {
-            //     arguments "-DANDROID_APP_PLATFORM=android-30", "-DANDROID_STL=c++_static"
+            //     arguments "-DANDROID_APP_PLATFORM=android-26", "-DANDROID_STL=c++_static"
             //     abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
             //     abiFilters 'arm64-v8a'
             // }
