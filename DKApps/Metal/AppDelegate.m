@@ -96,7 +96,7 @@ static matrix_float4x4 rotationMatrix2D(float radians)
      */
     _vertexBuffer = [_device newBufferWithBytes:vertexData
         length:sizeof(vertexData)
-        options:MTLResourceStorageModePrivate];
+        options:MTLResourceStorageModeShared];
 
     /*
      * Metal setup: Uniforms
