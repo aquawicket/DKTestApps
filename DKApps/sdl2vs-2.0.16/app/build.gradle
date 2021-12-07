@@ -43,9 +43,9 @@ android {
             //ndkBuild {
             //    path 'jni/Android.mk'
             //}
-            cmake {
-				path "CMakeLists.txt"
-			}
+             cmake {
+                 path 'CMakeLists.txt'
+             }
         }
        
     }
