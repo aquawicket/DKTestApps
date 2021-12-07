@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.4.1)
+message(STATUS "********  Running CMakeLists.txt   ********")
+
 include_directories(C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2-2.0.14/include)
 include_directories(C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2_ttf-2.0.15)
 add_library(main SHARED src/main/cpp/main.cpp)
 add_library(hidapi SHARED  C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2-2.0.14/src/hidapi/android/hid.cpp)
 target_link_libraries(hidapi -llog)
 target_link_libraries(main C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2-2.0.14/android32/Debug/libSDL2.a)
-#link_directories(main C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2-2.0.14/android32/Debug)
 target_link_libraries(main hidapi)
 target_link_libraries(main -landroid)
 target_link_libraries(main -llog)
