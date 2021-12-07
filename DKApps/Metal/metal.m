@@ -7,6 +7,8 @@
 #import <QuartzCore/CAMetalLayer.h>
 #endif
 
+int main(void){};
+
 @interface ViewController ()
 
 
