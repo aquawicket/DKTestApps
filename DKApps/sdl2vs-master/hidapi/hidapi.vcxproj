@@ -178,7 +178,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);..\SDL2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2-2.0.14\include</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
     </ClCompile>
     <Link>
@@ -188,7 +188,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);..\SDL2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2-2.0.14\include</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
     </ClCompile>
     <Link>
