@@ -6,7 +6,7 @@ android {
     buildToolsVersion = "32.0.0-rc1"
 
     defaultConfig.with {
-        applicationId = "com.DKGradle"
+        applicationId = "com.SDL2_GradleApp"
         minSdkVersion = 26
         targetSdkVersion = 26
     }
