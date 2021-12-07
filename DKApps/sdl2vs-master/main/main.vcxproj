@@ -162,22 +162,24 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);..\libsdl\SDL\include;..\libsdl\SDL_ttf\include;..\libsdl\SDL_image\include;..\libsdl\SDL_ttf</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2-2.0.14\include;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15\include;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_image-main\include</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\$(ToolchainName)\$(ToolchainFullVersionName)\$(PlatformShortName);$(StlLibraryPath);$(SolutionDir)$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
-      <LibraryDependencies>$(StlLibraryName);%(LibraryDependencies);m;dl;GLESv1_CM;GLESv2;log;android;SDL2</LibraryDependencies>
+      <LibraryDependencies>$(StlLibraryName);%(LibraryDependencies);m;dl;GLESv1_CM;GLESv2;log;android</LibraryDependencies>
+      <AdditionalDependencies>C:\Users\Administrator\digitalknob\DK\3rdParty\freetype-2.5.5\android64\Debug\libfreetype.a;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2-2.0.14\android64\Debug\libSDL2.a;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15\android64\lib\Debug\SDL_ttf.a;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_image-main\android64\lib\Debug\SDL_image.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);..\libsdl\SDL\include;..\libsdl\SDL_ttf\include;..\libsdl\SDL_image\include;..\libsdl\SDL_ttf</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2-2.0.14\include;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15\include;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_image-main\include</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\$(ToolchainName)\$(ToolchainFullVersionName)\$(PlatformShortName);$(StlLibraryPath);$(SolutionDir)$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
-      <LibraryDependencies>$(StlLibraryName);%(LibraryDependencies);m;dl;GLESv1_CM;GLESv2;log;android;SDL2</LibraryDependencies>
+      <LibraryDependencies>$(StlLibraryName);%(LibraryDependencies);m;dl;GLESv1_CM;GLESv2;log;android</LibraryDependencies>
+      <AdditionalDependencies>C:\Users\Administrator\digitalknob\DK\3rdParty\freetype-2.5.5\android64\Release\libfreetype.a;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2-2.0.14\android64\Release\libSDL2.a;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15\android64\lib\Release\SDL_ttf.a;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_image-main\android64\lib\Release\SDL_image.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
