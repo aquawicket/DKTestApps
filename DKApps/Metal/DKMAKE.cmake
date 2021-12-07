@@ -1,5 +1,6 @@
 # minimal Metal Example
 
+DKDEPEND(cocoa)
 DKDEPEND(quartz_core)
 #DKDEPEND(mobile_core_services)
 DKDEPEND(metal)
