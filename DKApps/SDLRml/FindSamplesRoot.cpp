@@ -57,7 +57,7 @@ Rml::String Shell::FindSamplesRoot()
 		Rml::String realPath;
 		char full[_MAX_PATH];
 		if (_fullpath(full, tryPath.c_str(), _MAX_PATH) != NULL) {
-			Rml::String realPath = Rml::String(full);
+			realPath = Rml::String(full);
 			realPath = Rml::StringUtilities::Replace(realPath, '\\', '/');
 			struct stat buf;
 			if(stat(realPath.c_str(), &buf) == 0){ //does path exist?
