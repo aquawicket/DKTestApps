@@ -8,23 +8,23 @@ else {
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 30
     defaultConfig {
         if (buildAsApplication) {
             applicationId "org.libsdl.app"
         }
-        minSdkVersion 21
-        targetSdkVersion 26
+        minSdkVersion 30
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         /*
 		externalNativeBuild {
             ndkBuild {
-                arguments "APP_PLATFORM=android-26"
+                arguments "APP_PLATFORM=android-30"
                 abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
             }
             //cmake {
-            //     arguments "-DANDROID_APP_PLATFORM=android-26", "-DANDROID_STL=c++_static"
+            //     arguments "-DANDROID_APP_PLATFORM=android-30", "-DANDROID_STL=c++_static"
             //     abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
             //     abiFilters 'arm64-v8a'
             // }
@@ -42,30 +42,30 @@ android {
             jniLibs.srcDir 'libs'
         }
         externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
+			cmake {
+				path "CMakeLists.txt"
+			}
+		}
 
-    flavorDimensions "abi"
-    productFlavors {
-        arm7 {
-            dimension "abi"
-            ndk.abiFilters 'armeabi-v7a'
-        }
-        arm8 {
-            dimension "abi"
-            ndk.abiFilters 'arm64-v8a'
-        }
-        x86 {
-            dimension "abi"
-            ndk.abiFilters 'x86'
-        }
-        x64 {
-            dimension "abi"
-            ndk.abiFilters 'x86_64'
-        }
-    }
+		flavorDimensions "abi"
+		productFlavors {
+			arm7 {
+				dimension "abi"
+				ndk.abiFilters 'armeabi-v7a'
+			}
+			arm8 {
+				dimension "abi"
+				ndk.abiFilters 'arm64-v8a'
+			}
+			x86 {
+				dimension "abi"
+				ndk.abiFilters 'x86'
+			}
+			x64 {
+				dimension "abi"
+				ndk.abiFilters 'x86_64'
+			}
+		}
        
     }
     lintOptions {
