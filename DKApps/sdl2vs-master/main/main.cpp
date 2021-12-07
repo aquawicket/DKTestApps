@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-int main(int argc, char** argsv)
+int main(int argc, char** argv)
 {
 	//put your SDL / game code here
 
