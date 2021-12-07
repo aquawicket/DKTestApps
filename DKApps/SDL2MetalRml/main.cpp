@@ -33,8 +33,8 @@
 #include <ShellFileInterface.h>
 #include <string.h>
 
-#include "SystemInterfaceSDL2Metal.h"
-#include "RenderInterfaceSDL2Metal.h"
+#include "SystemInterfaceSDL2.h"
+#include "RenderInterfaceSDL2.h"
 
 #ifdef RMLUI_PLATFORM_WIN32
 #include <windows.h>
