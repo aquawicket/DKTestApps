@@ -105,9 +105,6 @@
     <JavaCompile Include="app\src\main\java\org\libsdl\app\SDLAudioManager.java" />
     <JavaCompile Include="app\src\main\java\org\libsdl\app\SDLControllerManager.java" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\main\main.vcxproj" />
-  </ItemGroup>
   <Import Project="$(AndroidTargetsPath)\Android.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
