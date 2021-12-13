@@ -69,7 +69,7 @@ char getch_(int echo){
 	char ch;
 	initTermios(echo);
 	ch = getchar();
-	resetTermios();
+	restoreTermios();
 	return ch;
 }
 
