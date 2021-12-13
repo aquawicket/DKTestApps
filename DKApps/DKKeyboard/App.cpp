@@ -67,3 +67,23 @@ bool App::Init() {
 }
 
 #endif //HAVE_DK
+
+
+
+bool GetKey(int& key){
+	int b; // The getchar function returns an int (important for EOF check)
+	int a = getch();
+	if (a == 0 || a == 27 || a == 224){ //  Escape read, there's more characters to read
+		b = getch();
+		if (b == 79) { // It's a function key, there's one more characters to read
+			int c = getch();
+			printf("FUNCTION_KEY c->%d-%d-%d\n\n", a, b, c);
+		}
+		else {
+			printf("UNKNOWN_KEY b->%d-%d\n\n", a, b);  // Not a function key, perhaps Alt-D?
+		}	
+	}
+	else {
+		printf("CHAR_KEY a->%d\n\n", a);     // Not escape, a normal key...
+	}
+}
