@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// https://stackoverflow.com/a/4028974
+
 
 bool App::Init() {
 
