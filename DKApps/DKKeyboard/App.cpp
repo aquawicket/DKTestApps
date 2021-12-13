@@ -26,7 +26,13 @@ void initTermios(int echo){
 	}
 	tcsetattr(0, TCSANOW, &current); // use these new terminal i/o settings now
 	*/
-	system("stty raw"); // Set terminal to raw mode, (no wait for enter)
+
+	if (echo) {
+		system("stty raw echo"); // Set terminal to raw mode, (no wait for enter)
+	}
+	else {
+		system("stty raw -echo"); // Set terminal to raw mode, (no wait for enter)
+	}
 }
 
 void restoreTermios(void){
