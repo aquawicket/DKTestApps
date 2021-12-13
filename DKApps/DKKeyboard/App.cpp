@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define TIMEOUT 1   // seconds
+#define TIMEOUT 10   // milliseconds
 
 
 #ifndef _WIN32
@@ -94,33 +94,30 @@ bool App::Init() {
 			
 		    // TODO - poll for key here with timeout
 		    // https://stackoverflow.com/a/57513499
+			
 			clock_t tstart = clock();
 			int b = -1;                   // default key press
-			while ((clock() - tstart) / CLOCKS_PER_SEC < TIMEOUT) {
+			while ((clock() - tstart) < TIMEOUT) {
 				if (kbhit()) {
 					b = getch();
 					break;
 				}
 			}
 			if (b == -1) {
-				return 0;
+				printf("ESCAPE KEY");
+				loop = false;
+				break;
 			}
-
-			//int b =  getch();
-			if (b == 79) { // It's a function key, there's one more characters to read
-				 int c = getch();
-				 printf("   c->%d-%d-%d\n", a, b, c);
+			else if (b == 79) { // It's a function key, there's one more characters to read
+				int c = getch();
+				printf("FUNCTION_KEY c->%d-%d-%d\n\n", a, b, c);
 			}
 			else {
-				 printf("   b->%d-%d\n", a, b);  // Not a function key, perhaps Alt-D?
+				printf("UNKNOWN_KEY b->%d-%d\n\n", a, b);  // Not a function key, perhaps Alt-D?
 			}
 		}
 		else {
-			printf("   a->%d\n", a);     // Not escape, a normal key...
-		}
-
-		if (a == 27) {
-			loop = false;
+			printf("CHAR_KEY a->%d\n\n", a);     // Not escape, a normal key...
 		}
 	}
 	return 0;
