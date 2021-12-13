@@ -11,6 +11,9 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#define TIMEOUT 1   // seconds
+
 
 #ifndef _WIN32
 void initTermios(int echo)
@@ -73,7 +76,8 @@ char getche(void)
 
 bool App::Init() {
 
-	while (1) {
+	bool loop = true;
+	while (loop) {
 		/*
 		char c;
 		printf("(getche example) please type a letter: ");
@@ -87,7 +91,22 @@ bool App::Init() {
 		int b; // The getchar function returns an int (important for EOF check)
 		int a = getch();
 		if (a == 0 || a == 27 || a == 224){ //  Escape read, there's more characters to read
-			int b =  getch();
+			
+		    // TODO - poll for key here with timeout
+		    // https://stackoverflow.com/a/57513499
+			clock_t tstart = clock();
+			int b = -1;                   // default key press
+			while ((clock() - tstart) / CLOCKS_PER_SEC < TIMEOUT) {
+				if (kbhit()) {
+					b = getch();
+					break;
+				}
+			}
+			if (b == -1) {
+				return 0;
+			}
+
+			//int b =  getch();
 			if (b == 79) { // It's a function key, there's one more characters to read
 				 int c = getch();
 				 printf("   c->%d-%d-%d\n", a, b, c);
@@ -98,8 +117,13 @@ bool App::Init() {
 		}
 		else {
 			printf("   a->%d\n", a);     // Not escape, a normal key...
-		}		
+		}
+
+		if (a == 27) {
+			loop = false;
+		}
 	}
+	return 0;
 }
 
 #endif //HAVE_DK
