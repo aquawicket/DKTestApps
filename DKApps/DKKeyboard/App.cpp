@@ -7,7 +7,7 @@
 	#include "conio.h"
 #else
 	#include <termios.h>  //for system()
-	static struct termios current, saved;
+	static struct termios current, old;
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,6 +40,7 @@ void initTermios(int echo)
 void restoreTermios(void)
 {
 	tcsetattr(0, TCSANOW, &old);
+
 	// Fallback shell command method
 	// system("stty cooked"); // Reset terminal to normal "cooked" mode
 }
