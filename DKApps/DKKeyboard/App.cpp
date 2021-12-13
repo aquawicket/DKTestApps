@@ -12,37 +12,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-bool App::Init(){
-	
-	while (1) {
-		char c;
-		printf("(getche example) please type a letter: ");
-		c = getche();
-		printf("\nYou typed: %c\n", c);
-		printf("(getch example) please type a letter...");
-		c = getch();
-		printf("\nYou typed: %c\n", c);
-
-	/*
-		int a, b; // The getchar function returns an int (important for EOF check)
-		if ((a = GetChar()) == 27) { //  Escape read, there's more characters to read
-			if ((b = getchar()) == 79) { // It's a function key, there's one more characters to read
-				 int c = getchar();
-				 printf("->TO USER %d\n", c);
-			}
-			else {
-				 printf("->TO USER %d\n", b);  // Not a function key, perhaps Alt-D? 
-			}
-		}
-		else {
-			printf("->TO USER %d\n", a);     // Not escape, a normal key...
-		}
-	*/
-	}
-}
-
 #ifndef _WIN32
 void initTermios(int echo){
 	tcgetattr(0, &old); /* grab old terminal i/o settings */
@@ -85,5 +54,35 @@ char getche(void){
 #endif //!WIN32
 
 
+
+
+bool App::Init() {
+
+	while (1) {
+		char c;
+		printf("(getche example) please type a letter: ");
+		c = getche();
+		printf("\nYou typed: %c\n", c);
+		printf("(getch example) please type a letter...");
+		c = getch();
+		printf("\nYou typed: %c\n", c);
+
+		/*
+			int a, b; // The getchar function returns an int (important for EOF check)
+			if ((a = GetChar()) == 27) { //  Escape read, there's more characters to read
+				if ((b = getchar()) == 79) { // It's a function key, there's one more characters to read
+					 int c = getchar();
+					 printf("->TO USER %d\n", c);
+				}
+				else {
+					 printf("->TO USER %d\n", b);  // Not a function key, perhaps Alt-D?
+				}
+			}
+			else {
+				printf("->TO USER %d\n", a);     // Not escape, a normal key...
+			}
+		*/
+	}
+}
 
 #endif //HAVE_DK
