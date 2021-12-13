@@ -1,1 +1,2 @@
+DKDEPEND(ncurses)
 DKDEPEND(DK)
