@@ -6,72 +6,9 @@
 #if WIN32
 	#include "conio.h"
 #else
-	#include <termios.h>  //for system()
-	static struct termios current, old;
 #endif
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#define TIMEOUT 10   // milliseconds
-
-
-#ifndef _WIN32
-void initTermios(int echo)
-{
-	tcgetattr(0, &old);              // save current terminal settings 
-	current = old;                   // store them
-	current.c_lflag &= ~ICANON;      // disable buffered i/o
-	if (echo) {
-		current.c_lflag |= ECHO;     // set echo mode on
-	}
-	else {
-		current.c_lflag &= ~ECHO;    // set echo mode off
-	}
-	tcsetattr(0, TCSANOW, &current);  // use created terminal settings
-
-	/*
-	// Fallback shell command method
-	if (echo) {
-		system("stty raw echo"); // Set terminal to raw mode with echo, (no wait for enter)
-	}
-	else {
-		system("stty raw -echo"); // Set terminal to raw mode without echo, (no wait for enter)
-	}
-	*/
-}
-
-void restoreTermios(void)
-{
-	tcsetattr(0, TCSANOW, &old);
-
-	// Fallback shell command method
-	// system("stty cooked"); // Reset terminal to normal "cooked" mode
-}
-
-/* Read 1 character - echo defines echo mode */
-char getch_(int echo)
-{
-	char ch;
-	initTermios(echo);
-	ch = getchar();
-	restoreTermios();
-	return ch;
-}
-
-/* Read 1 character without echo */
-char getch(void)
-{
-	return getch_(0);
-}
-
-/* Read 1 character with echo */
-char getche(void)
-{
-	return getch_(1);
-}
-#endif //!WIN32
-
-
 
 
 bool App::Init() {
@@ -88,6 +25,7 @@ bool App::Init() {
 		printf("\nYou typed: %c\n", c);
 		*/
 
+
 		int b; // The getchar function returns an int (important for EOF check)
 		int a = getch();
 		if (a == 0 || a == 27 || a == 224){ //  Escape read, there's more characters to read
@@ -95,6 +33,8 @@ bool App::Init() {
 		    // TODO - poll for key here with timeout
 		    // https://stackoverflow.com/a/57513499
 			/*
+			#include <time.h>
+			#define TIMEOUT 10   // milliseconds
 			clock_t tstart = clock();
 			int b = -1;                   // default key press
 			while ((clock() - tstart) < TIMEOUT) {
