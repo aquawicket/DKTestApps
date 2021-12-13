@@ -86,7 +86,7 @@ bool App::Init() {
 
 		int b; // The getchar function returns an int (important for EOF check)
 		int a = getch();
-		if (a == 0 || a == 224){ //  Escape read, there's more characters to read
+		if (a == 0 || a == 27 || a == 224){ //  Escape read, there's more characters to read
 			int b =  getch();
 			if (b == 79) { // It's a function key, there's one more characters to read
 				 int c = getch();
