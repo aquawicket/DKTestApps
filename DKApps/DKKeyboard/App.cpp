@@ -94,7 +94,7 @@ bool App::Init() {
 			
 		    // TODO - poll for key here with timeout
 		    // https://stackoverflow.com/a/57513499
-			
+			/*
 			clock_t tstart = clock();
 			int b = -1;                   // default key press
 			while ((clock() - tstart) < TIMEOUT) {
@@ -108,7 +108,8 @@ bool App::Init() {
 				loop = false;
 				break;
 			}
-			else if (b == 79) { // It's a function key, there's one more characters to read
+			*/
+			if (b == 79) { // It's a function key, there's one more characters to read
 				int c = getch();
 				printf("FUNCTION_KEY c->%d-%d-%d\n\n", a, b, c);
 			}
