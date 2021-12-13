@@ -8,11 +8,11 @@
 	#include "Android.h"
 #endif
 
-/////////////////////////////////
 class App : public DKObjectT<App>
 {
 public:
 	bool Init();
+	int GetChar();
 };
 
 REGISTER_OBJECT(App, true);
