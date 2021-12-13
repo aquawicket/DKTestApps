@@ -14,23 +14,24 @@
 
 #ifndef _WIN32
 void initTermios(int echo){
-	tcgetattr(0, &old); /* grab old terminal i/o settings */
-	current = old; /* make new settings same as old settings */
-	current.c_lflag &= ~ICANON; /* disable buffered i/o */
+	/*
+	tcgetattr(0, &old); // grab old terminal i/o settings 
+	current = old; // make new settings same as old settings
+	current.c_lflag &= ~ICANON; // disable buffered i/o
 	if (echo) {
-		current.c_lflag |= ECHO; /* set echo mode */
+		current.c_lflag |= ECHO; // set echo mode
 	}
 	else {
-		current.c_lflag &= ~ECHO; /* set no echo mode */
+		current.c_lflag &= ~ECHO; // set no echo mode
 	}
-	tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
-
-	//system("stty raw"); // Set terminal to raw mode, (no wait for enter)
+	tcsetattr(0, TCSANOW, &current); // use these new terminal i/o settings now
+	*/
+	system("stty raw"); // Set terminal to raw mode, (no wait for enter)
 }
 
 void restoreTermios(void){
-	tcsetattr(0, TCSANOW, &old);
-	//system("stty cooked"); // Reset terminal to normal "cooked" mode
+	//tcsetattr(0, TCSANOW, &old);
+	system("stty cooked"); // Reset terminal to normal "cooked" mode
 }
 
 /* Read 1 character - echo defines echo mode */
