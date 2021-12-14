@@ -1,4 +1,4 @@
-#include "FileInterfaceSDL2.h"
+#include "RmlFileInterface.h"
 
 
 RmlUiSDL2FileInterface::RmlUiSDL2FileInterface(const Rml::String& root) : root(root)

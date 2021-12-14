@@ -32,10 +32,9 @@
 //#include <Shell.h>
 #include <string.h>
 
+#include "FileInterfaceSDL2.h"
 #include "SystemInterfaceSDL2.h"
 #include "RenderInterfaceSDL2.h"
-#include "FileInterfaceSDL2.h"
-#include "FindSampleRoot.h"
 
 #ifdef RMLUI_PLATFORM_WIN32
 #include <windows.h>
