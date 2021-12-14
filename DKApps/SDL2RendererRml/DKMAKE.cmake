@@ -15,6 +15,6 @@ DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
 
 DKSET(USE_SDL2main ON)
-DKINCLUDE(${RMLUI}/Samples/shell/include)
+#DKINCLUDE(${RMLUI}/Samples/shell/include)
 DKINCLUDE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src)
-DKCOPY(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/ ${DKPROJECT}/ FALSE)
+#DKCOPY(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/ ${DKPROJECT}/ FALSE)

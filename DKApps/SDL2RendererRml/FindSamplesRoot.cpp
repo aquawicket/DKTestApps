@@ -17,7 +17,7 @@
 #endif
 #include <sys/stat.h>
 
-Rml::String RmlUiSDL2FileInterface::FindSamplesRoot()
+Rml::String FindSamplesRoot()
 {
 	Rml::String path = "";
 	Rml::String appPath = "";
