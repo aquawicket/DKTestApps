@@ -28,8 +28,10 @@ DKINCLUDE(${RMLUI}/Samples/shell/include)
 
 # rmlui shell
 DKINCLUDE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src)
-ADD_SOURCE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/*)
+DKCOPY(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/ ${DKPROJECT}/ FALSE)
 
+
+#ADD_SOURCE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/*)
 #Samples/basic/sdl2_sdlrenderer/src/RenderInterfaceSDL2.cpp
 #Samples/basic/sdl2_sdlrenderer/src/RenderInterfaceSDL2.h
 #Samples/basic/sdl2_sdlrenderer/src/SystemInterfaceSDL2.cpp
