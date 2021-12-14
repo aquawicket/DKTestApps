@@ -24,6 +24,8 @@ DKDEPEND(rmlui)
 #DKCOPY(${RMLUI}/Samples/shell/include/ShellRenderInterfaceExtensions.h ${DKPROJECT}/ShellRenderInterfaceExtensions.h FALSE)
 #DKCOPY(${RMLUI}/Samples/shell/include/ShellSystemInterface.h ${DKPROJECT}/ShellSystemInterface.h FALSE)
 
+DKINCLUDE(${RMLUI}/Samples/shell/include)
+
 # rmlui shell
 DKINCLUDE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src)
 ADD_SOURCE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/*)
