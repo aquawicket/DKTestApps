@@ -1,4 +1,13 @@
-#include "RmlFileInterface.h"
+#include "FileInterfaceSDL2.h"
+
+
+RmlUiSDL2FileInterface::RmlUiSDL2FileInterface(const Rml::String& root) : root(root)
+{
+}
+
+RmlUiSDL2FileInterface::~RmlUiSDL2FileInterface()
+{
+}
 
 /// Opens a file for use with RmlUi
 /// @param file The file handle to Open().

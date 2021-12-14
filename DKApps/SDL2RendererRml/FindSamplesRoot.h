@@ -1,5 +1,6 @@
 #include <RmlUi/Core/StringUtilities.h>  //Rml::StringUtilities::Replace
-#include "RmlUiSDL2FileInterface.h"
+#include "FileInterfaceSDL2.h"
+#include "FindSampleRoot.h"
 #include <iostream>
 
 #ifdef RMLUI_PLATFORM_WIN32

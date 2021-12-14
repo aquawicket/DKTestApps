@@ -32,9 +32,10 @@
 //#include <Shell.h>
 #include <string.h>
 
-#include "FileInterfaceSDL2.h"
 #include "SystemInterfaceSDL2.h"
 #include "RenderInterfaceSDL2.h"
+#include "FileInterfaceSDL2.h"
+#include "FindSampleRoot.h"
 
 #ifdef RMLUI_PLATFORM_WIN32
 #include <windows.h>
@@ -65,7 +66,7 @@ int main(int /*argc*/, char** /*argv*/)
 	
 	RmlUiSDL2Renderer Renderer(renderer, screen);
 	RmlUiSDL2SystemInterface SystemInterface;
-	Rml::String root = RmlUiSDL2FileInterface::FindSamplesRoot();
+	Rml::String root = FindSamplesRoot();
 	RmlUiSDL2FileInterface FileInterface(root);
 
 	Rml::SetFileInterface(&FileInterface);
