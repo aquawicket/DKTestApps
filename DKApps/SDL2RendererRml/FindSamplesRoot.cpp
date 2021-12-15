@@ -1,3 +1,4 @@
+#include <Shell.h>
 #include <RmlUi/Core/StringUtilities.h>  //Rml::StringUtilities::Replace
 #include <iostream>
 
@@ -16,7 +17,7 @@
 #endif
 #include <sys/stat.h>
 
-Rml::String RmlUiSDL2FileInterface::FindSamplesRoot()
+Rml::String Shell::FindSamplesRoot()
 {
 	Rml::String path = "";
 	Rml::String appPath = "";
