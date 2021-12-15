@@ -14,6 +14,8 @@ DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
 
+DKSET(USE_SDL2main ON)
+
 # import rmlui sdl2 sample source
 DKCOPY(${RMLUI}/Samples/basic/sdl2/src/ ${DKPROJECT}/ FALSE)
 DKCOPY(${RMLUI}/Samples/shell/include/Shell.h ${DKPROJECT}/Shell.h FALSE)
