@@ -58,6 +58,31 @@ bool WARN(std::string message, std::string lastError = "") {
 	return true;
 }
 
+/* Draw a Gimpish background pattern to show transparency in the image */
+static void draw_background(SDL_Renderer* renderer, int w, int h)
+{
+	SDL_Color col[2] = {
+		{ 0x66, 0x66, 0x66, 0xff },
+		{ 0x99, 0x99, 0x99, 0xff },
+	};
+	int i, x, y;
+	SDL_Rect rect;
+
+	rect.w = 8;
+	rect.h = 8;
+	for (y = 0; y < h; y += rect.h) {
+		for (x = 0; x < w; x += rect.w) {
+			/* use an 8x8 checkerboard pattern */
+			i = (((x ^ y) >> 3) & 1);
+			SDL_SetRenderDrawColor(renderer, col[i].r, col[i].g, col[i].b, col[i].a);
+
+			rect.x = x;
+			rect.y = y;
+			SDL_RenderFillRect(renderer, &rect);
+		}
+	}
+}
+
 int main(int /*argc*/, char** /*argv*/)
 {
 #ifdef RMLUI_PLATFORM_WIN32
@@ -69,27 +94,34 @@ int main(int /*argc*/, char** /*argv*/)
 
     if(SDL_Init( SDL_INIT_VIDEO ) < 0)
 		ERR("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed", SDL_GetError());
+	
 	/*
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+	if(SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY) < 0)
+		WARN("SDL_GL_CONTEXT_PROFILE_MASK was not able to set", SDL_GetError());
+	if(SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1) < 0)
+		WARN("SDL_GL_CONTEXT_MAJOR_VERSION was not able to set", SDL_GetError());
+	if(SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1) < 0)
+		WARN("SDL_GL_CONTEXT_MINOR_VERSION was not able to set", SDL_GetError());
+	if(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1) < 0)
+		WARN("SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER was not able to set", SDL_GetError());
+	if(SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1) < 0)
+		WARN("SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL was not able to set", SDL_GetError());
+	if(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16) < 0)
+		WARN("SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE was not able to set", SDL_GetError());
+	if (!SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "opengl", SDL_HINT_OVERRIDE))
+		WARN("SDL_HINT_RENDER_DRIVER was not able to set", SDL_GetError());
+	if (!SDL_SetHintWithPriority(SDL_HINT_RENDER_OPENGL_SHADERS, 0, SDL_HINT_OVERRIDE))
+		WARN("SDL_HINT_RENDER_OPENGL_SHADERS was not able to set", SDL_GetError());
 	*/
 
-	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", 20, 20, window_width, window_height, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
+	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", 20, 20, window_width, window_height, /*SDL_WINDOW_OPENGL |*/ SDL_WINDOW_RESIZABLE);
 	if (!screen) {
 		ERR("SDL_Window* invalid", SDL_GetError());
 	}
 
-	/*
-	if (!SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "opengl", SDL_HINT_OVERRIDE))
-		WARN("SDL_HINT_RENDER_DRIVER was not able to set", SDL_GetError());
 	
-	if (!SDL_SetHintWithPriority(SDL_HINT_RENDER_OPENGL_SHADERS, 0, SDL_HINT_OVERRIDE))
-		WARN("SDL_HINT_RENDER_OPENGL_SHADERS was not able to set", SDL_GetError());
-	*/
+	
+	
 
 	SDL_Renderer * renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!renderer)
@@ -100,6 +132,7 @@ int main(int /*argc*/, char** /*argv*/)
 		ERR("SDL_GetRendererInfo() failed", SDL_GetError());
 
 	printf("Render Driver = %s\n", std::string(info.name).c_str());
+	printf("Render Driver flags = %d\n", info.flags);
 
 	RmlUiSDL2Renderer Renderer(renderer, screen);
 	RmlUiSDL2SystemInterface SystemInterface;
@@ -154,8 +187,10 @@ int main(int /*argc*/, char** /*argv*/)
 	{
 		SDL_Event event;
 
-		//SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+		//SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
 		SDL_RenderClear(renderer);
+
+		draw_background(renderer, window_width, window_height);
 
 		Context->Render();
 		SDL_RenderPresent(renderer);

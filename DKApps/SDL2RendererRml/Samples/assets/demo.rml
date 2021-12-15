@@ -6,7 +6,7 @@
 	</head>
 	<body>
 	<div>
-		<template src="imagetest"></template>
+		<!-- <template src="imagetest"></template> -->
 		<template src="csstest"></template>
 	</div>
 	</body>
