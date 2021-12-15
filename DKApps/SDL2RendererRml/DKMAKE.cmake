@@ -21,9 +21,10 @@ DKSET(USE_SDL2main ON)
 #ADD_SOURCE(${RMLUI}/Samples/shell/src/ShellFileInterface.cpp)
 #ADD_SOURCE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/*.*)
 
-# import rmlui sdl2_sdlrenderer sample source
+# import rmlui sdl2 sample source
 DKCOPY(${RMLUI}/Samples/shell/include/Shell.h ${DKPROJECT}/Shell.h FALSE)
 DKCOPY(${RMLUI}/Samples/shell/src/Shell.cpp ${DKPROJECT}/Shell.cpp FALSE)
 DKCOPY(${RMLUI}/Samples/shell/include/ShellFileInterface.h ${DKPROJECT}/ShellFileInterface.h FALSE)
 DKCOPY(${RMLUI}/Samples/shell/src/ShellFileInterface.cpp ${DKPROJECT}/ShellFileInterface.cpp FALSE)
+
 DKCOPY(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/ ${DKPROJECT}/ FALSE)
