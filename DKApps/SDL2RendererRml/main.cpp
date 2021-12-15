@@ -33,6 +33,7 @@
 #include <string.h>
 
 #include "FileInterfaceSDL2.h"
+#include "FindSamplesRoot.h"
 #include "SystemInterfaceSDL2.h"
 #include "RenderInterfaceSDL2.h"
 
