@@ -13,6 +13,13 @@ DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
 
+## Use the source file from their own paths
+#DKINCLUDE(${RMLUI}/Samples/shell/include/)
+#DKINCLUDE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src)
+#ADD_SOURCE(${RMLUI}/Samples/shell/src/ShellFileInterface.cpp)
+#ADD_SOURCE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/*.*)
+
+## Copy the source file to local path
 DKSET(USE_SDL2main ON)
 DKINCLUDE(${DKPROJECT})
 DKINCLUDE(${RMLUI}/Samples/shell/include)
@@ -22,8 +29,5 @@ DKCOPY(${RMLUI}/Samples/shell/include/ShellFileInterface.h ${DKPROJECT}/ShellFil
 DKCOPY(${RMLUI}/Samples/shell/src/Shell.cpp ${DKPROJECT}/Shell.cpp FALSE)
 DKCOPY(${RMLUI}/Samples/shell/src/ShellFileInterface.cpp ${DKPROJECT}/ShellFileInterface.cpp FALSE)
 
-#DKINCLUDE(${RMLUI}/Samples/shell/include/)
-#DKINCLUDE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src)
-#ADD_SOURCE(${RMLUI}/Samples/shell/src/ShellFileInterface.cpp)
-#ADD_SOURCE(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/*.*)
+
 
