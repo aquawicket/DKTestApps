@@ -15,6 +15,7 @@ DKDEPEND(rmlui)
 
 DKSET(USE_SDL2main ON)
 DKINCLUDE(${DKPROJECT})
+DKINCLUDE(${RMLUI}/Samples/shell/include)
 DKCOPY(${RMLUI}/Samples/basic/sdl2_sdlrenderer/src/ ${DKPROJECT}/ FALSE)
 DKCOPY(${RMLUI}/Samples/shell/include/Shell.h ${DKPROJECT}/Shell.h FALSE)
 DKCOPY(${RMLUI}/Samples/shell/include/ShellFileInterface.h ${DKPROJECT}/ShellFileInterface.h FALSE)
