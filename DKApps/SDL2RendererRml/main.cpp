@@ -114,7 +114,7 @@ int main(int /*argc*/, char** /*argv*/)
 		WARN("SDL_HINT_RENDER_OPENGL_SHADERS was not able to set", SDL_GetError());
 	*/
 
-#if RMLUI_PLATFORM_MACOSX
+#ifdef RMLUI_PLATFORM_MACOSX
 	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", 20, 20, window_width, window_height, SDL_WINDOW_METAL | SDL_WINDOW_RESIZABLE);
 #else
 	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", 20, 20, window_width, window_height, /*SDL_WINDOW_OPENGL |*/ SDL_WINDOW_RESIZABLE);
