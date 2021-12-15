@@ -114,14 +114,14 @@ int main(int /*argc*/, char** /*argv*/)
 		WARN("SDL_HINT_RENDER_OPENGL_SHADERS was not able to set", SDL_GetError());
 	*/
 
+#if RMLUI_PLATFORM_MACOSX
+	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", 20, 20, window_width, window_height, SDL_WINDOW_METAL | SDL_WINDOW_RESIZABLE);
+#else
 	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", 20, 20, window_width, window_height, /*SDL_WINDOW_OPENGL |*/ SDL_WINDOW_RESIZABLE);
+#endif
 	if (!screen) {
 		ERR("SDL_Window* invalid", SDL_GetError());
 	}
-
-	
-	
-	
 
 	SDL_Renderer * renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!renderer)
@@ -174,11 +174,11 @@ int main(int /*argc*/, char** /*argv*/)
 	if (Document)
 	{
 		Document->Show();
-		fprintf(stdout, "\nDocument loaded");
+		fprintf(stdout, "Document loaded\n");
 	}
 	else
 	{
-		fprintf(stdout, "\nDocument is nullptr");
+		fprintf(stdout, "Document is nullptr\n");
 	}
 
 	bool done = false;
@@ -186,12 +186,8 @@ int main(int /*argc*/, char** /*argv*/)
 	while (!done)
 	{
 		SDL_Event event;
-
-		//SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
 		SDL_RenderClear(renderer);
-
 		draw_background(renderer, window_width, window_height);
-
 		Context->Render();
 		SDL_RenderPresent(renderer);
 
