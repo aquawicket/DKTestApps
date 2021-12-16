@@ -41,7 +41,7 @@ SDL_Texture* GetGifAnimation(const Rml::TextureHandle texture) {
         GifData* g = &gif_map[texture];
         SDL_Texture* sdl_texture = (SDL_Texture*)g->textures[g->current_frame];
         g->delay = g->anim->delays[g->current_frame];
-        g->currentTime = SDL_GetTicks64();
+        g->currentTime = SDL_GetTicks();  //FIXME: USE SDL_GetTicks64 if avalable
         if (g->currentTime > g->lastTime + g->delay) {
             g->lastTime = g->currentTime;
             g->current_frame = (g->current_frame + 1) % g->anim->count;
