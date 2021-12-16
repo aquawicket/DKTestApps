@@ -29,7 +29,6 @@
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
 #include <RmlUi/Debugger/Debugger.h>
-#include <Shell.h>
 #include <string.h>
 
 #include "FileInterfaceSDL2.h"
@@ -109,7 +108,7 @@ int main(int argc, char** argv)
 	RmlUiSDL2Renderer Renderer(renderer, screen);
 	RmlUiSDL2SystemInterface SystemInterface;
 
-	Rml::String root = Shell::FindSamplesRoot();
+	Rml::String root = ShellFileInterface::FindSamplesRoot();
 	ShellFileInterface FileInterface(root);
 
 	Rml::SetFileInterface(&FileInterface);
