@@ -140,7 +140,6 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
 // Called by RmlUi when a texture is required to be built from an internally-generated sequence of pixels.
 bool RmlUiSDL2Renderer::GenerateTexture(Rml::TextureHandle& texture_handle, const Rml::byte* source, const Rml::Vector2i& source_dimensions)
 {
-    printf("GenerateTexture()\n");
     #if SDL_BYTEORDER == SDL_BIG_ENDIAN
         Uint32 rmask = 0xff000000;
         Uint32 gmask = 0x00ff0000;

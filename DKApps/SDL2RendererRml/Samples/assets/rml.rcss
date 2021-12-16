@@ -11,7 +11,8 @@ body
 	font-style: normal;
 	font-size: 15dp;
 	/*color: white;*/
-	overflow: auto;
+	overflow-x: auto;
+	overflow-y: auto;
 	height: 100%;
     width: 100%;
     top: 0px;

@@ -62,20 +62,17 @@ bool WARN(std::string message, std::string lastError = "") {
 static void draw_background(SDL_Renderer* renderer, int w, int h)
 {
 	SDL_Color col[2] = {
-		{ 0x66, 0x66, 0x66, 0xff },
-		{ 0x99, 0x99, 0x99, 0xff },
+		{ 90, 90, 90, 255 },
+		{ 160, 160, 160, 255 },
 	};
 	int i, x, y;
 	SDL_Rect rect;
 
-	rect.w = 8;
-	rect.h = 8;
+	rect.w = rect.h = 12;
 	for (y = 0; y < h; y += rect.h) {
 		for (x = 0; x < w; x += rect.w) {
-			/* use an 8x8 checkerboard pattern */
 			i = (((x ^ y) >> 3) & 1);
 			SDL_SetRenderDrawColor(renderer, col[i].r, col[i].g, col[i].b, col[i].a);
-
 			rect.x = x;
 			rect.y = y;
 			SDL_RenderFillRect(renderer, &rect);
@@ -89,40 +86,22 @@ int main(int /*argc*/, char** /*argv*/)
 	AllocConsole();
 #endif
 
-    int window_width = 1024;
-    int window_height = 768;
+    int window_width = 800;
+    int window_height = 600;
 
     if(SDL_Init( SDL_INIT_VIDEO ) < 0)
 		ERR("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed", SDL_GetError());
-	
-	/*
-	if(SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY) < 0)
-		WARN("SDL_GL_CONTEXT_PROFILE_MASK was not able to set", SDL_GetError());
-	if(SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1) < 0)
-		WARN("SDL_GL_CONTEXT_MAJOR_VERSION was not able to set", SDL_GetError());
-	if(SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1) < 0)
-		WARN("SDL_GL_CONTEXT_MINOR_VERSION was not able to set", SDL_GetError());
-	if(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1) < 0)
-		WARN("SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER was not able to set", SDL_GetError());
-	if(SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1) < 0)
-		WARN("SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL was not able to set", SDL_GetError());
-	if(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16) < 0)
-		WARN("SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE was not able to set", SDL_GetError());
-	if (!SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "opengl", SDL_HINT_OVERRIDE))
-		WARN("SDL_HINT_RENDER_DRIVER was not able to set", SDL_GetError());
-	if (!SDL_SetHintWithPriority(SDL_HINT_RENDER_OPENGL_SHADERS, 0, SDL_HINT_OVERRIDE))
-		WARN("SDL_HINT_RENDER_OPENGL_SHADERS was not able to set", SDL_GetError());
-	*/
 
-#ifdef RMLUI_PLATFORM_MACOSX
-	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", 20, 20, window_width, window_height, SDL_WINDOW_METAL | SDL_WINDOW_RESIZABLE);
-#else
-	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", 20, 20, window_width, window_height, /*SDL_WINDOW_OPENGL |*/ SDL_WINDOW_RESIZABLE);
-#endif
-	if (!screen) {
+	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_RESIZABLE);
+	if (!screen)
 		ERR("SDL_Window* invalid", SDL_GetError());
-	}
-	
+
+	int w, h;
+	SDL_GetWindowSize(screen, &w, &h);
+
+	int top, left, bottom, right;
+	SDL_GetWindowBordersSize(screen, &top, &left, &bottom, &right);
+
 	SDL_Renderer * renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!renderer)
 		ERR("renderer invalid", SDL_GetError());
