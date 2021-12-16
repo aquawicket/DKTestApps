@@ -27,12 +27,7 @@
  */
 
 #include <RmlUi/Core.h>
-
 #include "RenderInterfaceSDL2.h"
-
-//int GifData::currentTime;
-//int GifData::lastTime;
-
 
 RmlUiSDL2Renderer::RmlUiSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen)
 {
@@ -65,10 +60,10 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
         sdl_texture = (SDL_Texture*)texture;
     }
 
-    int sz = sizeof(vertices[0]);                 // 20
-    int off1 = offsetof(Rml::Vertex, position);   // 0
-    int off2 = offsetof(Rml::Vertex, colour);     // 8
-    int off3 = offsetof(Rml::Vertex, tex_coord);  // 12
+    int sz = sizeof(vertices[0]);
+    int off1 = offsetof(Rml::Vertex, position);
+    int off2 = offsetof(Rml::Vertex, colour);
+    int off3 = offsetof(Rml::Vertex, tex_coord);
 
     std::vector<Rml::Vector2f> pos;
     for (int i = 0; i < num_vertices; ++i) {
@@ -152,10 +147,10 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
     if (extension == "gif") {
         GifData gif_data;
         gif_data.anim = IMG_LoadAnimation(source.c_str());
-        if (!gif_data.anim)
+        if (!gif_data.anim) {
             printf("Couldn't load %s: %s\n", source.c_str(), SDL_GetError());
-        //int width = gif_data.anim->w;
-        //int height = gif_data.anim->h;
+            return false;
+        }
         gif_data.textures = (SDL_Texture**)SDL_calloc(gif_data.anim->count, sizeof(*gif_data.textures));
         if (!gif_data.textures) {
             printf("Couldn't allocate textures\n");

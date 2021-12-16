@@ -34,10 +34,6 @@
 #include <SDL_image.h>
 #include <map>
 
-//#if !(SDL_VIDEO_RENDER_OGL)
-//   #error "Only the opengl sdl backend is supported."
-//#endif
-
 struct GifData {
 	IMG_Animation* anim;
 	SDL_Texture** textures;
@@ -84,7 +80,6 @@ private:
     SDL_Rect mRectScisor;
 
 	std::map<Rml::TextureHandle, GifData> gif_map;
-	//unsigned int lastTime = 0, currentTime;
 };
 
 #endif
