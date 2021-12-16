@@ -218,5 +218,5 @@ int main(int argc, char** argv)
 
 // For iphone, iPad
 #ifdef IOS
-int retval = UIApplicationMain(DKApp::argc, DKApp::argv, nil, @"iphoneViewerAppDelegate");
+int retval = UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
 #endif
