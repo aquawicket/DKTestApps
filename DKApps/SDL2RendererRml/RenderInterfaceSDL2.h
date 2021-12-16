@@ -31,15 +31,6 @@
 #include <RmlUi/Core/RenderInterface.h>
 
 #include <SDL.h>
-#include <SDL_image.h>
-#include <map>
-
-struct GifData {
-	IMG_Animation* anim;
-	SDL_Texture** textures;
-	int current_frame, delay, lastTime, currentTime; 
-	//int speed = 0; //TODO
-};
 
 class RmlUiSDL2Renderer : public Rml::RenderInterface
 {
@@ -78,8 +69,6 @@ private:
     int mRenderer_h;
     SDL_Window* mScreen;
     SDL_Rect mRectScisor;
-
-	std::map<Rml::TextureHandle, GifData> gif_map;
 };
 
 #endif

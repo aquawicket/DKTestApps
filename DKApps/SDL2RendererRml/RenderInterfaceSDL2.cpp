@@ -28,6 +28,9 @@
 
 #include <RmlUi/Core.h>
 #include "RenderInterfaceSDL2.h"
+#include <SDL_image.h>
+
+#include "GifAnimate.h"
 
 RmlUiSDL2Renderer::RmlUiSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen)
 {
@@ -45,7 +48,11 @@ RmlUiSDL2Renderer::RmlUiSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen)
 // Called by RmlUi when it wants to render geometry that it does not wish to optimise.
 void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, const Rml::TextureHandle texture, const Rml::Vector2f& translation)
 {
-    SDL_Texture* sdl_texture;
+    SDL_Texture* sdl_texture = GetGifAnimation(texture);
+    if (sdl_texture == nullptr)
+        sdl_texture = (SDL_Texture*)texture;
+
+    /*
     if (gif_map.find(texture) != gif_map.end()) {
         GifData* g = &gif_map[texture];
         sdl_texture = (SDL_Texture*)g->textures[g->current_frame];
@@ -59,6 +66,7 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
     else {
         sdl_texture = (SDL_Texture*)texture;
     }
+    */
 
     int sz = sizeof(vertices[0]);
     int off1 = offsetof(Rml::Vertex, position);
@@ -144,6 +152,7 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
 
     Rml::String extension = source.substr(i+1, source.length()-i);
    
+    /*
     if (extension == "gif") {
         GifData gif_data;
         gif_data.anim = IMG_LoadAnimation(source.c_str());
@@ -170,7 +179,12 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
         gif_map[texture_handle] = gif_data;
         return true;
     }
-    else {    
+    */
+
+    if(LoadGifAnimation(mRenderer, source, texture_handle, texture_dimensions)) {
+        return true;
+    }
+    else{
         SDL_Surface* surface = IMG_LoadTyped_RW(SDL_RWFromMem(buffer, int(buffer_size)), 1, extension.c_str());
         file_interface->Close(file_handle);
         if (surface) {

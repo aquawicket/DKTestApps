@@ -74,7 +74,7 @@ static void draw_background(SDL_Renderer* renderer, int w, int h)
 	}
 }
 
-int main(int /*argc*/, char** /*argv*/)
+int main(int argc, char** argv)
 {
 #ifdef RMLUI_PLATFORM_WIN32
 	AllocConsole();
