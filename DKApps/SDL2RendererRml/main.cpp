@@ -213,3 +213,10 @@ int main(int argc, char** argv)
 
 	return 0;
 }
+
+
+
+// For iphone, iPad
+#ifdef IOS
+int retval = UIApplicationMain(DKApp::argc, DKApp::argv, nil, @"iphoneViewerAppDelegate");
+#endif
