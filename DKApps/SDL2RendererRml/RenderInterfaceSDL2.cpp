@@ -50,10 +50,10 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
 {
     SDL_Texture *sdl_texture = (SDL_Texture *) texture;
    
-    //int sz = sizeof(vertices[0]);                 // 20
-    //int off1 = offsetof(Rml::Vertex, position);   // 0
-    //int off2 = offsetof(Rml::Vertex, colour);     // 8
-    //int off3 = offsetof(Rml::Vertex, tex_coord);  // 12
+    int sz = sizeof(vertices[0]);                 // 20
+    int off1 = offsetof(Rml::Vertex, position);   // 0
+    int off2 = offsetof(Rml::Vertex, colour);     // 8
+    int off3 = offsetof(Rml::Vertex, tex_coord);  // 12
 
     std::vector<Rml::Vector2f> pos;
     for (int i = 0; i < num_vertices; ++i) {
@@ -64,8 +64,8 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
 
     SDL_RenderGeometryRaw(mRenderer, sdl_texture,
         (float*)(position), szPos,
-        (const SDL_Color*)((Uint8*)vertices + /*off2*/8), /*sz*/20,
-        (float*)((Uint8*)vertices + /*off3*/12), /*sz*/20,
+        (const SDL_Color*)((Uint8*)vertices + off2), sz,
+        (float*)((Uint8*)vertices + off3), sz,
         num_vertices, indices, num_indices, 4);
 }
 
