@@ -52,22 +52,6 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
     if (sdl_texture == nullptr)
         sdl_texture = (SDL_Texture*)texture;
 
-    /*
-    if (gif_map.find(texture) != gif_map.end()) {
-        GifData* g = &gif_map[texture];
-        sdl_texture = (SDL_Texture*)g->textures[g->current_frame];
-        g->delay = g->anim->delays[g->current_frame];
-        g->currentTime = SDL_GetTicks64();
-        if (g->currentTime > g->lastTime + g->delay) {
-            g->lastTime = g->currentTime;
-            g->current_frame = (g->current_frame + 1) % g->anim->count;
-        }
-    }
-    else {
-        sdl_texture = (SDL_Texture*)texture;
-    }
-    */
-
     int sz = sizeof(vertices[0]);
     int off1 = offsetof(Rml::Vertex, position);
     int off2 = offsetof(Rml::Vertex, colour);
@@ -129,6 +113,10 @@ void RmlUiSDL2Renderer::SetScissorRegion(int x, int y, int width, int height)
 // Called by RmlUi when a texture is required by the library.		
 bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vector2i& texture_dimensions, const Rml::String& source)
 {
+    if(LoadGifAnimation(mRenderer, source, texture_handle, texture_dimensions)) {
+        return true;
+    }
+    
     Rml::FileInterface* file_interface = Rml::GetFileInterface();
     Rml::FileHandle file_handle = file_interface->Open(source);
     if (!file_handle) {
@@ -144,64 +132,30 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
     file_interface->Read(buffer, buffer_size, file_handle);
     
     size_t i;
-    for(i = source.length() - 1; i > 0; i--)
+    for (i = source.length() - 1; i > 0; i--)
     {
-        if(source[i] == '.')
+        if (source[i] == '.')
             break;
     }
 
-    Rml::String extension = source.substr(i+1, source.length()-i);
-   
-    /*
-    if (extension == "gif") {
-        GifData gif_data;
-        gif_data.anim = IMG_LoadAnimation(source.c_str());
-        if (!gif_data.anim) {
-            printf("Couldn't load %s: %s\n", source.c_str(), SDL_GetError());
+    Rml::String extension = source.substr(i + 1, source.length() - i);
+
+    SDL_Surface* surface = IMG_LoadTyped_RW(SDL_RWFromMem(buffer, int(buffer_size)), 1, extension.c_str());
+    file_interface->Close(file_handle);
+    if (surface) {
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(mRenderer, surface);
+        if (texture) {
+            texture_handle = (Rml::TextureHandle)texture;
+            texture_dimensions = Rml::Vector2i(surface->w, surface->h);
+            SDL_FreeSurface(surface);
+        }
+        else
+        {
             return false;
         }
-        gif_data.textures = (SDL_Texture**)SDL_calloc(gif_data.anim->count, sizeof(*gif_data.textures));
-        if (!gif_data.textures) {
-            printf("Couldn't allocate textures\n");
-            IMG_FreeAnimation(gif_data.anim);
-            return false;
-        }
-        //printf("anim->count = %d\n", gif_data.anim->count);
-        for (int n = 0; n < gif_data.anim->count; ++n) {
-            gif_data.textures[n] = SDL_CreateTextureFromSurface(mRenderer, gif_data.anim->frames[n]);
-        }
-        texture_handle = (Rml::TextureHandle)gif_data.textures[0];
-        texture_dimensions = Rml::Vector2i(gif_data.anim->w, gif_data.anim->h);
-        gif_data.current_frame = 0;
-        gif_data.lastTime = 0;
-        gif_data.currentTime = 0;
-        gif_data.delay = 1000;
-        gif_map[texture_handle] = gif_data;
         return true;
     }
-    */
-
-    if(LoadGifAnimation(mRenderer, source, texture_handle, texture_dimensions)) {
-        return true;
-    }
-    else{
-        SDL_Surface* surface = IMG_LoadTyped_RW(SDL_RWFromMem(buffer, int(buffer_size)), 1, extension.c_str());
-        file_interface->Close(file_handle);
-        if (surface) {
-            SDL_Texture* texture = SDL_CreateTextureFromSurface(mRenderer, surface);
-            if (texture) {
-                texture_handle = (Rml::TextureHandle)texture;
-                texture_dimensions = Rml::Vector2i(surface->w, surface->h);
-                SDL_FreeSurface(surface);
-            }
-            else
-            {
-                return false;
-            }
-            return true;
-        }
-    }
-
+ 
     return false;
 }
 
