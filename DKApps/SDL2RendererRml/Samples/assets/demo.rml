@@ -8,8 +8,8 @@
 	<body>
 	<div>
 		<template src="square"></template>
-		<!-- <template src="csstest"></template>
-		<template src="imagetest"></template> -->
+		<template src="csstest"></template>
+		<template src="imagetest"></template>
 	</div>
 	</body>
 </rml>
