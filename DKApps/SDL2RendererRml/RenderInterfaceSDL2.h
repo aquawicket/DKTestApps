@@ -38,7 +38,7 @@ struct GifData {
 	IMG_Animation* anim;
 	SDL_Texture** textures;
 	int current_frame, delay, lastTime, currentTime; 
-	int speed = 0; // 0 = normal,  -n = slower,  +n = faster
+	//int speed = 0; //TODO
 };
 
 class RmlUiSDL2Renderer : public Rml::RenderInterface

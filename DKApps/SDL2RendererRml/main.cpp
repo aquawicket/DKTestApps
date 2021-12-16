@@ -105,7 +105,6 @@ int main(int /*argc*/, char** /*argv*/)
 		ERR("SDL_GetRendererInfo() failed", SDL_GetError());
 
 	printf("Render Driver = %s\n", std::string(info.name).c_str());
-	printf("Render Driver flags = %d\n", info.flags);
 
 	RmlUiSDL2Renderer Renderer(renderer, screen);
 	RmlUiSDL2SystemInterface SystemInterface;

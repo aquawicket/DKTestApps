@@ -49,8 +49,8 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
     if (gif_map.find(texture) != gif_map.end()) {
         GifData* g = &gif_map[texture];
         sdl_texture = (SDL_Texture*)g->textures[g->current_frame];
-        g->delay = g->anim->delays[g->current_frame] - g->speed;
-        g->currentTime = SDL_GetTicks();
+        g->delay = g->anim->delays[g->current_frame];
+        g->currentTime = SDL_GetTicks64();
         if (g->currentTime > g->lastTime + g->delay) {
             g->lastTime = g->currentTime;
             g->current_frame = (g->current_frame + 1) % g->anim->count;
@@ -157,12 +157,16 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
             IMG_FreeAnimation(gif_data.anim);
             return false;
         }
+        //printf("anim->count = %d\n", gif_data.anim->count);
         for (int n = 0; n < gif_data.anim->count; ++n) {
             gif_data.textures[n] = SDL_CreateTextureFromSurface(mRenderer, gif_data.anim->frames[n]);
         }
         texture_handle = (Rml::TextureHandle)gif_data.textures[0];
         texture_dimensions = Rml::Vector2i(gif_data.anim->w, gif_data.anim->h);
         gif_data.current_frame = 0;
+        gif_data.lastTime = 0;
+        gif_data.currentTime = 0;
+        gif_data.delay = 1000;
         gif_map[texture_handle] = gif_data;
         return true;
     }
