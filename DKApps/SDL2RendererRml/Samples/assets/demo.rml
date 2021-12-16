@@ -1,6 +1,7 @@
 <rml>
 	<head>
 		<link type="text/rcss" href="rml.rcss" />
+		<link type="text/template" href="square/square.html" />
 		<link type="text/template" href="imagetest/imagetest.html" />
 		<link type="text/template" href="csstest/csstest.html" />
 	</head>
