@@ -58,23 +58,17 @@ bool WARN(std::string message, std::string lastError = "") {
 	return true;
 }
 
-/* Draw a Gimpish background pattern to show transparency in the image */
 static void draw_background(SDL_Renderer* renderer, int w, int h)
 {
-	SDL_Color col[2] = {
-		{ 90, 90, 90, 255 },
-		{ 160, 160, 160, 255 },
-	};
+	SDL_Color col[2] = {{ 100, 100, 100, 255 }, { 150, 150, 150, 255 }};
+	SDL_Rect rect({ 0,0,8,8 });
 	int i, x, y;
-	SDL_Rect rect;
-
-	rect.w = rect.h = 12;
 	for (y = 0; y < h; y += rect.h) {
 		for (x = 0; x < w; x += rect.w) {
 			i = (((x ^ y) >> 3) & 1);
-			SDL_SetRenderDrawColor(renderer, col[i].r, col[i].g, col[i].b, col[i].a);
 			rect.x = x;
 			rect.y = y;
+			SDL_SetRenderDrawColor(renderer, col[i].r, col[i].g, col[i].b, col[i].a);
 			SDL_RenderFillRect(renderer, &rect);
 		}
 	}

@@ -27,7 +27,6 @@
  */
 
 #include <RmlUi/Core.h>
-#include <SDL_image.h>
 
 #include "RenderInterfaceSDL2.h"
 
@@ -48,7 +47,13 @@ RmlUiSDL2Renderer::RmlUiSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen)
 // Called by RmlUi when it wants to render geometry that it does not wish to optimise.
 void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, const Rml::TextureHandle texture, const Rml::Vector2f& translation)
 {
-    SDL_Texture *sdl_texture = (SDL_Texture *) texture;
+    SDL_Texture* sdl_texture = NULL;
+    if (texture == (Rml::TextureHandle)textures[0]) {
+        sdl_texture = (SDL_Texture*)textures[current_frame];
+    }
+    else {
+        sdl_texture = (SDL_Texture*)texture;
+    }
    
     int sz = sizeof(vertices[0]);                 // 20
     int off1 = offsetof(Rml::Vertex, position);   // 0
@@ -67,6 +72,21 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
         (const SDL_Color*)((Uint8*)vertices + off2), sz,
         (float*)((Uint8*)vertices + off3), sz,
         num_vertices, indices, num_indices, 4);
+
+    //for gif animations
+    if (anim->delays[current_frame]) {
+        delay = anim->delays[current_frame];
+    }
+    else {
+        delay = 100;
+    }
+    
+    currentTime = SDL_GetTicks();
+    if (currentTime > lastTime + delay) {
+        lastTime = currentTime;
+        current_frame = (current_frame + 1) % anim->count;
+    }
+
 }
 
 // Called by RmlUi when it wants to enable or disable scissoring to clip content.		
@@ -115,23 +135,43 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
     }
 
     Rml::String extension = source.substr(i+1, source.length()-i);
-
-    SDL_Surface* surface = IMG_LoadTyped_RW(SDL_RWFromMem(buffer, int(buffer_size)), 1, extension.c_str());
-    file_interface->Close(file_handle);
-    if (surface) {
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(mRenderer, surface);
-
-        if (texture) {
-            texture_handle = (Rml::TextureHandle) texture;
-            texture_dimensions = Rml::Vector2i(surface->w, surface->h);
-            SDL_FreeSurface(surface);
+    if (extension == "gif") {
+        anim = IMG_LoadAnimation(source.c_str());
+        if (!anim)
+            printf("Couldn't load %s: %s\n", source.c_str(), SDL_GetError());
+        //w = anim->w;
+        //h = anim->h;
+        textures = (SDL_Texture**)SDL_calloc(anim->count, sizeof(*textures));
+        if (!textures) {
+            printf("Couldn't allocate textures\n");
+            IMG_FreeAnimation(anim);
         }
-        else
-        {
-            return false;
+        for (int n = 0; n < anim->count; ++n) {
+            textures[n] = SDL_CreateTextureFromSurface(mRenderer, anim->frames[n]);
         }
-
+        texture_handle = (Rml::TextureHandle)textures[0];
+        texture_dimensions = Rml::Vector2i(anim->frames[0]->w, anim->frames[0]->h);
+        current_frame = 0;
         return true;
+    }
+    else {
+        SDL_Surface* surface = IMG_LoadTyped_RW(SDL_RWFromMem(buffer, int(buffer_size)), 1, extension.c_str());
+        file_interface->Close(file_handle);
+        if (surface) {
+            SDL_Texture* texture = SDL_CreateTextureFromSurface(mRenderer, surface);
+
+            if (texture) {
+                texture_handle = (Rml::TextureHandle)texture;
+                texture_dimensions = Rml::Vector2i(surface->w, surface->h);
+                SDL_FreeSurface(surface);
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 
     return false;
