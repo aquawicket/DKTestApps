@@ -30,9 +30,9 @@
 #include <RmlUi/Core/Input.h>
 #include <RmlUi/Debugger/Debugger.h>
 #include <Shell.h>
-#include <ShellFileInterface.h>
 #include <string.h>
 
+#include "FileInterfaceSDL2.h"
 #include "SystemInterfaceSDL2.h"
 #include "RenderInterfaceSDL2.h"
 

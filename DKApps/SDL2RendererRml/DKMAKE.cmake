@@ -24,8 +24,8 @@ DKSET(USE_SDL2main ON)
 # import rmlui sdl2 sample source
 DKCOPY(${RMLUI}/Samples/shell/include/Shell.h ${DKPROJECT}/Shell.h FALSE)
 DKCOPY(${RMLUI}/Samples/shell/src/Shell.cpp ${DKPROJECT}/Shell.cpp FALSE)
-DKCOPY(${RMLUI}/Samples/shell/include/ShellFileInterface.h ${DKPROJECT}/ShellFileInterface.h FALSE)
-DKCOPY(${RMLUI}/Samples/shell/src/ShellFileInterface.cpp ${DKPROJECT}/ShellFileInterface.cpp FALSE)
+#DKCOPY(${RMLUI}/Samples/shell/include/ShellFileInterface.h ${DKPROJECT}/ShellFileInterface.h FALSE)
+#DKCOPY(${RMLUI}/Samples/shell/src/ShellFileInterface.cpp ${DKPROJECT}/ShellFileInterface.cpp FALSE)
 DKCOPY(${RMLUI}/Samples/shell/include/ShellRenderInterfaceExtensions.h ${DKPROJECT}/ShellRenderInterfaceExtensions.h FALSE)
 DKCOPY(${RMLUI}/Samples/shell/include/ShellSystemInterface.h ${DKPROJECT}/ShellSystemInterface.h FALSE)
 
