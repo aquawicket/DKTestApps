@@ -30,6 +30,10 @@
 
 #include "RenderInterfaceSDL2.h"
 
+struct TextureHandle {
+    std::string extension;
+    Rml::TextureHandle texture;
+};
 
 RmlUiSDL2Renderer::RmlUiSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen)
 {
@@ -47,13 +51,24 @@ RmlUiSDL2Renderer::RmlUiSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen)
 // Called by RmlUi when it wants to render geometry that it does not wish to optimise.
 void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, const Rml::TextureHandle texture, const Rml::Vector2f& translation)
 {
-    SDL_Texture* sdl_texture = NULL;
-    if (texture == (Rml::TextureHandle)textures[0]) {
-        sdl_texture = (SDL_Texture*)textures[current_frame];
-    }
-    else {
-        sdl_texture = (SDL_Texture*)texture;
-    }
+    SDL_Texture *sdl_texture = (SDL_Texture*)texture;
+
+    /*
+    TextureHandle* handle = nullptr;
+    SDL_Texture* sdl_texture = nullptr;
+    if (texture)
+        handle = (TextureHandle*)texture;
+    if (handle)
+        sdl_texture = (SDL_Texture*)handle->texture;
+    */
+
+    //if (handle->name == "gif") {
+    //    return;
+    //    sdl_texture = (SDL_Texture*)textures[current_frame];
+    //}
+    //else {
+    //    sdl_texture = (SDL_Texture*)handle->data;
+    //}
    
     int sz = sizeof(vertices[0]);                 // 20
     int off1 = offsetof(Rml::Vertex, position);   // 0
@@ -68,11 +83,12 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
     int szPos = sizeof(position[0]);
 
     SDL_RenderGeometryRaw(mRenderer, sdl_texture,
-        (float*)(position), szPos,
-        (const SDL_Color*)((Uint8*)vertices + off2), sz,
-        (float*)((Uint8*)vertices + off3), sz,
-        num_vertices, indices, num_indices, 4);
+         (float*)(position), szPos,
+         (const SDL_Color*)((Uint8*)vertices + off2), sz,
+         (float*)((Uint8*)vertices + off3), sz,
+         num_vertices, indices, num_indices, 4);
 
+    /*
     //for gif animations
     if (anim->delays[current_frame]) {
         delay = anim->delays[current_frame];
@@ -86,6 +102,25 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
         lastTime = currentTime;
         current_frame = (current_frame + 1) % anim->count;
     }
+    */
+
+}
+
+// Called by RmlUi when it wants to compile geometry it believes will be static for the forseeable future.
+Rml::CompiledGeometryHandle RmlUiSDL2Renderer::CompileGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rml::TextureHandle texture)
+{
+    return (Rml::CompiledGeometryHandle) nullptr;
+}
+
+// Called by RmlUi when it wants to render application-compiled geometry.
+void RmlUiSDL2Renderer::RenderCompiledGeometry(Rml::CompiledGeometryHandle geometry, const Rml::Vector2f& translation) 
+{
+
+}
+
+// Called by RmlUi when it wants to release application-compiled geometry.
+void RmlUiSDL2Renderer::ReleaseCompiledGeometry(Rml::CompiledGeometryHandle geometry) 
+{
 
 }
 
@@ -135,12 +170,11 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
     }
 
     Rml::String extension = source.substr(i+1, source.length()-i);
+    /*
     if (extension == "gif") {
         anim = IMG_LoadAnimation(source.c_str());
         if (!anim)
             printf("Couldn't load %s: %s\n", source.c_str(), SDL_GetError());
-        //w = anim->w;
-        //h = anim->h;
         textures = (SDL_Texture**)SDL_calloc(anim->count, sizeof(*textures));
         if (!textures) {
             printf("Couldn't allocate textures\n");
@@ -149,19 +183,26 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
         for (int n = 0; n < anim->count; ++n) {
             textures[n] = SDL_CreateTextureFromSurface(mRenderer, anim->frames[n]);
         }
-        texture_handle = (Rml::TextureHandle)textures[0];
+        texture_handle = (Rml::TextureHandle)textures;
         texture_dimensions = Rml::Vector2i(anim->frames[0]->w, anim->frames[0]->h);
         current_frame = 0;
         return true;
     }
     else {
+    */
         SDL_Surface* surface = IMG_LoadTyped_RW(SDL_RWFromMem(buffer, int(buffer_size)), 1, extension.c_str());
         file_interface->Close(file_handle);
         if (surface) {
             SDL_Texture* texture = SDL_CreateTextureFromSurface(mRenderer, surface);
-
             if (texture) {
+
                 texture_handle = (Rml::TextureHandle)texture;
+                /*
+                TextureHandle handle;
+                handle.extension = "none";
+                handle.texture = (Rml::TextureHandle)texture;
+                texture_handle = (Rml::TextureHandle)&handle;
+                */
                 texture_dimensions = Rml::Vector2i(surface->w, surface->h);
                 SDL_FreeSurface(surface);
             }
@@ -172,7 +213,7 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
 
             return true;
         }
-    }
+    //}
 
     return false;
 }
@@ -197,6 +238,12 @@ bool RmlUiSDL2Renderer::GenerateTexture(Rml::TextureHandle& texture_handle, cons
     SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
     SDL_FreeSurface(surface);
     texture_handle = (Rml::TextureHandle) texture;
+    /*
+    TextureHandle handle;
+    handle.extension = "none";
+    handle.texture = (Rml::TextureHandle)texture;
+    texture_handle = (Rml::TextureHandle)&handle;
+    */
     return true;
 }
 
@@ -204,4 +251,9 @@ bool RmlUiSDL2Renderer::GenerateTexture(Rml::TextureHandle& texture_handle, cons
 void RmlUiSDL2Renderer::ReleaseTexture(Rml::TextureHandle texture_handle)
 {
     SDL_DestroyTexture((SDL_Texture*) texture_handle);
+}
+
+void RmlUiSDL2Renderer::SetTransform(const Rml::Matrix4f* transform)
+{
+
 }
