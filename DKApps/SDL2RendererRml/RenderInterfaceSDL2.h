@@ -32,11 +32,18 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <map>
 
 //#if !(SDL_VIDEO_RENDER_OGL)
 //   #error "Only the opengl sdl backend is supported."
 //#endif
 
+struct GifData {
+	IMG_Animation* anim;
+	SDL_Texture** textures;
+	int current_frame, delay, lastTime, currentTime; 
+	int speed = 0; // 0 = normal,  -n = slower,  +n = faster
+};
 
 class RmlUiSDL2Renderer : public Rml::RenderInterface
 {
@@ -76,11 +83,8 @@ private:
     SDL_Window* mScreen;
     SDL_Rect mRectScisor;
 
-	//for animated gif images
-	IMG_Animation* anim;
-	SDL_Texture** textures;
-	int current_frame, delay;
-	unsigned int lastTime = 0, currentTime;
+	std::map<Rml::TextureHandle, GifData> gif_map;
+	//unsigned int lastTime = 0, currentTime;
 };
 
 #endif
