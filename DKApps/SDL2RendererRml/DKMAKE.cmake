@@ -11,7 +11,6 @@ DKDEPEND(glew)
 DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
-DKDEPEND(opengles)
 DKDEPEBD(mobile_core_services)
 
 DKSET(USE_SDL2main ON)
