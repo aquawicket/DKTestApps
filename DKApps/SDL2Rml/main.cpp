@@ -76,10 +76,11 @@ int main(int /*argc*/, char** /*argv*/)
 	}
 	SDL_Renderer* renderer = SDL_CreateRenderer(screen, oglIdx, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
+#ifndef IOS
 	GLenum err = glewInit();
-
 	if (err != GLEW_OK)
 		fprintf(stderr, "GLEW ERROR: %s\n", glewGetErrorString(err));
+#endif
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	glMatrixMode(GL_PROJECTION | GL_MODELVIEW);
