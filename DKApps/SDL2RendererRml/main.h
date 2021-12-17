@@ -23,11 +23,17 @@ class App
 {
 public:
 	App(int argc, char** argv);
-	static void draw_frame();
+	static void init();
+	static void loop();
+	static void do_frame();
 	static void exit();
 	
+	static int    argc;
+	static char** argv;
+	static SDL_Window* mScreen;
 	static SDL_Renderer* mRenderer;
 	static Rml::Context* mContext;
+	//static RmlUiSDL2Renderer* rmlRenderer;
 	static RmlUiSDL2SystemInterface SystemInterface;
 	static int window_width;
 	static int window_height;

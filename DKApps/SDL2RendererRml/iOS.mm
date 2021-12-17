@@ -19,7 +19,7 @@
     
     //DKFile::appfilename = "/Users/aquawicket/Desktop/digitalknob/DKApps/"+appname+"/iossim32/Release-iphonesimulator/"+appname+".app/"+appname;
 	
-    App app(0,0;//argc, argv);
+    App app(0,0;)  //argc, argv);
 	App::active = true;
     
 	//DKStringArray classes;
@@ -44,8 +44,9 @@
 
 - (void)updateScene
 {
-    while(App::active)
+    while(App::active){
 		App::draw_frame();
+	}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

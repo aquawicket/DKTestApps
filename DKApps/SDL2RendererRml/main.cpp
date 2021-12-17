@@ -28,9 +28,12 @@
 
 #include "main.h"
 
-
+int    App::argc;
+char** App::argv;
+SDL_Window* App::mScreen;
 SDL_Renderer* App::mRenderer;
 Rml::Context* App::mContext;
+//RmlUiSDL2Renderer* App::rmlRenderer;
 RmlUiSDL2SystemInterface App::SystemInterface;
 int App::window_width = 800;
 int App::window_height = 600;
@@ -71,22 +74,29 @@ static void draw_background(SDL_Renderer* renderer, int w, int h)
 int main(int argc, char** argv)
 {
 	App app(argc, argv);
+	App::init();
 	return 0;
 }
 
 App::App(int argc, char** argv)
 {
 
+}
+
+
+void App::init()
+{
 #ifdef RMLUI_PLATFORM_WIN32
 	AllocConsole();
 #endif
 
-    if(SDL_Init( SDL_INIT_VIDEO ) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ERR("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed", SDL_GetError());
 
 	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_RESIZABLE);
 	if (!screen)
 		ERR("SDL_Window* invalid", SDL_GetError());
+	mScreen = screen;
 
 	int w, h;
 	SDL_GetWindowSize(screen, &w, &h);
@@ -94,19 +104,18 @@ App::App(int argc, char** argv)
 	int top, left, bottom, right;
 	SDL_GetWindowBordersSize(screen, &top, &left, &bottom, &right);
 
-	SDL_Renderer * renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	SDL_Renderer* renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!renderer)
 		ERR("renderer invalid", SDL_GetError());
 	mRenderer = renderer;
 
 	SDL_RendererInfo info;
-	if (SDL_GetRendererInfo(renderer, &info) < 0)
+	if (SDL_GetRendererInfo(mRenderer, &info) < 0)
 		ERR("SDL_GetRendererInfo() failed", SDL_GetError());
 
 	printf("Render Driver = %s\n", std::string(info.name).c_str());
 
-	RmlUiSDL2Renderer Renderer(renderer, screen);
-	
+	RmlUiSDL2Renderer Renderer(mRenderer, mScreen);
 
 	Rml::String root = ShellFileInterface::FindSamplesRoot();
 	ShellFileInterface FileInterface(root);
@@ -130,7 +139,7 @@ App::App(int argc, char** argv)
 		{ "NotoEmoji-Regular.ttf",    true  },
 	};
 
-	for (const FontFace& face : font_faces){
+	for (const FontFace& face : font_faces) {
 		Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
 	}
 
@@ -141,26 +150,31 @@ App::App(int argc, char** argv)
 	Rml::Debugger::Initialise(Context);
 	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
 
-	if (Document){
+	if (Document) {
 		Document->Show();
 		fprintf(stdout, "Document loaded\n");
 	}
-	else{
+	else {
 		fprintf(stdout, "Document is nullptr\n");
 	}
-
-	active = true;
-	while (active){
-		draw_frame();
-	}
-
-	Rml::Shutdown();
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(screen);
-    SDL_Quit();
+	App::active = true;
+	App::loop();
+	App::exit();
 }
 
-void App::draw_frame(){
+
+void App::loop()
+{
+	while (App::active)
+	{
+		//limit_framerate();
+		App::do_frame();
+	}
+}
+	
+	
+void App::do_frame()
+{
 	SDL_Event event;
 	SDL_RenderClear(mRenderer);
 	draw_background(mRenderer, window_width, window_height);
@@ -210,11 +224,16 @@ void App::draw_frame(){
 	mContext->Update();
 }
 
-void App::exit() {
+void App::exit() 
+{
 	active = false;
+	Rml::Shutdown();
+    SDL_DestroyRenderer(mRenderer);
+    SDL_DestroyWindow(mScreen);
+    SDL_Quit();
 }
 
 // For iphone, iPad
 #ifdef IOS
-int retval = UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
+int retval = UIApplicationMain(App::argc, App::argv, nil, @"iphoneViewerAppDelegate");
 #endif
