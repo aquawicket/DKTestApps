@@ -14,6 +14,7 @@ DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
 
 DKSET(USE_SDL2main ON)
+DKDEFINE(SDL_VIDEO_RENDER_OGL)
 
 ## Use the source file from their own paths
 #DKINCLUDE(${RMLUI}/Samples/shell/include/)
