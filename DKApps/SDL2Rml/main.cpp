@@ -83,10 +83,12 @@ int main(int /*argc*/, char** /*argv*/)
 #endif
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	
+#ifndef IOS
 	glMatrixMode(GL_PROJECTION | GL_MODELVIEW);
 	glLoadIdentity();
 	glOrtho(0, window_width, window_height, 0, 0, 1);
-
+#endif
 	RmlUiSDL2Renderer Renderer(renderer, screen);
 	RmlUiSDL2SystemInterface SystemInterface;
 
