@@ -1,6 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#ifdef IOS
+	#import <UIKit/UIKit.h>
+#endif
+
 #include <SDL.h>
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>

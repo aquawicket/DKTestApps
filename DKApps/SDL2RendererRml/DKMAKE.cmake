@@ -12,8 +12,9 @@ DKDEPEND(glew)
 DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
+DKDEPEND(uikit)
 
-DKSET(USE_SDL2main ON)
+WIN_DKSET(USE_SDL2main ON)
 
 # import rmlui sdl2 sample source
 #DKCOPY(${RMLUI}/Samples/shell/include/Shell.h ${DKPROJECT}/Shell.h FALSE)
