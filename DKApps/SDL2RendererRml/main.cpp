@@ -28,12 +28,9 @@
 
 #include "main.h"
 
-int    App::argc;
-char** App::argv;
 SDL_Window* App::mScreen;
 SDL_Renderer* App::mRenderer;
 Rml::Context* App::mContext;
-//RmlUiSDL2Renderer* App::rmlRenderer;
 RmlUiSDL2SystemInterface App::SystemInterface;
 int App::window_width = 800;
 int App::window_height = 600;
@@ -73,8 +70,14 @@ static void draw_background(SDL_Renderer* renderer, int w, int h)
 
 int main(int argc, char** argv)
 {
+#ifdef IOS
+	@autoreleasepool{
+		int retval = UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
+	}
+#else
 	App app(argc, argv);
 	App::init();
+#endif
 	return 0;
 }
 
@@ -233,7 +236,3 @@ void App::exit()
     SDL_Quit();
 }
 
-// For iphone, iPad
-#ifdef IOS
-int retval = UIApplicationMain(App::argc, App::argv, nil, @"iphoneViewerAppDelegate");
-#endif
