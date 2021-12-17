@@ -26,6 +26,7 @@
  *
  */
 
+#include "main.h"
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
 #include <RmlUi/Debugger/Debugger.h>
@@ -40,6 +41,8 @@
 #endif
 
 #include <SDL.h>
+
+bool App::done = false;
 
 bool ERR(std::string message, std::string lastError = "") {
 	std::string full_message = "ERROR: "+ message + "\n" + lastError + "\n";
@@ -75,6 +78,12 @@ static void draw_background(SDL_Renderer* renderer, int w, int h)
 
 int main(int argc, char** argv)
 {
+	return App::appmain(argc, argv);
+}
+
+int App::appmain(int argc, char** argv)
+{
+
 #ifdef RMLUI_PLATFORM_WIN32
 	AllocConsole();
 #endif
@@ -130,8 +139,7 @@ int main(int argc, char** argv)
 		{ "NotoEmoji-Regular.ttf",    true  },
 	};
 
-	for (const FontFace& face : font_faces)
-	{
+	for (const FontFace& face : font_faces){
 		Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
 	}
 
@@ -139,82 +147,76 @@ int main(int argc, char** argv)
 		Rml::Vector2i(window_width, window_height));
 
 	Rml::Debugger::Initialise(Context);
-
 	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
 
-	if (Document)
-	{
+	if (Document){
 		Document->Show();
 		fprintf(stdout, "Document loaded\n");
 	}
-	else
-	{
+	else{
 		fprintf(stdout, "Document is nullptr\n");
 	}
 
-	bool done = false;
-
-	while (!done)
-	{
-		SDL_Event event;
-		SDL_RenderClear(renderer);
-		draw_background(renderer, window_width, window_height);
-		Context->Render();
-		SDL_RenderPresent(renderer);
-
-		while (SDL_PollEvent(&event))
-		{
-			switch (event.type)
-			{
-			case SDL_QUIT:
-				done = true;
-				break;
-
-			case SDL_MOUSEMOTION:
-				Context->ProcessMouseMove(event.motion.x, event.motion.y, SystemInterface.GetKeyModifiers());
-				break;
-			case SDL_MOUSEBUTTONDOWN:
-				Context->ProcessMouseButtonDown(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
-				break;
-
-			case SDL_MOUSEBUTTONUP:
-				Context->ProcessMouseButtonUp(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
-				break;
-
-			case SDL_MOUSEWHEEL:
-				Context->ProcessMouseWheel(float(event.wheel.y), SystemInterface.GetKeyModifiers());
-				break;
-
-			case SDL_KEYDOWN:
-			{
-				// Intercept F8 key stroke to toggle RmlUi's visual debugger tool
-				if (event.key.keysym.sym == SDLK_F8)
-				{
-					Rml::Debugger::SetVisible(!Rml::Debugger::IsVisible());
-					break;
-				}
-
-				Context->ProcessKeyDown(SystemInterface.TranslateKey(event.key.keysym.sym), SystemInterface.GetKeyModifiers());
-				break;
-			}
-
-			default:
-				break;
-			}
-		}
-		Context->Update();
+	while (!done){
+		draw_frame();
 	}
 
 	Rml::Shutdown();
-
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(screen);
     SDL_Quit();
-
 	return 0;
 }
 
+void App::draw_frame(){
+	SDL_Event event;
+	SDL_RenderClear(renderer);
+	draw_background(renderer, window_width, window_height);
+	Context->Render();
+	SDL_RenderPresent(renderer);
 
+	while (SDL_PollEvent(&event))
+	{
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			done = true;
+			break;
+
+		case SDL_MOUSEMOTION:
+			Context->ProcessMouseMove(event.motion.x, event.motion.y, SystemInterface.GetKeyModifiers());
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			Context->ProcessMouseButtonDown(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
+			break;
+
+		case SDL_MOUSEBUTTONUP:
+			Context->ProcessMouseButtonUp(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
+			break;
+
+		case SDL_MOUSEWHEEL:
+			Context->ProcessMouseWheel(float(event.wheel.y), SystemInterface.GetKeyModifiers());
+			break;
+
+		case SDL_KEYDOWN:
+		{
+			// Intercept F8 key stroke to toggle RmlUi's visual debugger tool
+			if (event.key.keysym.sym == SDLK_F8)
+			{
+				Rml::Debugger::SetVisible(!Rml::Debugger::IsVisible());
+				break;
+			}
+
+			Context->ProcessKeyDown(SystemInterface.TranslateKey(event.key.keysym.sym), SystemInterface.GetKeyModifiers());
+			break;
+		}
+
+		default:
+			break;
+		}
+	}
+	Context->Update();
+}
 
 // For iphone, iPad
 #ifdef IOS
