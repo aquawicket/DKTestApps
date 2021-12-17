@@ -27,29 +27,21 @@
  */
 
 #include "main.h"
-#include <RmlUi/Core.h>
-#include <RmlUi/Core/Input.h>
-#include <RmlUi/Debugger/Debugger.h>
-#include <string.h>
 
-#include "FileInterfaceSDL2.h"
-#include "SystemInterfaceSDL2.h"
-#include "RenderInterfaceSDL2.h"
 
-#ifdef RMLUI_PLATFORM_WIN32
-#include <windows.h>
-#endif
-
-#include <SDL.h>
-
-bool App::done = false;
-
+SDL_Renderer* App::mRenderer;
+Rml::Context* App::mContext;
+RmlUiSDL2SystemInterface App::SystemInterface;
+int App::window_width = 800;
+int App::window_height = 600;
+bool App::active;
+	
+	
 bool ERR(std::string message, std::string lastError = "") {
 	std::string full_message = "ERROR: "+ message + "\n" + lastError + "\n";
 	printf("%s ", full_message.c_str());
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", full_message.c_str(), NULL);
 	throw;
-	exit;
 	return false;
 }
 
@@ -78,18 +70,16 @@ static void draw_background(SDL_Renderer* renderer, int w, int h)
 
 int main(int argc, char** argv)
 {
-	return App::appmain(argc, argv);
+	App app(argc, argv);
+	return 0;
 }
 
-int App::appmain(int argc, char** argv)
+App::App(int argc, char** argv)
 {
 
 #ifdef RMLUI_PLATFORM_WIN32
 	AllocConsole();
 #endif
-
-    int window_width = 800;
-    int window_height = 600;
 
     if(SDL_Init( SDL_INIT_VIDEO ) < 0)
 		ERR("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed", SDL_GetError());
@@ -107,6 +97,7 @@ int App::appmain(int argc, char** argv)
 	SDL_Renderer * renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!renderer)
 		ERR("renderer invalid", SDL_GetError());
+	mRenderer = renderer;
 
 	SDL_RendererInfo info;
 	if (SDL_GetRendererInfo(renderer, &info) < 0)
@@ -115,7 +106,7 @@ int App::appmain(int argc, char** argv)
 	printf("Render Driver = %s\n", std::string(info.name).c_str());
 
 	RmlUiSDL2Renderer Renderer(renderer, screen);
-	RmlUiSDL2SystemInterface SystemInterface;
+	
 
 	Rml::String root = ShellFileInterface::FindSamplesRoot();
 	ShellFileInterface FileInterface(root);
@@ -125,7 +116,7 @@ int App::appmain(int argc, char** argv)
 	Rml::SetSystemInterface(&SystemInterface);
 
 	if (!Rml::Initialise())
-		return 1;
+		ERR("Rml::Initialise() failed");
 
 	struct FontFace {
 		Rml::String filename;
@@ -145,6 +136,7 @@ int App::appmain(int argc, char** argv)
 
 	Rml::Context* Context = Rml::CreateContext("default",
 		Rml::Vector2i(window_width, window_height));
+	mContext = Context;
 
 	Rml::Debugger::Initialise(Context);
 	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
@@ -157,7 +149,8 @@ int App::appmain(int argc, char** argv)
 		fprintf(stdout, "Document is nullptr\n");
 	}
 
-	while (!done){
+	active = true;
+	while (active){
 		draw_frame();
 	}
 
@@ -165,37 +158,36 @@ int App::appmain(int argc, char** argv)
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(screen);
     SDL_Quit();
-	return 0;
 }
 
 void App::draw_frame(){
 	SDL_Event event;
-	SDL_RenderClear(renderer);
-	draw_background(renderer, window_width, window_height);
-	Context->Render();
-	SDL_RenderPresent(renderer);
+	SDL_RenderClear(mRenderer);
+	draw_background(mRenderer, window_width, window_height);
+	mContext->Render();
+	SDL_RenderPresent(mRenderer);
 
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			done = true;
+			active = false;
 			break;
 
 		case SDL_MOUSEMOTION:
-			Context->ProcessMouseMove(event.motion.x, event.motion.y, SystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseMove(event.motion.x, event.motion.y, SystemInterface.GetKeyModifiers());
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			Context->ProcessMouseButtonDown(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseButtonDown(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
 			break;
 
 		case SDL_MOUSEBUTTONUP:
-			Context->ProcessMouseButtonUp(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseButtonUp(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
 			break;
 
 		case SDL_MOUSEWHEEL:
-			Context->ProcessMouseWheel(float(event.wheel.y), SystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseWheel(float(event.wheel.y), SystemInterface.GetKeyModifiers());
 			break;
 
 		case SDL_KEYDOWN:
@@ -207,7 +199,7 @@ void App::draw_frame(){
 				break;
 			}
 
-			Context->ProcessKeyDown(SystemInterface.TranslateKey(event.key.keysym.sym), SystemInterface.GetKeyModifiers());
+			mContext->ProcessKeyDown(SystemInterface.TranslateKey(event.key.keysym.sym), SystemInterface.GetKeyModifiers());
 			break;
 		}
 
@@ -215,7 +207,11 @@ void App::draw_frame(){
 			break;
 		}
 	}
-	Context->Update();
+	mContext->Update();
+}
+
+void App::exit() {
+	active = false;
 }
 
 // For iphone, iPad

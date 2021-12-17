@@ -1,7 +1,5 @@
 #ifdef IOS
-#import "DKApp.h"
-#import "DKClass.h"
-#import "DKFile.h"
+#import "main.h"
 
 @implementation iphoneViewerAppDelegate
 
@@ -21,7 +19,8 @@
     
     //DKFile::appfilename = "/Users/aquawicket/Desktop/digitalknob/DKApps/"+appname+"/iossim32/Release-iphonesimulator/"+appname+".app/"+appname;
 	
-    App app(0,0);
+    App app(0,0;//argc, argv);
+	App::done = false;
     
 	//DKStringArray classes;
 	//DKClass::GetClassList(classes);
@@ -45,9 +44,8 @@
 
 - (void)updateScene
 {
-    //if(!App::done){
-		app.draw_frame();
-	//}
+    while(App::active)
+		App::draw_frame();
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -62,7 +60,7 @@
 
 -(void)applicationWillTerminate:(UIApplication *)application
 {
-    //DKApp::Exit();
+    App::exit();
 } 
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
