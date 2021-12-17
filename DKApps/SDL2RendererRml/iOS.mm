@@ -20,7 +20,7 @@
     //DKFile::appfilename = "/Users/aquawicket/Desktop/digitalknob/DKApps/"+appname+"/iossim32/Release-iphonesimulator/"+appname+".app/"+appname;
 	
     App app(0,0;//argc, argv);
-	App::done = false;
+	App::active = true;
     
 	//DKStringArray classes;
 	//DKClass::GetClassList(classes);
