@@ -12,7 +12,6 @@ DKDEPEND(glew)
 DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
-DKDEPEND(uikit)
 
 DKSET(USE_SDL2main ON)
 
