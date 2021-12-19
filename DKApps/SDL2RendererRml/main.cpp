@@ -41,7 +41,7 @@ bool ERR(std::string message, std::string lastError = "") {
 	std::string full_message = "ERROR: "+ message + "\n" + lastError + "\n";
 	printf("%s ", full_message.c_str());
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", full_message.c_str(), NULL);
-	throw;
+	//throw;
 	return false;
 }
 
@@ -72,7 +72,7 @@ int main(int argc, char** argv)
 {
 #ifdef IOS
 	@autoreleasepool{
-		int retval = UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
+		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
 	}
 #else
 	App app(argc, argv);
@@ -100,7 +100,7 @@ void App::init()
 	if (!screen)
 		ERR("SDL_Window* invalid", SDL_GetError());
 	mScreen = screen;
-
+    
 	int w, h;
 	SDL_GetWindowSize(screen, &w, &h);
 

@@ -9,7 +9,7 @@
     //NSDictionary *info = [bundle infoDictionary];
     //NSString *prodName = [info objectForKey:@"CFBundleExecutable"];
     //DKString appname = std::string([prodName UTF8String]); //NSString to std::string
-    NSString *epath = [[NSBundle mainBundle] executablePath];
+    //NSString *epath = [[NSBundle mainBundle] executablePath];
     //DKFile::exe_path = std::string([epath UTF8String]); //NSString to std::string
 
     //NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
