@@ -32,8 +32,13 @@ SDL_Window* App::mScreen;
 SDL_Renderer* App::mRenderer;
 Rml::Context* App::mContext;
 RmlUiSDL2SystemInterface App::SystemInterface;
-int App::window_width = 800;
-int App::window_height = 600;
+#ifdef IOS
+    int App::window_width = 320;
+    int App::window_height = 480;
+#else
+    int App::window_width = 800;
+    int App::window_height = 600;
+#endif
 bool App::active;
 	
 	
@@ -92,26 +97,36 @@ void App::init()
 #ifdef RMLUI_PLATFORM_WIN32
 	AllocConsole();
 #endif
-
+    SDL_SetMainReady(); //Bypass SDLmain  //https://wiki.libsdl.org/SDL_SetMainReady
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ERR("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed", SDL_GetError());
 
+    SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
+#if defined(ANDROID) || defined(IOS)
+    printf("Creating SDLWindow for mobile device\n");
+    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengles");
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_Window* screen;
+    SDL_Renderer* renderer;
+    if(SDL_CreateWindowAndRenderer(window_width, window_height, SDL_WINDOW_RESIZABLE, &screen, &renderer) < 0)
+        ERR("SDL_Window* invalid", SDL_GetError());
+#else
 	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_RESIZABLE);
 	if (!screen)
 		ERR("SDL_Window* invalid", SDL_GetError());
 	mScreen = screen;
-    
-	int w, h;
-	SDL_GetWindowSize(screen, &w, &h);
-
-	int top, left, bottom, right;
-	SDL_GetWindowBordersSize(screen, &top, &left, &bottom, &right);
 
 	SDL_Renderer* renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!renderer)
 		ERR("renderer invalid", SDL_GetError());
 	mRenderer = renderer;
-
+#endif
+    
 	SDL_RendererInfo info;
 	if (SDL_GetRendererInfo(mRenderer, &info) < 0)
 		ERR("SDL_GetRendererInfo() failed", SDL_GetError());
