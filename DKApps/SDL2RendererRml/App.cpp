@@ -171,15 +171,16 @@ void App::draw_background(SDL_Renderer* renderer, int w, int h)
 void App::do_frame()
 {
 	SDL_Event event;
+
 	SDL_RenderClear(mRenderer);
-	
+
 	//adjust the Context if the window is resized
 	SDL_GetWindowSize(mWindow, &window_width, &window_height);
 	if (window_width != mContext->GetDimensions().x || window_height != mContext->GetDimensions().y)
 	{
 		mContext->SetDimensions(Rml::Vector2i(window_width, window_height));
 	}
-
+	
 	draw_background(mRenderer, window_width, window_height);
 	mContext->Render();
 	SDL_RenderPresent(mRenderer);
@@ -209,8 +210,16 @@ void App::do_frame()
 
 		case SDL_KEYDOWN:
 		{
-			// Intercept F8 key stroke to toggle RmlUi's visual debugger tool
-			if (event.key.keysym.sym == SDLK_F8)
+			// Intercept F11 key stroke to toggle Fullscreen
+			if (event.key.keysym.sym == SDLK_F11)
+			{
+				long FullscreenFlag = SDL_WINDOW_FULLSCREEN;
+				bool isFullscreen = ((SDL_GetWindowFlags(mWindow) & FullscreenFlag) != 0);
+				isFullscreen ? SDL_SetWindowFullscreen(mWindow, 0) : SDL_SetWindowFullscreen(mWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+				break;
+			}
+			// Intercept F12 key stroke to toggle RmlUi's visual debugger tool
+			if (event.key.keysym.sym == SDLK_F12)
 			{
 				Rml::Debugger::SetVisible(!Rml::Debugger::IsVisible());
 				break;
@@ -227,7 +236,7 @@ void App::do_frame()
 	mContext->Update();
 
 	// update framerate in the window Titlebar
-	Rml::String post_mTitle = mTitle + " : " + std::to_string(Framerate::GetFps()) +"fps";
+	Rml::String post_mTitle = mTitle + " : " + std::to_string(Framerate::GetFps()) + "fps";
 	SDL_SetWindowTitle(mWindow, post_mTitle.c_str());
 }
 

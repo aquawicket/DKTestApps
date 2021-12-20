@@ -52,7 +52,7 @@ Rml::String FileInterfaceSDL2::FindSamplesRoot(Rml::String& argv_file)
 		if (stat(argv_file.c_str(), &buff) == 0) { //does path exist?
 			argv_file = Rml::StringUtilities::Replace(argv_file, '\\', '/'); //normalize windows backslashes
 			std::size_t last = argv_file.find_last_of("\\/");
-			std::size_t second = argv_file.find_last_of("\\/", last-1);
+			std::size_t second = argv_file.find_last_of("\\/", last - 1);
 			std::string root = argv_file.substr(0, second+1);
 			argv_file = argv_file.substr(second+1);
 			printf("the root is = %s\n", root.c_str());

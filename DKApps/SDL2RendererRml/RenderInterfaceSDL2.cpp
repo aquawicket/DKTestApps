@@ -110,7 +110,7 @@ void RmlUiSDL2Renderer::SetScissorRegion(int x, int y, int width, int height)
     int w_width, w_height;
     SDL_GetWindowSize(mScreen, &w_width, &w_height);
     mRectScisor.x = x;
-    mRectScisor.y = w_height - (y + height);
+    mRectScisor.y = y;
     mRectScisor.w = width;
     mRectScisor.h = height;
 }
