@@ -29,7 +29,6 @@
 #include <RmlUi/Core.h>
 #include "RenderInterfaceSDL2.h"
 #include <SDL_image.h>
-
 #include "GifAnimate.h"
 
 RmlUiSDL2Renderer::RmlUiSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen)
@@ -50,15 +49,19 @@ void RmlUiSDL2Renderer::RenderGeometry(Rml::Vertex* vertices, int num_vertices, 
 {
     SDL_Texture* sdl_texture = GetGifAnimation(texture);
     if (sdl_texture == nullptr)
+    {
         sdl_texture = (SDL_Texture*)texture;
+    }
 
     int sz = sizeof(vertices[0]);
     int off1 = offsetof(Rml::Vertex, position);
     int off2 = offsetof(Rml::Vertex, colour);
     int off3 = offsetof(Rml::Vertex, tex_coord);
 
+    //Crate a vector to position the texture's translation
     std::vector<Rml::Vector2f> pos;
-    for (int i = 0; i < num_vertices; ++i) {
+    for (int i = 0; i < num_vertices; ++i) 
+    {
         pos.push_back(Rml::Vector2f(vertices[i].position.x + translation.x, vertices[i].position.y + translation.y));
     }
     Rml::Vector2f* position = &pos[0];
@@ -92,9 +95,11 @@ void RmlUiSDL2Renderer::ReleaseCompiledGeometry(Rml::CompiledGeometryHandle geom
 // Called by RmlUi when it wants to enable or disable scissoring to clip content.		
 void RmlUiSDL2Renderer::EnableScissorRegion(bool enable)
 {
-    if (enable) {
+    if (enable) 
+    {
        SDL_RenderSetClipRect(mRenderer, &mRectScisor);
-    } else {
+    } else 
+    {
         SDL_RenderSetClipRect(mRenderer, NULL);
     }
 }
@@ -113,14 +118,16 @@ void RmlUiSDL2Renderer::SetScissorRegion(int x, int y, int width, int height)
 // Called by RmlUi when a texture is required by the library.		
 bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vector2i& texture_dimensions, const Rml::String& source)
 {
-    if(LoadGifAnimation(mRenderer, source, texture_handle, texture_dimensions)) {
+    if(LoadGifAnimation(mRenderer, source, texture_handle, texture_dimensions)) 
+    {
         return true;
     }
     
     Rml::FileInterface* file_interface = Rml::GetFileInterface();
     Rml::FileHandle file_handle = file_interface->Open(source);
-    if (!file_handle) {
-        printf("Error loading file");
+    if (!file_handle) 
+    {
+        printf("Error loading file\n");
         return false;
     }
 
@@ -142,9 +149,11 @@ bool RmlUiSDL2Renderer::LoadTexture(Rml::TextureHandle& texture_handle, Rml::Vec
 
     SDL_Surface* surface = IMG_LoadTyped_RW(SDL_RWFromMem(buffer, int(buffer_size)), 1, extension.c_str());
     file_interface->Close(file_handle);
-    if (surface) {
+    if (surface) 
+    {
         SDL_Texture* texture = SDL_CreateTextureFromSurface(mRenderer, surface);
-        if (texture) {
+        if (texture) 
+        {
             texture_handle = (Rml::TextureHandle)texture;
             texture_dimensions = Rml::Vector2i(surface->w, surface->h);
             SDL_FreeSurface(surface);

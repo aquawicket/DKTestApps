@@ -26,80 +26,31 @@
  *
  */
 
-#include "main.h"
+#include "App.h"
+#include "Framerate.h"
 
-SDL_Window* App::mScreen;
+bool App::active;
+Rml::String App::mTitle;
+SDL_Window* App::mWindow;
 SDL_Renderer* App::mRenderer;
 Rml::Context* App::mContext;
-RmlUiSDL2SystemInterface App::SystemInterface;
+RmlUiSDL2SystemInterface App::mSystemInterface;
 #ifdef IOS
-    int App::window_width = 320;
-    int App::window_height = 480;
+int App::window_width = 320;
+int App::window_height = 480;
 #else
-    int App::window_width = 800;
-    int App::window_height = 600;
+int App::window_width = 800;
+int App::window_height = 600;
 #endif
-bool App::active;
-	
-	
-bool ERR(std::string message, std::string lastError = "") {
-	std::string full_message = "ERROR: "+ message + "\n" + lastError + "\n";
-	printf("%s ", full_message.c_str());
-	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", full_message.c_str(), NULL);
-	//throw;
-	return false;
-}
-
-bool WARN(std::string message, std::string lastError = "") {
-	std::string full_message = "Warning: " + message + "\n" + lastError + "\n";
-	printf("%s ", full_message.c_str());
-	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "Warning", full_message.c_str(), NULL);
-	return true;
-}
-
-static void draw_background(SDL_Renderer* renderer, int w, int h)
-{
-	SDL_Color col[2] = {{ 100, 100, 100, 255 }, { 150, 150, 150, 255 }};
-	SDL_Rect rect({ 0,0,8,8 });
-	int i, x, y;
-	for (y = 0; y < h; y += rect.h) {
-		for (x = 0; x < w; x += rect.w) {
-			i = (((x ^ y) >> 3) & 1);
-			rect.x = x;
-			rect.y = y;
-			SDL_SetRenderDrawColor(renderer, col[i].r, col[i].g, col[i].b, col[i].a);
-			SDL_RenderFillRect(renderer, &rect);
-		}
-	}
-}
-
-int main(int argc, char** argv)
-{
-#ifdef IOS
-	@autoreleasepool{
-		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
-	}
-#else
-	App app(argc, argv);
-	App::init();
-#endif
-	return 0;
-}
-
-App::App(int argc, char** argv)
-{
-
-}
-
 
 void App::init()
 {
 #ifdef RMLUI_PLATFORM_WIN32
-	AllocConsole();
+	//AllocConsole();
 #endif
     SDL_SetMainReady(); //Bypass SDLmain  //https://wiki.libsdl.org/SDL_SetMainReady
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-		ERR("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed", SDL_GetError());
+		printf("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed: %s\n", SDL_GetError());
 
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 #if defined(ANDROID) || defined(IOS)
@@ -111,41 +62,46 @@ void App::init()
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-    SDL_Window* screen;
+    SDL_Window* sdl_window;
     SDL_Renderer* renderer;
-    if(SDL_CreateWindowAndRenderer(window_width, window_height, SDL_WINDOW_RESIZABLE, &screen, &renderer) < 0)
-        ERR("SDL_Window* invalid", SDL_GetError());
+    if(SDL_CreateWindowAndRenderer(window_width, window_height, SDL_WINDOW_RESIZABLE, &sdl_window, &renderer) < 0)
+        printf("SDL_Window* invalid: %s\n", SDL_GetError());
 #else
-	SDL_Window* screen = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_RESIZABLE);
-	if (!screen)
-		ERR("SDL_Window* invalid", SDL_GetError());
-	mScreen = screen;
+	SDL_Window* sdl_window = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_RESIZABLE);
+	if (!sdl_window)
+		printf("SDL_Window* invalid: %s\n", SDL_GetError());
+	mWindow = sdl_window;
 
-	SDL_Renderer* renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	SDL_Renderer* renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED/* | SDL_RENDERER_PRESENTVSYNC*/);
 	if (!renderer)
-		ERR("renderer invalid", SDL_GetError());
+		printf("renderer invalid: %s\n", SDL_GetError());
 	mRenderer = renderer;
 #endif
     
 	SDL_RendererInfo info;
 	if (SDL_GetRendererInfo(mRenderer, &info) < 0)
-		ERR("SDL_GetRendererInfo() failed", SDL_GetError());
+		printf("SDL_GetRendererInfo() failed: %s\n", SDL_GetError());
 
-	printf("Render Driver = %s\n", std::string(info.name).c_str());
+	// Print the SDL_Render name, and display it in the mTitle bar
+	Rml::String renderer_name = info.name;
+	printf("SDL_Renderer Driver = %s\n", renderer_name.c_str());
+	mTitle = Rml::String("SDL_Renderer RmlUi - " + renderer_name);
+	SDL_SetWindowTitle(sdl_window, mTitle.c_str());
 
-	RmlUiSDL2Renderer Renderer(mRenderer, mScreen);
+	RmlUiSDL2Renderer Renderer(mRenderer, mWindow);
 
-	Rml::String root = ShellFileInterface::FindSamplesRoot();
-	ShellFileInterface FileInterface(root);
+	Rml::String root = FileInterfaceSDL2::FindSamplesRoot();
+	FileInterfaceSDL2 FileInterface(root);
 
 	Rml::SetFileInterface(&FileInterface);
 	Rml::SetRenderInterface(&Renderer);
-	Rml::SetSystemInterface(&SystemInterface);
+	Rml::SetSystemInterface(&mSystemInterface);
 
 	if (!Rml::Initialise())
-		ERR("Rml::Initialise() failed");
+		printf("Rml::Initialise() failed\n");
 
-	struct FontFace {
+	struct FontFace 
+	{
 		Rml::String filename;
 		bool fallback_face;
 	};
@@ -166,7 +122,7 @@ void App::init()
 	mContext = Context;
 
 	Rml::Debugger::Initialise(Context);
-	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml");
+	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml"); //Path to resources
 
 	if (Document) {
 		Document->Show();
@@ -185,16 +141,39 @@ void App::loop()
 {
 	while (App::active)
 	{
-		//limit_framerate();
+		Framerate::LimitFramerate(120);
 		App::do_frame();
 	}
 }
 	
-	
+void App::draw_background(SDL_Renderer* renderer, int w, int h)
+{
+	SDL_Color col[2] = { { 100, 100, 100, 255 }, { 150, 150, 150, 255 } };
+	SDL_Rect rect({ 0,0,8,8 });
+	int i, x, y;
+	for (y = 0; y < h; y += rect.h) {
+		for (x = 0; x < w; x += rect.w) {
+			i = (((x ^ y) >> 3) & 1);
+			rect.x = x;
+			rect.y = y;
+			SDL_SetRenderDrawColor(renderer, col[i].r, col[i].g, col[i].b, col[i].a);
+			SDL_RenderFillRect(renderer, &rect);
+		}
+	}
+}
+
 void App::do_frame()
 {
 	SDL_Event event;
 	SDL_RenderClear(mRenderer);
+	
+	//adjust the Context if the window is resized
+	SDL_GetWindowSize(mWindow, &window_width, &window_height);
+	if (window_width != mContext->GetDimensions().x || window_height != mContext->GetDimensions().y)
+	{
+		mContext->SetDimensions(Rml::Vector2i(window_width, window_height));
+	}
+
 	draw_background(mRenderer, window_width, window_height);
 	mContext->Render();
 	SDL_RenderPresent(mRenderer);
@@ -208,18 +187,18 @@ void App::do_frame()
 			break;
 
 		case SDL_MOUSEMOTION:
-			mContext->ProcessMouseMove(event.motion.x, event.motion.y, SystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseMove(event.motion.x, event.motion.y, mSystemInterface.GetKeyModifiers());
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			mContext->ProcessMouseButtonDown(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseButtonDown(mSystemInterface.TranslateMouseButton(event.button.button), mSystemInterface.GetKeyModifiers());
 			break;
 
 		case SDL_MOUSEBUTTONUP:
-			mContext->ProcessMouseButtonUp(SystemInterface.TranslateMouseButton(event.button.button), SystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseButtonUp(mSystemInterface.TranslateMouseButton(event.button.button), mSystemInterface.GetKeyModifiers());
 			break;
 
 		case SDL_MOUSEWHEEL:
-			mContext->ProcessMouseWheel(float(event.wheel.y), SystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseWheel(float(event.wheel.y), mSystemInterface.GetKeyModifiers());
 			break;
 
 		case SDL_KEYDOWN:
@@ -231,7 +210,7 @@ void App::do_frame()
 				break;
 			}
 
-			mContext->ProcessKeyDown(SystemInterface.TranslateKey(event.key.keysym.sym), SystemInterface.GetKeyModifiers());
+			mContext->ProcessKeyDown(mSystemInterface.TranslateKey(event.key.keysym.sym), mSystemInterface.GetKeyModifiers());
 			break;
 		}
 
@@ -240,6 +219,10 @@ void App::do_frame()
 		}
 	}
 	mContext->Update();
+
+	// update framerate in the window Titlebar
+	Rml::String post_mTitle = mTitle + " : " + std::to_string(Framerate::GetFps()) +"fps";
+	SDL_SetWindowTitle(mWindow, post_mTitle.c_str());
 }
 
 void App::exit() 
@@ -247,7 +230,21 @@ void App::exit()
 	active = false;
 	Rml::Shutdown();
     SDL_DestroyRenderer(mRenderer);
-    SDL_DestroyWindow(mScreen);
+    SDL_DestroyWindow(mWindow);
     SDL_Quit();
 }
 
+
+
+int main(int argc, char** argv)
+{
+#ifdef IOS
+	@autoreleasepool{
+		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
+	}
+#else
+	App app(argc, argv);
+	App::init();
+#endif
+	return 0;
+}

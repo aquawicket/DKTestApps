@@ -32,7 +32,6 @@ Rml::Input::KeyIdentifier RmlUiSDL2SystemInterface::TranslateKey(SDL_Keycode sdl
 {
     using namespace Rml::Input;
 
-
     switch(sdlkey) {
         case SDLK_UNKNOWN:
             return KI_UNKNOWN;

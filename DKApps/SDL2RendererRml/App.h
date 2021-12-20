@@ -3,7 +3,7 @@
  *
  * For the latest information, see http://github.com/mikke89/RmlUi
  *
- * Copyright (c) 2008-2010 CodePoint Ltd, Shift Technology Ltd
+ * Copyright (c) 2008-2010 Nuno Silva
  * Copyright (c) 2019 The RmlUi Team, and contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -15,7 +15,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,50 +26,58 @@
  *
  */
 
-#include <FileInterfaceSDL2.h>
-#include <stdio.h>
+#ifndef APP_H
+#define APP_H
 
-FileInterfaceSDL2::FileInterfaceSDL2(const Rml::String& root) : root(root)
+#ifdef RMLUI_PLATFORM_WIN32
+#include <windows.h>
+#endif
+
+#ifdef IOS
+	#import <UIKit/UIKit.h>
+#endif
+
+#include <SDL.h>
+#include <RmlUi/Core.h>
+#include <RmlUi/Core/Input.h>
+#include <RmlUi/Debugger/Debugger.h>
+
+#include "FileInterfaceSDL2.h"
+#include "SystemInterfaceSDL2.h"
+#include "RenderInterfaceSDL2.h"
+
+#include <string.h>
+
+class App
 {
+public:
+	App(int argc, char** argv) {};
+	static void init();
+	static void loop();
+	static void draw_background(SDL_Renderer* renderer, int w, int h);
+	static void do_frame();
+	static void exit();
+	
+	static Rml::String mTitle;
+	static SDL_Window* mWindow;
+	static SDL_Renderer* mRenderer;
+	static Rml::Context* mContext;
+	static RmlUiSDL2SystemInterface mSystemInterface;
+	static int window_width;
+	static int window_height;
+	static bool active;
+};
+
+
+
+#ifdef IOS
+@interface iphoneViewerAppDelegate : NSObject <UIApplicationDelegate, UIAccelerometerDelegate>{
+	UIAccelerationValue        accel[3];
 }
 
-FileInterfaceSDL2::~FileInterfaceSDL2()
-{
-}
+@property (nonatomic, retain) UIWindow *_window;
+- (void)updateScene;
+@end
+#endif //ISO
 
-// Opens a file.
-Rml::FileHandle FileInterfaceSDL2::Open(const Rml::String& path)
-{
-	// Attempt to open the file relative to the application's root.
-	FILE* fp = fopen((root + path).c_str(), "rb");
-	if (fp != nullptr)
-		return (Rml::FileHandle) fp;
-
-	// Attempt to open the file relative to the current working directory.
-	fp = fopen(path.c_str(), "rb");
-	return (Rml::FileHandle) fp;
-}
-
-// Closes a previously opened file.
-void FileInterfaceSDL2::Close(Rml::FileHandle file)
-{
-	fclose((FILE*) file);
-}
-
-// Reads data from a previously opened file.
-size_t FileInterfaceSDL2::Read(void* buffer, size_t size, Rml::FileHandle file)
-{
-	return fread(buffer, 1, size, (FILE*) file);
-}
-
-// Seeks to a point in a previously opened file.
-bool FileInterfaceSDL2::Seek(Rml::FileHandle file, long offset, int origin)
-{
-	return fseek((FILE*) file, offset, origin) == 0;
-}
-
-// Returns the current position of the file pointer.
-size_t FileInterfaceSDL2::Tell(Rml::FileHandle file)
-{
-	return ftell((FILE*) file);
-}
+#endif

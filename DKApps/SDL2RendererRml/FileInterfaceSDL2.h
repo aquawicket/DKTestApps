@@ -25,23 +25,25 @@
  * THE SOFTWARE.
  *
  */
-
-#ifndef RMLUI_SHELL_SHELLFILEINTERFACE_H
-#define RMLUI_SHELL_SHELLFILEINTERFACE_H
-
-#include <RmlUi/Core/Types.h>
-#include <RmlUi/Core/FileInterface.h>
-
-/**
+ /*
+	Code originated from: 
 	RmlUi file interface for the shell examples.
 	@author Lloyd Weehuizen
  */
 
-class ShellFileInterface : public Rml::FileInterface
+#ifndef FILEINTERFACESDL2_H
+#define FILEINTERFACESDL2_H
+
+#include <RmlUi/Core/Types.h>
+#include <RmlUi/Core/FileInterface.h>
+
+
+
+class FileInterfaceSDL2 : public Rml::FileInterface
 {
 public:
-	ShellFileInterface(const Rml::String& root);
-	virtual ~ShellFileInterface();
+	FileInterfaceSDL2(const Rml::String& root);
+	virtual ~FileInterfaceSDL2();
 
 	static Rml::String FindSamplesRoot();
 

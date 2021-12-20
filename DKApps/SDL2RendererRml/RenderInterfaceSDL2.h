@@ -29,7 +29,6 @@
 #define RENDERINTERFACESDL2_H
 
 #include <RmlUi/Core/RenderInterface.h>
-
 #include <SDL.h>
 
 class RmlUiSDL2Renderer : public Rml::RenderInterface
