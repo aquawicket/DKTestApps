@@ -28,8 +28,11 @@
 
 #include "App.h"
 #include "Framerate.h"
+#include <fstream>
+
 
 bool App::active;
+Rml::String App::file;
 Rml::String App::mTitle;
 SDL_Window* App::mWindow;
 SDL_Renderer* App::mRenderer;
@@ -90,10 +93,9 @@ void App::init()
 
 	RmlUiSDL2Renderer Renderer(mRenderer, mWindow);
 
-	Rml::String root = FileInterfaceSDL2::FindSamplesRoot();
-	FileInterfaceSDL2 FileInterface(root);
-
+	FileInterfaceSDL2 FileInterface(FileInterfaceSDL2::FindSamplesRoot(App::file));
 	Rml::SetFileInterface(&FileInterface);
+	
 	Rml::SetRenderInterface(&Renderer);
 	Rml::SetSystemInterface(&mSystemInterface);
 
@@ -122,7 +124,11 @@ void App::init()
 	mContext = Context;
 
 	Rml::Debugger::Initialise(Context);
-	Rml::ElementDocument* Document = Context->LoadDocument("assets/demo.rml"); //Path to resources
+	if (App::file.empty())
+	{
+		App::file = "assets/demo.rml";
+	}
+	Rml::ElementDocument* Document = Context->LoadDocument(App::file); //Path to resources
 
 	if (Document) {
 		Document->Show();
@@ -243,7 +249,12 @@ int main(int argc, char** argv)
 		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
 	}
 #else
-	App app(argc, argv);
+	App app();
+
+	if (argc > 1){
+		App::file = argv[1];
+	}
+
 	App::init();
 #endif
 	return 0;

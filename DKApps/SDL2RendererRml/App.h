@@ -51,13 +51,14 @@
 class App
 {
 public:
-	App(int argc, char** argv) {};
+	App(){};
 	static void init();
 	static void loop();
 	static void draw_background(SDL_Renderer* renderer, int w, int h);
 	static void do_frame();
 	static void exit();
 	
+	static Rml::String file;
 	static Rml::String mTitle;
 	static SDL_Window* mWindow;
 	static SDL_Renderer* mRenderer;

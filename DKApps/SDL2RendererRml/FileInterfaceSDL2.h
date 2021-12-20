@@ -45,7 +45,7 @@ public:
 	FileInterfaceSDL2(const Rml::String& root);
 	virtual ~FileInterfaceSDL2();
 
-	static Rml::String FindSamplesRoot();
+	static Rml::String FindSamplesRoot(Rml::String& argv_file);
 
 	/// Opens a file.		
 	Rml::FileHandle Open(const Rml::String& path) override;
