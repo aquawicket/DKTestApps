@@ -37,6 +37,7 @@
 	#import <UIKit/UIKit.h>
 #endif
 
+#define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
