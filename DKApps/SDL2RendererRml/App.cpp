@@ -55,7 +55,8 @@ void App::init()
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		printf("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed: %s\n", SDL_GetError());
 
-    SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
+    //SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
+/*
 #if defined(ANDROID) || defined(IOS)
     printf("Creating SDLWindow for mobile device\n");
     SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengles");
@@ -70,6 +71,7 @@ void App::init()
     if(SDL_CreateWindowAndRenderer(window_width, window_height, SDL_WINDOW_RESIZABLE, &sdl_window, &renderer) < 0)
         printf("SDL_Window* invalid: %s\n", SDL_GetError());
 #else
+ */
 	SDL_Window* sdl_window = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_RESIZABLE);
 	if (!sdl_window)
 		printf("SDL_Window* invalid: %s\n", SDL_GetError());
@@ -79,7 +81,7 @@ void App::init()
 	if (!renderer)
 		printf("renderer invalid: %s\n", SDL_GetError());
 	mRenderer = renderer;
-#endif
+//#endif
     
 	SDL_RendererInfo info;
 	if (SDL_GetRendererInfo(mRenderer, &info) < 0)
@@ -253,11 +255,11 @@ void App::exit()
 
 int main(int argc, char** argv)
 {
-#ifdef IOS
-	@autoreleasepool{
-		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
-	}
-#else
+//#ifdef IOS
+//	@autoreleasepool{
+//		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
+//	}
+//#else
 	App app();
 
 	if (argc > 1){
@@ -265,6 +267,6 @@ int main(int argc, char** argv)
 	}
 
 	App::init();
-#endif
+//#endif
 	return 0;
 }
