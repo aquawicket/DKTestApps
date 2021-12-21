@@ -255,11 +255,11 @@ void App::exit()
 
 int main(int argc, char** argv)
 {
-//#ifdef IOS
-//	@autoreleasepool{
-//		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
-//	}
-//#else
+#ifdef IOS
+	@autoreleasepool{
+		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
+	}
+#else
 	App app();
 
 	if (argc > 1){
@@ -267,6 +267,6 @@ int main(int argc, char** argv)
 	}
 
 	App::init();
-//#endif
+#endif
 	return 0;
 }
