@@ -1,5 +1,5 @@
 #ifdef IOS
-#import "main.h"
+#import "App.h"
 
 @implementation iphoneViewerAppDelegate
 
