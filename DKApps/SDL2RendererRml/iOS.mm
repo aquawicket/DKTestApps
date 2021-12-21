@@ -1,7 +1,6 @@
 #ifdef IOS
 #import "App.h"
 
-/*
 @implementation iphoneViewerAppDelegate
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
