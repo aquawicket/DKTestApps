@@ -29,7 +29,7 @@
 #include "Framerate.h"
 #include <SDL.h>
 #include <cstring>
-
+#include <sys/time.h>
 
 //Frame limiter
 int Framerate::_fps = 100;
