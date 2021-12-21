@@ -22,7 +22,3 @@ if(RELEASE)
 	dk_makeDirectory(${DKPROJECT}/${OS}/${RELEASE_DIR}/${APP_NAME}.app/assets)
 	DKCOPY(${DKPROJECT}/Samples/ ${DKPROJECT}/${OS}/${RELEASE_DIR}/${APP_NAME}.app/Samples TRUE)
 endif()
-add_custom_command(TARGET ${APP_NAME} PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory 
-              ${CMAKE_CURRENT_LIST_DIR}/Samples $<TARGET_FILE_DIR:ExampleTestTarget>
-)
