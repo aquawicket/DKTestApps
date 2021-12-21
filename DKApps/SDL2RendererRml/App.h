@@ -52,7 +52,7 @@
 class App
 {
 public:
-	App(){};
+	//App();
 	static void init();
 	static void loop();
 	static void draw_background(SDL_Renderer* renderer, int w, int h);
