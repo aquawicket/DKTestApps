@@ -112,7 +112,7 @@ Rml::String FileInterfaceSDL2::FindSamplesRoot(Rml::String& argv_file)
 		}
 #endif
 
-#ifdef RMLUI_PLATFORM_MACOSX
+#if defined(RMLUI_PLATFORM_MACOSX) || defined(IOS)
 		char* realPath = realpath(tryPath.c_str(), NULL);
 		if (realPath) {
 			struct stat buf;

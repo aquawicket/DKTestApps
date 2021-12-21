@@ -178,6 +178,10 @@ void App::do_frame()
 
 	//adjust the Context if the window is resized
 	SDL_GetWindowSize(mWindow, &window_width, &window_height);
+    if(!mContext){
+        printf("ERROR: The context is invalid\n");
+        return;
+    }
 	if (window_width != mContext->GetDimensions().x || window_height != mContext->GetDimensions().y)
 	{
 		mContext->SetDimensions(Rml::Vector2i(window_width, window_height));
