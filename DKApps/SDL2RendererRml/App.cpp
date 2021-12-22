@@ -38,7 +38,8 @@ SDL_Window* App::mWindow;
 SDL_Renderer* App::mRenderer;
 Rml::Context* App::mContext;
 RmlUiSDL2Renderer* App::Renderer;
-RmlUiSDL2SystemInterface App::mSystemInterface;
+FileInterfaceSDL2* App::FileInterface;
+RmlUiSDL2SystemInterface* App::SystemInterface;
 #ifdef IOS
 int App::window_x = 0;
 int App::window_y = 0;
@@ -87,14 +88,16 @@ void App::init()
 	mTitle = Rml::String("SDL_Renderer RmlUi - " + renderer_name);
 	SDL_SetWindowTitle(sdl_window, mTitle.c_str());
 
-	//RmlUiSDL2Renderer Renderer(mRenderer, mWindow);
+    //FileInterfaceSDL2 FileInterface(FileInterfaceSDL2::FindSamplesRoot(App::file));
+    FileInterface = new FileInterfaceSDL2(FileInterfaceSDL2::FindSamplesRoot(App::file));
+    Rml::SetFileInterface(FileInterface);
+    
+    //RmlUiSDL2Renderer Renderer(mRenderer, mWindow);
 	Renderer = new RmlUiSDL2Renderer(mRenderer, mWindow);
-
-	FileInterfaceSDL2 FileInterface(FileInterfaceSDL2::FindSamplesRoot(App::file));
-	Rml::SetFileInterface(&FileInterface);
-	
-	Rml::SetRenderInterface(Renderer);
-	Rml::SetSystemInterface(&mSystemInterface);
+    Rml::SetRenderInterface(Renderer);
+    
+    SystemInterface = new RmlUiSDL2SystemInterface;
+    Rml::SetSystemInterface(SystemInterface);
 
 	if (!Rml::Initialise())
 		printf("Rml::Initialise() failed\n");
@@ -135,10 +138,10 @@ void App::init()
 		fprintf(stdout, "Document is nullptr\n");
 	}
 	App::active = true;
-//#ifndef IOS
+#ifndef IOS
 	App::loop();
 	App::exit();
-//#endif
+#endif
 }
 
 
@@ -197,18 +200,18 @@ void App::do_frame()
 			break;
 
 		case SDL_MOUSEMOTION:
-			mContext->ProcessMouseMove(event.motion.x, event.motion.y, mSystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseMove(event.motion.x, event.motion.y, SystemInterface->GetKeyModifiers());
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			mContext->ProcessMouseButtonDown(mSystemInterface.TranslateMouseButton(event.button.button), mSystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseButtonDown(SystemInterface->TranslateMouseButton(event.button.button), SystemInterface->GetKeyModifiers());
 			break;
 
 		case SDL_MOUSEBUTTONUP:
-			mContext->ProcessMouseButtonUp(mSystemInterface.TranslateMouseButton(event.button.button), mSystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseButtonUp(SystemInterface->TranslateMouseButton(event.button.button), SystemInterface->GetKeyModifiers());
 			break;
 
 		case SDL_MOUSEWHEEL:
-			mContext->ProcessMouseWheel(float(event.wheel.y), mSystemInterface.GetKeyModifiers());
+			mContext->ProcessMouseWheel(float(event.wheel.y), SystemInterface->GetKeyModifiers());
 			break;
 
 		case SDL_KEYDOWN:
@@ -228,7 +231,7 @@ void App::do_frame()
 				break;
 			}
 
-			mContext->ProcessKeyDown(mSystemInterface.TranslateKey(event.key.keysym.sym), mSystemInterface.GetKeyModifiers());
+			mContext->ProcessKeyDown(SystemInterface->TranslateKey(event.key.keysym.sym), SystemInterface->GetKeyModifiers());
 			break;
 		}
 
@@ -256,18 +259,16 @@ void App::exit()
 
 int main(int argc, char** argv)
 {
-/*
 #ifdef IOS
 	@autoreleasepool{
 		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
 	}
 #else
- */
-	App app();
+	App app;
 	if (argc > 1){
 		App::file = argv[1];
 	}
 	App::init();
-//#endif
+#endif
 	return 0;
 }

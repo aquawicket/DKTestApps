@@ -63,9 +63,10 @@ public:
 	static Rml::String mTitle;
 	static SDL_Window* mWindow;
 	static SDL_Renderer* mRenderer;
-    static RmlUiSDL2Renderer* Renderer;
 	static Rml::Context* mContext;
-	static RmlUiSDL2SystemInterface mSystemInterface;
+    static RmlUiSDL2Renderer* Renderer;
+    static FileInterfaceSDL2* FileInterface;
+    static RmlUiSDL2SystemInterface* SystemInterface;
     static int window_x;
     static int window_y;
 	static int window_width;

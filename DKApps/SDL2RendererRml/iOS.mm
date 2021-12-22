@@ -26,7 +26,6 @@
     App::file = exe_path+"/assets/demo.rml";
     App::init();
 
-		
     [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:@selector(updateScene) userInfo:nil repeats:YES];
 }
 
