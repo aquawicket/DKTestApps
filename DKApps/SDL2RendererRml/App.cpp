@@ -37,6 +37,7 @@ Rml::String App::mTitle;
 SDL_Window* App::mWindow;
 SDL_Renderer* App::mRenderer;
 Rml::Context* App::mContext;
+RmlUiSDL2Renderer* App::Renderer;
 RmlUiSDL2SystemInterface App::mSystemInterface;
 #ifdef IOS
 int App::window_x = 0;
@@ -60,22 +61,6 @@ void App::init()
 		printf("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed: %s\n", SDL_GetError());
 
     //SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-/*
-#if defined(ANDROID) || defined(IOS)
-    printf("Creating SDLWindow for mobile device\n");
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengles");
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-    SDL_Window* sdl_window;
-    SDL_Renderer* renderer;
-    if(SDL_CreateWindowAndRenderer(window_width, window_height, SDL_WINDOW_RESIZABLE, &sdl_window, &renderer) < 0)
-        printf("SDL_Window* invalid: %s\n", SDL_GetError());
-#else
- */
     int flags;
 #ifdef IOS
     flags = SDL_WINDOW_OPENGL;
@@ -103,7 +88,7 @@ void App::init()
 	SDL_SetWindowTitle(sdl_window, mTitle.c_str());
 
 	//RmlUiSDL2Renderer Renderer(mRenderer, mWindow);
-    Renderer = new RmlUiSDL2Renderer(mRenderer, mWindow);
+	Renderer = new RmlUiSDL2Renderer(mRenderer, mWindow);
 
 	FileInterfaceSDL2 FileInterface(FileInterfaceSDL2::FindSamplesRoot(App::file));
 	Rml::SetFileInterface(&FileInterface);
