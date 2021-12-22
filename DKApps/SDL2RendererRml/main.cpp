@@ -18,8 +18,7 @@ int main(int argc, char** argv)
 //#else
 	
 	App app;
-	if (argc > 1)
-	{
+	if (argc > 1){
 		App::mFile = argv[1];
 	}
 	App::init();
