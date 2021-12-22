@@ -68,6 +68,7 @@ Rml::String FileInterface::FindAssets(Rml::String& argv_file)
 	char buffer[MAX_PATH];
 	GetModuleFileName(NULL, buffer, MAX_PATH);
 	appPath = Rml::String(buffer);
+	appPath = Rml::StringUtilities::Replace(appPath, '\\', '/'); //normalize windows backslashes 
 #endif
 
 #ifdef RMLUI_PLATFORM_MACOSX
@@ -84,16 +85,15 @@ Rml::String FileInterface::FindAssets(Rml::String& argv_file)
 		printf("ERROR: could not get appPath from /proc/self/exe \n");
 	appPath = Rml::String(buf);
 #endif
+	
 
 	printf("appPath = %s \n", appPath.c_str());
 	std::size_t found = appPath.find_last_of("/");
 	appPath = appPath.substr(0,found); //point the path to the app folder by removing the executbale from the end
 	
 	Rml::String basePath = appPath + "/";
-	basePath = Rml::StringUtilities::Replace(basePath, '\\', '/'); //normalize windows backslashes 
-
 	for (unsigned int i = 0; i < 15; i++) { //Start at the top and go back N levels in search of our assets location
-		Rml::String tryPath = basePath;
+		Rml::String tryPath = basePath + "assets";
 
 #ifdef RMLUI_PLATFORM_WIN32
 		Rml::String realPath;
@@ -107,7 +107,7 @@ Rml::String FileInterface::FindAssets(Rml::String& argv_file)
 					printf("ERROR: _chdir failed \n");
 					return "";
 				}
-				return realPath;
+				return realPath+"/";
 			}
 		}
 #endif
