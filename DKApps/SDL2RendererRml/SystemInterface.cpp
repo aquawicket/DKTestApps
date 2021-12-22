@@ -25,8 +25,9 @@
  * THE SOFTWARE.
  *
  */
+ 
+#include "SystemInterface.h"
 #include <RmlUi/Core.h>
-#include "SystemInterfaceSDL2.h"
 
 Rml::Input::KeyIdentifier RmlSystemInterface::TranslateKey(SDL_Keycode sdlkey)
 {

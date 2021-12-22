@@ -26,9 +26,9 @@
  *
  */
 
-#include <RmlUi/Core.h>
-#include "RenderInterfaceSDL2.h"
+#include "RenderInterface.h"
 #include <SDL_image.h>
+#include <RmlUi/Core.h>
 #include "GifAnimate.h"
 
 RmlRenderInterface::RmlRenderInterface(SDL_Renderer* sdlRenderer, SDL_Window* sdlWindow)

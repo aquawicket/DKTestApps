@@ -26,7 +26,7 @@
  *
  */
 
-#include <FileInterfaceSDL2.h>
+#include "FileInterface.h"
 #include <stdio.h>
 
 RmlFileInterface::RmlFileInterface(const Rml::String& root) : root(root)

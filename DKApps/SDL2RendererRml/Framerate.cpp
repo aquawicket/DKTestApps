@@ -29,9 +29,6 @@
 #include "Framerate.h"
 #include <SDL.h>
 #include <cstring>
-//#ifdef IOS
-//    #include <sys/time.h>
-//#endif
 
 //Frame limiter
 int Framerate::_fps = 100;
@@ -49,13 +46,7 @@ float Framerate::framespersecond = 0;
 
 long Framerate::GetTicks() 
 {
-//#ifdef WIN32
 	return SDL_GetTicks();
-//#else
-//	struct timeval tv;
-//	gettimeofday(&tv, 0);
-//	return unsigned((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-//#endif
 }
 
 int Framerate::GetFramerate()

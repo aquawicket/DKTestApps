@@ -25,11 +25,13 @@
  * THE SOFTWARE.
  *
  */
+ 
 #ifndef RMLRENDERINTERFACE_H
 #define RMLRENDERINTERFACE_H
 
-#include <RmlUi/Core/RenderInterface.h>
 #include <SDL.h>
+#include <RmlUi/Core/RenderInterface.h>
+
 
 class RmlRenderInterface : public Rml::RenderInterface
 {

@@ -3,7 +3,7 @@
  *
  * For the latest information, see http://github.com/mikke89/RmlUi
  *
- * Copyright (c) 2008-2010 Nuno Silva
+ * Copyright (c) 2008-2010 CodePoint Ltd, Shift Technology Ltd
  * Copyright (c) 2019 The RmlUi Team, and contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,22 +25,44 @@
  * THE SOFTWARE.
  *
  */
-#ifndef RMLSYSTEMINTEFACE_H
-#define RMLSYSTEMINTEFACE_H
+ /*
+	Code originated from: 
+	RmlUi file interface for the shell examples.
+	@author Lloyd Weehuizen
+ */
 
-#include <RmlUi/Core/SystemInterface.h>
-#include <RmlUi/Core/Input.h>
+#ifndef FILEINTERFACE_H
+#define FILEINTERFACE_H
 
-#include <SDL.h>
+#include <RmlUi/Core/Types.h>
+#include <RmlUi/Core/FileInterface.h>
 
-class RmlSystemInterface : public Rml::SystemInterface
+
+class RmlFileInterface : public Rml::FileInterface
 {
 public:
-    Rml::Input::KeyIdentifier TranslateKey(SDL_Keycode sdlkey);
-    int TranslateMouseButton(Uint8 button);
-	int GetKeyModifiers();
-	
-	double GetElapsedTime() override;
-    bool LogMessage(Rml::Log::Type type, const Rml::String& message) override;
+	RmlFileInterface(const Rml::String& root);
+	virtual ~RmlFileInterface();
+
+	static Rml::String FindSamplesRoot(Rml::String& argv_file);
+
+	/// Opens a file.		
+	Rml::FileHandle Open(const Rml::String& path) override;
+
+	/// Closes a previously opened file.		
+	void Close(Rml::FileHandle file) override;
+
+	/// Reads data from a previously opened file.		
+	size_t Read(void* buffer, size_t size, Rml::FileHandle file) override;
+
+	/// Seeks to a point in a previously opened file.		
+	bool Seek(Rml::FileHandle file, long offset, int origin) override;
+
+	/// Returns the current position of the file pointer.		
+	size_t Tell(Rml::FileHandle file) override;
+
+private:
+	Rml::String root;
 };
+
 #endif

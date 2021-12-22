@@ -25,12 +25,14 @@
  * THE SOFTWARE.
  *
  */
-
+ 
 #ifndef GIFANIMATE_H
 #define GIFANIMATE_H
+
+#include <map>
 #include <SDL_image.h>
 #include <RmlUi/Core/Types.h>
-#include <map>
+
 
 struct GifData 
 {
