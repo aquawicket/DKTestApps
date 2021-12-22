@@ -29,16 +29,16 @@
 #include <FileInterfaceSDL2.h>
 #include <stdio.h>
 
-FileInterfaceSDL2::FileInterfaceSDL2(const Rml::String& root) : root(root)
+RmlFileInterface::RmlFileInterface(const Rml::String& root) : root(root)
 {
 }
 
-FileInterfaceSDL2::~FileInterfaceSDL2()
+RmlFileInterface::~RmlFileInterface()
 {
 }
 
 // Opens a file.
-Rml::FileHandle FileInterfaceSDL2::Open(const Rml::String& path)
+Rml::FileHandle RmlFileInterface::Open(const Rml::String& path)
 {
 	// Attempt to open the file relative to the application's root.
 	FILE* fp = fopen((root + path).c_str(), "rb");
@@ -51,25 +51,25 @@ Rml::FileHandle FileInterfaceSDL2::Open(const Rml::String& path)
 }
 
 // Closes a previously opened file.
-void FileInterfaceSDL2::Close(Rml::FileHandle file)
+void RmlFileInterface::Close(Rml::FileHandle file)
 {
 	fclose((FILE*) file);
 }
 
 // Reads data from a previously opened file.
-size_t FileInterfaceSDL2::Read(void* buffer, size_t size, Rml::FileHandle file)
+size_t RmlFileInterface::Read(void* buffer, size_t size, Rml::FileHandle file)
 {
 	return fread(buffer, 1, size, (FILE*) file);
 }
 
 // Seeks to a point in a previously opened file.
-bool FileInterfaceSDL2::Seek(Rml::FileHandle file, long offset, int origin)
+bool RmlFileInterface::Seek(Rml::FileHandle file, long offset, int origin)
 {
 	return fseek((FILE*) file, offset, origin) == 0;
 }
 
 // Returns the current position of the file pointer.
-size_t FileInterfaceSDL2::Tell(Rml::FileHandle file)
+size_t RmlFileInterface::Tell(Rml::FileHandle file)
 {
 	return ftell((FILE*) file);
 }

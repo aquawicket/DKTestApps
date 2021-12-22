@@ -25,15 +25,15 @@
  * THE SOFTWARE.
  *
  */
-#ifndef SYSTEMINTEFACESDL2_H
-#define SYSTEMINTEFACESDL2_H
+#ifndef RMLSYSTEMINTEFACE_H
+#define RMLSYSTEMINTEFACE_H
 
 #include <RmlUi/Core/SystemInterface.h>
 #include <RmlUi/Core/Input.h>
 
 #include <SDL.h>
 
-class RmlUiSDL2SystemInterface : public Rml::SystemInterface
+class RmlSystemInterface : public Rml::SystemInterface
 {
 public:
     Rml::Input::KeyIdentifier TranslateKey(SDL_Keycode sdlkey);

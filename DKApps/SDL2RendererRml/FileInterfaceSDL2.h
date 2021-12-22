@@ -31,19 +31,18 @@
 	@author Lloyd Weehuizen
  */
 
-#ifndef FILEINTERFACESDL2_H
-#define FILEINTERFACESDL2_H
+#ifndef RMLFILEINTERFACE_H
+#define RMLFILEINTERFACE_H
 
 #include <RmlUi/Core/Types.h>
 #include <RmlUi/Core/FileInterface.h>
 
 
-
-class FileInterfaceSDL2 : public Rml::FileInterface
+class RmlFileInterface : public Rml::FileInterface
 {
 public:
-	FileInterfaceSDL2(const Rml::String& root);
-	virtual ~FileInterfaceSDL2();
+	RmlFileInterface(const Rml::String& root);
+	virtual ~RmlFileInterface();
 
 	static Rml::String FindSamplesRoot(Rml::String& argv_file);
 

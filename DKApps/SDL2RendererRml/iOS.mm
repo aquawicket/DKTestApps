@@ -11,8 +11,8 @@
     std::string appname = std::string([prodName UTF8String]);
     //printf("appname = %s\n", appname.c_str());
     NSString *epath = [[NSBundle mainBundle] executablePath];
-    std::string exe_path = std::string([epath UTF8String]); //NSString to std::string
-    exe_path = exe_path.substr(0, exe_path.find_last_of("/\\"));
+    std::string exePath = std::string([epath UTF8String]); //NSString to std::string
+    exePath = exePath.substr(0, exePath.find_last_of("/\\"));
     //printf("exe_path = %s\n", exe+path.c_str());
     
     /*
@@ -23,7 +23,7 @@
     */
 
     App app;
-    App::file = exe_path+"/assets/demo.rml";
+    App::mFile = exePath+"/assets/demo.rml";
     App::init();
 
     [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:@selector(updateScene) userInfo:nil repeats:YES];
@@ -31,7 +31,7 @@
 
 - (void)updateScene
 {
-    if(App::active){
+    if(App::mActive){
         App::do_frame();
 	}
 }

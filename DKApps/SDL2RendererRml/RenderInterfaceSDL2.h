@@ -25,16 +25,16 @@
  * THE SOFTWARE.
  *
  */
-#ifndef RENDERINTERFACESDL2_H
-#define RENDERINTERFACESDL2_H
+#ifndef RMLRENDERINTERFACE_H
+#define RMLRENDERINTERFACE_H
 
 #include <RmlUi/Core/RenderInterface.h>
 #include <SDL.h>
 
-class RmlUiSDL2Renderer : public Rml::RenderInterface
+class RmlRenderInterface : public Rml::RenderInterface
 {
 public:
-	RmlUiSDL2Renderer(SDL_Renderer* renderer, SDL_Window* screen);
+    RmlRenderInterface(SDL_Renderer* renderer, SDL_Window* screen);
 
 	/// Called by RmlUi when it wants to render geometry that it does not wish to optimise.
 	void RenderGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rml::TextureHandle texture, const Rml::Vector2f& translation) override;
@@ -63,11 +63,11 @@ public:
 	void SetTransform(const Rml::Matrix4f* transform) override;
 
 private:
-    SDL_Renderer* mRenderer;
-    int mRenderer_w;
-    int mRenderer_h;
-    SDL_Window* mScreen;
-    SDL_Rect mRectScisor;
+    SDL_Renderer* mSdlRenderer;
+    int mWidth;
+    int mHeight;
+    SDL_Window* mSdlWindow;
+    SDL_Rect mScisorRect;
 };
 
 #endif

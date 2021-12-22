@@ -52,26 +52,25 @@
 class App
 {
 public:
-	//App();
 	static void init();
 	static void loop();
-	static void draw_background(SDL_Renderer* renderer, int w, int h);
+	static void draw_background(SDL_Renderer* sdlRenderer, int width, int height);
 	static void do_frame();
 	static void exit();
 	
-	static Rml::String file;
-	static Rml::String mTitle;
 	static SDL_Window* mSdlWindow;
 	static SDL_Renderer* mSdlRenderer;
 	static Rml::Context* mRmlContext;
-    static RmlUiSDL2Renderer* mRmlRenderer;
-    static FileInterfaceSDL2* mRmlFileInterface;
-    static RmlUiSDL2SystemInterface* mRmlSystemInterface;
-    static int window_x;
-    static int window_y;
-	static int window_width;
-	static int window_height;
-	static bool active;
+    static RmlFileInterface* mRmlFileInterface;
+    static RmlSystemInterface* mRmlSystemInterface;
+    static RmlRenderInterface* mRmlRenderInterface;
+    static Rml::String mFile;
+    static Rml::String mTitle;
+    static int mX;
+    static int mY;
+	static int mWidth;
+	static int mHeight;
+	static bool mActive;
 };
 
 
