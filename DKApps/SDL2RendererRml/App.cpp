@@ -39,9 +39,13 @@ SDL_Renderer* App::mRenderer;
 Rml::Context* App::mContext;
 RmlUiSDL2SystemInterface App::mSystemInterface;
 #ifdef IOS
+int App::window_x = 0;
+int App::window_y = 0;
 int App::window_width = 320;
 int App::window_height = 480;
 #else
+int App::window_x = SDL_WINDOWPOS_CENTERED;
+int App::window_y = SDL_WINDOWPOS_CENTERED;
 int App::window_width = 800;
 int App::window_height = 600;
 #endif
@@ -72,12 +76,18 @@ void App::init()
         printf("SDL_Window* invalid: %s\n", SDL_GetError());
 #else
  */
-	SDL_Window* sdl_window = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_RESIZABLE);
+    int flags;
+#ifdef IOS
+    flags = SDL_WINDOW_OPENGL;
+#else
+    flags = SDL_WINDOW_RESIZABLE;
+#endif
+	SDL_Window* sdl_window = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer", window_x, window_y, window_width, window_height, flags);
 	if (!sdl_window)
 		printf("SDL_Window* invalid: %s\n", SDL_GetError());
 	mWindow = sdl_window;
 
-	SDL_Renderer* renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED/* | SDL_RENDERER_PRESENTVSYNC*/);
+    SDL_Renderer* renderer = SDL_CreateRenderer(sdl_window, -1, 0);//SDL_RENDERER_ACCELERATED/* | SDL_RENDERER_PRESENTVSYNC*/);
 	if (!renderer)
 		printf("renderer invalid: %s\n", SDL_GetError());
 	mRenderer = renderer;
