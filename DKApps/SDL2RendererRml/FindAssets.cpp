@@ -107,21 +107,26 @@ Rml::String FileInterface::FindAssets(Rml::String& argv_file)
 					printf("ERROR: _chdir failed \n");
 					return "";
 				}
-				return realPath+"/";
+				std::size_t found = realPath.find_last_of("/");
+				realPath = realPath.substr(0, found);
+				return (realPath+"/");
 			}
 		}
 #endif
 
 #if defined(RMLUI_PLATFORM_MACOSX) || defined(IOS)
-		char* realPath = realpath(tryPath.c_str(), NULL);
-		if (realPath) {
+		char* rp = realpath(tryPath.c_str(), NULL);
+		if (rp) {
 			struct stat buf;
-			if(stat(realPath, &buf) == 0){ //does path exist?
-				if( chdir(realPath) != 0){
+			if(stat(rp, &buf) == 0){ //does path exist?
+				if( chdir(rp) != 0){
 					printf("ERROR: chdir failed \n");
 					return "";
 				}
-				return (Rml::String(realPath)+"/");
+				Rml::String realPath = rp;
+				std::size_t found = realPath.find_last_of("/");
+				realPath = realPath.substr(0, found);
+				return realPath+"/";
 			}
 		}
 #endif
@@ -136,7 +141,9 @@ Rml::String FileInterface::FindAssets(Rml::String& argv_file)
 					printf("ERROR: chdir failed \n");
 					return "";
 				}
-				return Rml::String(realPath);
+				std::size_t found = realPath.find_last_of("/");
+				realPath = realPath.substr(0, found);
+				return realPath+"/";
 			}
 		}
 		else {

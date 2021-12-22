@@ -61,8 +61,7 @@ public:
 	/// Returns the current position of the file pointer.		
 	size_t Tell(Rml::FileHandle file) override;
 
-private:
-	Rml::String root;
+	static Rml::String mRoot;
 };
 
 #endif

@@ -29,8 +29,11 @@
 #include "FileInterface.h"
 #include <stdio.h>
 
-FileInterface::FileInterface(const Rml::String& root) : root(root)
+Rml::String FileInterface::mRoot;
+
+FileInterface::FileInterface(const Rml::String& root)
 {
+	mRoot = root;
 }
 
 FileInterface::~FileInterface()
@@ -41,7 +44,7 @@ FileInterface::~FileInterface()
 Rml::FileHandle FileInterface::Open(const Rml::String& path)
 {
 	// Attempt to open the file relative to the application's root.
-	FILE* fp = fopen((root + path).c_str(), "rb");
+	FILE* fp = fopen((mRoot + path).c_str(), "rb");
 	if (fp != nullptr)
 		return (Rml::FileHandle) fp;
 

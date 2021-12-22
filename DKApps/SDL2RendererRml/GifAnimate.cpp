@@ -27,6 +27,7 @@
  */
 
 #include "GifAnimate.h"
+#include "FileInterface.h"
 
 bool LoadGifAnimation(SDL_Renderer* renderer, const Rml::String& source, Rml::TextureHandle& texture_handle, Rml::Vector2i& texture_dimensions) 
 {
@@ -40,10 +41,10 @@ bool LoadGifAnimation(SDL_Renderer* renderer, const Rml::String& source, Rml::Te
     if (extension == "gif") 
     {
         GifData gif_data;
-        gif_data.anim = IMG_LoadAnimation(source.c_str());
+        gif_data.anim = IMG_LoadAnimation( (FileInterface::mRoot + source).c_str() );
         if (!gif_data.anim) 
         {
-            printf("Couldn't load %s: %s\n", source.c_str(), SDL_GetError());
+            printf("Couldn't load %s: %s\n", (FileInterface::mRoot + source).c_str(), SDL_GetError());
             return false;
         }
 

@@ -114,7 +114,7 @@ void App::init()
 	};
 
 	for (const FontFace& face : font_faces) {
-		Rml::LoadFontFace(/*"assets/" +*/ face.filename, face.fallback_face);
+		Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
 	}
 
 	Rml::Context* rmlContext = Rml::CreateContext("default", Rml::Vector2i(mWidth, mHeight) );
@@ -123,8 +123,7 @@ void App::init()
 	Rml::Debugger::Initialise(rmlContext);
 	if (mFile.empty())
 	{
-		//mFile = "assets/demo.rml";
-		mFile = "demo.rml";
+		mFile = "assets/demo.rml";
 	}
 	Rml::ElementDocument* rmlDocument = rmlContext->LoadDocument(mFile); //Path to resources
 
