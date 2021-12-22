@@ -39,11 +39,13 @@
 #endif
 */
 #include <string.h>
+/*
 #ifndef IOS
 	#define SDL_MAIN_HANDLED
 #else
 	#include "SDL_main.h"
 #endif
+*/
 #include <SDL.h>
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
