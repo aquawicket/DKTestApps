@@ -45,7 +45,7 @@
 #endif
 #include <sys/stat.h>
 
-Rml::String RmlFileInterface::FindSamplesRoot(Rml::String& argv_file)
+Rml::String FileInterface::FindSamplesRoot(Rml::String& argv_file)
 {
 	if (!argv_file.empty()) {
 		struct stat buff;

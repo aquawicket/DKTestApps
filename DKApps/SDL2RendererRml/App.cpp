@@ -37,9 +37,9 @@ Rml::String App::mTitle;
 SDL_Window* App::mSdlWindow;
 SDL_Renderer* App::mSdlRenderer;
 Rml::Context* App::mRmlContext;
-RmlFileInterface* App::mRmlFileInterface;
-RmlSystemInterface* App::mRmlSystemInterface;
-RmlRenderInterface* App::mRmlRenderInterface;
+FileInterface* App::mFileInterface;
+SystemInterface* App::mSystemInterface;
+RenderInterface* App::mRenderInterface;
 #ifdef IOS
 int App::mX = 0;
 int App::mY = 0;
@@ -88,14 +88,14 @@ void App::init()
 	mTitle = Rml::String("SDL_Renderer RmlUi - " + rendererName);
 	SDL_SetWindowTitle(sdlWindow, mTitle.c_str());
 
-    mRmlFileInterface = new RmlFileInterface( RmlFileInterface::FindSamplesRoot(App::mFile) );
-    Rml::SetFileInterface(mRmlFileInterface);
+    mFileInterface = new FileInterface( FileInterface::FindSamplesRoot(App::mFile) );
+    Rml::SetFileInterface(mFileInterface);
     
-    mRmlSystemInterface = new RmlSystemInterface;
-    Rml::SetSystemInterface(mRmlSystemInterface);
+    mSystemInterface = new SystemInterface;
+    Rml::SetSystemInterface(mSystemInterface);
     
-	mRmlRenderInterface = new RmlRenderInterface(mSdlRenderer, mSdlWindow);
-    Rml::SetRenderInterface(mRmlRenderInterface);
+	mRenderInterface = new RenderInterface(mSdlRenderer, mSdlWindow);
+    Rml::SetRenderInterface(mRenderInterface);
     
 	if (!Rml::Initialise())
 		printf("Rml::Initialise() failed\n");
@@ -197,18 +197,18 @@ void App::do_frame()
 			break;
 
 		case SDL_MOUSEMOTION:
-			mRmlContext->ProcessMouseMove(event.motion.x, event.motion.y, mRmlSystemInterface->GetKeyModifiers());
+			mRmlContext->ProcessMouseMove(event.motion.x, event.motion.y, mSystemInterface->GetKeyModifiers());
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			mRmlContext->ProcessMouseButtonDown(mRmlSystemInterface->TranslateMouseButton(event.button.button), mRmlSystemInterface->GetKeyModifiers());
+			mRmlContext->ProcessMouseButtonDown(mSystemInterface->TranslateMouseButton(event.button.button), mSystemInterface->GetKeyModifiers());
 			break;
 
 		case SDL_MOUSEBUTTONUP:
-			mRmlContext->ProcessMouseButtonUp(mRmlSystemInterface->TranslateMouseButton(event.button.button), mRmlSystemInterface->GetKeyModifiers());
+			mRmlContext->ProcessMouseButtonUp(mSystemInterface->TranslateMouseButton(event.button.button), mSystemInterface->GetKeyModifiers());
 			break;
 
 		case SDL_MOUSEWHEEL:
-			mRmlContext->ProcessMouseWheel(float(event.wheel.y), mRmlSystemInterface->GetKeyModifiers());
+			mRmlContext->ProcessMouseWheel(float(event.wheel.y), mSystemInterface->GetKeyModifiers());
 			break;
 
 		case SDL_KEYDOWN:
@@ -228,7 +228,7 @@ void App::do_frame()
 				break;
 			}
 
-			mRmlContext->ProcessKeyDown(mRmlSystemInterface->TranslateKey(event.key.keysym.sym), mRmlSystemInterface->GetKeyModifiers());
+			mRmlContext->ProcessKeyDown(mSystemInterface->TranslateKey(event.key.keysym.sym), mSystemInterface->GetKeyModifiers());
 			break;
 		}
 
@@ -262,7 +262,8 @@ int main(int argc, char** argv)
 	}
 #else
 	App app;
-	if (argc > 1){
+	if (argc > 1)
+	{
 		App::mFile = argv[1];
 	}
 	App::init();

@@ -26,17 +26,17 @@
  *
  */
  
-#ifndef RMLRENDERINTERFACE_H
-#define RMLRENDERINTERFACE_H
+#ifndef RENDERINTERFACE_H
+#define RENDERINTERFACE_H
 
 #include <SDL.h>
 #include <RmlUi/Core/RenderInterface.h>
 
 
-class RmlRenderInterface : public Rml::RenderInterface
+class RenderInterface : public Rml::RenderInterface
 {
 public:
-    RmlRenderInterface(SDL_Renderer* renderer, SDL_Window* screen);
+    RenderInterface(SDL_Renderer* renderer, SDL_Window* screen);
 
 	/// Called by RmlUi when it wants to render geometry that it does not wish to optimise.
 	void RenderGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rml::TextureHandle texture, const Rml::Vector2f& translation) override;

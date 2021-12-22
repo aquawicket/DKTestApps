@@ -30,14 +30,13 @@
 #define APP_H
 
 #ifdef RMLUI_PLATFORM_WIN32
-#include <windows.h>
+	#include <windows.h>
 #endif
-
 #ifdef IOS
 	#import <UIKit/UIKit.h>
 #endif
-
 #define SDL_MAIN_HANDLED
+#include <string.h>
 #include <SDL.h>
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
@@ -47,7 +46,6 @@
 #include "SystemInterface.h"
 #include "RenderInterface.h"
 
-#include <string.h>
 
 class App
 {
@@ -60,11 +58,11 @@ public:
 	
 	static SDL_Window* mSdlWindow;
 	static SDL_Renderer* mSdlRenderer;
+	static FileInterface* mFileInterface;
+    static SystemInterface* mSystemInterface;
+    static RenderInterface* mRenderInterface;
 	static Rml::Context* mRmlContext;
-    static RmlFileInterface* mRmlFileInterface;
-    static RmlSystemInterface* mRmlSystemInterface;
-    static RmlRenderInterface* mRmlRenderInterface;
-    static Rml::String mFile;
+	static Rml::String mFile;
     static Rml::String mTitle;
     static int mX;
     static int mY;
@@ -81,8 +79,8 @@ public:
 }
 
 @property (nonatomic, retain) UIWindow *_window;
-- (void)updateScene;
+	- (void)updateScene;
 @end
 #endif //ISO
 
-#endif
+#endif //APP_H

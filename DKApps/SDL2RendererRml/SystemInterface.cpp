@@ -29,7 +29,7 @@
 #include "SystemInterface.h"
 #include <RmlUi/Core.h>
 
-Rml::Input::KeyIdentifier RmlSystemInterface::TranslateKey(SDL_Keycode sdlkey)
+Rml::Input::KeyIdentifier SystemInterface::TranslateKey(SDL_Keycode sdlkey)
 {
     using namespace Rml::Input;
 
@@ -370,7 +370,7 @@ Rml::Input::KeyIdentifier RmlSystemInterface::TranslateKey(SDL_Keycode sdlkey)
     }
 }
 
-int RmlSystemInterface::TranslateMouseButton(Uint8 button)
+int SystemInterface::TranslateMouseButton(Uint8 button)
 {
     switch(button)
     {
@@ -385,7 +385,7 @@ int RmlSystemInterface::TranslateMouseButton(Uint8 button)
     }
 }
 
-int RmlSystemInterface::GetKeyModifiers()
+int SystemInterface::GetKeyModifiers()
 {
     SDL_Keymod sdlMods = SDL_GetModState();
 
@@ -403,12 +403,12 @@ int RmlSystemInterface::GetKeyModifiers()
     return retval;
 }
 
-double RmlSystemInterface::GetElapsedTime()
+double SystemInterface::GetElapsedTime()
 {
 	return double(SDL_GetTicks()) / 1000.0;
 }
 
-bool RmlSystemInterface::LogMessage(Rml::Log::Type type, const Rml::String& message)
+bool SystemInterface::LogMessage(Rml::Log::Type type, const Rml::String& message)
 {
 	Rml::String Type;
 

@@ -29,16 +29,16 @@
 #include "FileInterface.h"
 #include <stdio.h>
 
-RmlFileInterface::RmlFileInterface(const Rml::String& root) : root(root)
+FileInterface::FileInterface(const Rml::String& root) : root(root)
 {
 }
 
-RmlFileInterface::~RmlFileInterface()
+FileInterface::~FileInterface()
 {
 }
 
 // Opens a file.
-Rml::FileHandle RmlFileInterface::Open(const Rml::String& path)
+Rml::FileHandle FileInterface::Open(const Rml::String& path)
 {
 	// Attempt to open the file relative to the application's root.
 	FILE* fp = fopen((root + path).c_str(), "rb");
@@ -51,25 +51,25 @@ Rml::FileHandle RmlFileInterface::Open(const Rml::String& path)
 }
 
 // Closes a previously opened file.
-void RmlFileInterface::Close(Rml::FileHandle file)
+void FileInterface::Close(Rml::FileHandle file)
 {
 	fclose((FILE*) file);
 }
 
 // Reads data from a previously opened file.
-size_t RmlFileInterface::Read(void* buffer, size_t size, Rml::FileHandle file)
+size_t FileInterface::Read(void* buffer, size_t size, Rml::FileHandle file)
 {
 	return fread(buffer, 1, size, (FILE*) file);
 }
 
 // Seeks to a point in a previously opened file.
-bool RmlFileInterface::Seek(Rml::FileHandle file, long offset, int origin)
+bool FileInterface::Seek(Rml::FileHandle file, long offset, int origin)
 {
 	return fseek((FILE*) file, offset, origin) == 0;
 }
 
 // Returns the current position of the file pointer.
-size_t RmlFileInterface::Tell(Rml::FileHandle file)
+size_t FileInterface::Tell(Rml::FileHandle file)
 {
 	return ftell((FILE*) file);
 }

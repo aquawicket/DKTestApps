@@ -34,7 +34,7 @@
 #include <RmlUi/Core/Input.h>
 
 
-class RmlSystemInterface : public Rml::SystemInterface
+class SystemInterface : public Rml::SystemInterface
 {
 public:
     Rml::Input::KeyIdentifier TranslateKey(SDL_Keycode sdlkey);

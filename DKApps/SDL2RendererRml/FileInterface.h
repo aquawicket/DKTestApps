@@ -38,11 +38,11 @@
 #include <RmlUi/Core/FileInterface.h>
 
 
-class RmlFileInterface : public Rml::FileInterface
+class FileInterface : public Rml::FileInterface
 {
 public:
-	RmlFileInterface(const Rml::String& root);
-	virtual ~RmlFileInterface();
+	FileInterface(const Rml::String& root);
+	virtual ~FileInterface();
 
 	static Rml::String FindSamplesRoot(Rml::String& argv_file);
 
