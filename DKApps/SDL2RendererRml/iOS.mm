@@ -9,17 +9,21 @@
     NSDictionary *info = [bundle infoDictionary];
     NSString *prodName = [info objectForKey:@"CFBundleExecutable"];
     std::string appname = std::string([prodName UTF8String]);
+    printf("appname = %s\n", appname.c_str());
     NSString *epath = [[NSBundle mainBundle] executablePath];
     std::string exe_path = std::string([epath UTF8String]); //NSString to std::string
-
+    exe_path = exe_path.substr(0, exe_path.find_last_of("/\\"));
+    
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 	NSString *sourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Populator"];
 	NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"Files"];
 	NSLog(@"Source Path: %@\n Documents Path: %@ \n Folder Path: %@", sourcePath, documentsDirectory, folderPath);
     
-    //DKFile::appfilename = "/Users/aquawicket/Desktop/digitalknob/DKApps/"+appname+"/iossim32/Release-iphonesimulator/"+appname+".app/"+appname;
-	
-    App app;//(0,0);  //argc, argv);
+
+    App app; //argc, argv);
+    App::file = exe_path+"/assets/demo.rml";
+    printf("appname = %s\n", appname.c_str());
+    printf("App::file = %s\n", App::file.c_str());
     App::init();
 	App::active = true;
     
