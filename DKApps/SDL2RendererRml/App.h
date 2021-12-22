@@ -61,12 +61,12 @@ public:
 	
 	static Rml::String file;
 	static Rml::String mTitle;
-	static SDL_Window* mWindow;
-	static SDL_Renderer* mRenderer;
-	static Rml::Context* mContext;
-    static RmlUiSDL2Renderer* Renderer;
-    static FileInterfaceSDL2* FileInterface;
-    static RmlUiSDL2SystemInterface* SystemInterface;
+	static SDL_Window* mSdlWindow;
+	static SDL_Renderer* mSdlRenderer;
+	static Rml::Context* mRmlContext;
+    static RmlUiSDL2Renderer* mRmlRenderer;
+    static FileInterfaceSDL2* mRmlFileInterface;
+    static RmlUiSDL2SystemInterface* mRmlSystemInterface;
     static int window_x;
     static int window_y;
 	static int window_width;
