@@ -1,24 +1,14 @@
-DKDEPEND(xquartz)
-DKDEPEND(libx11-dev)
-DKDEPEND(shlwapi.lib)
+DKDEPEND(xquartz)          # mac, ios
+DKDEPEND(libx11-dev)       # linux
+DKDEPEND(shlwapi.lib)      # win
 DKDEPEND(zlib)
 DKDEPEND(giflib)
 DKDEPEND(libpng)
 DKDEPEND(libjpeg-turbo)
 DKDEPEND(libwebp)
 DKDEPEND(tiff)
-DKDEPEND(glew)
+DKDEPEND(glew)             #win, ma, linux
 DKDEPEND(sdl2)
 DKDEPEND(sdl2_image)
 DKDEPEND(rmlui)
-DKDEPEND(mobile_core_services)
-file(GLOB_RECURSE RES_FILES "${DKPROJECT}/Samples/*")
-
-if(DEBUG)
-	dk_makeDirectory(${DKPROJECT}/${OS}/${DEBUG_DIR}/${APP_NAME}.app/assets)
-	DKCOPY(${DKPROJECT}/Samples/ ${DKPROJECT}/${OS}/${DEBUG_DIR}/${APP_NAME}.app/Samples TRUE)
-endif()
-if(RELEASE)
-	dk_makeDirectory(${DKPROJECT}/${OS}/${RELEASE_DIR}/${APP_NAME}.app/assets)
-	DKCOPY(${DKPROJECT}/Samples/ ${DKPROJECT}/${OS}/${RELEASE_DIR}/${APP_NAME}.app/Samples TRUE)
-endif()
+#DKDEPEND(mobile_core_services) #iOS
