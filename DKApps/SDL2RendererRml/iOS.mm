@@ -1,3 +1,4 @@
+/*
 #ifdef IOS
 #import "App.h"
 
@@ -15,12 +16,11 @@
     exePath = exePath.substr(0, exePath.find_last_of("/\\"));
     //printf("exe_path = %s\n", exe+path.c_str());
     
-    /*
-    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-	NSString *sourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Populator"];
-	NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"Files"];
-	NSLog(@"Source Path: %@\n Documents Path: %@ \n Folder Path: %@", sourcePath, documentsDirectory, folderPath);
-    */
+    
+    //NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+	//NSString *sourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Populator"];
+	//NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"Files"];
+	//NSLog(@"Source Path: %@\n Documents Path: %@ \n Folder Path: %@", sourcePath, documentsDirectory, folderPath);
 
     App app;
     App::mFile = exePath+"/assets/demo.rml";
@@ -66,3 +66,4 @@
 
 @end
 #endif //IOS
+*/

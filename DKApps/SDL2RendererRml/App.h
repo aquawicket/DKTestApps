@@ -72,7 +72,7 @@ public:
 };
 
 
-
+/*
 #ifdef IOS
 @interface iphoneViewerAppDelegate : NSObject <UIApplicationDelegate, UIAccelerometerDelegate>{
 	UIAccelerationValue        accel[3];
@@ -82,5 +82,5 @@ public:
 	- (void)updateScene;
 @end
 #endif //ISO
-
+*/
 #endif //APP_H

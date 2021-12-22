@@ -62,13 +62,7 @@ void App::init()
 		printf("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed: %s\n", SDL_GetError());
 
     //SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-    int flags;
-#ifdef IOS
-    flags = SDL_WINDOW_OPENGL;
-#else
-    flags = SDL_WINDOW_RESIZABLE;
-#endif
-	SDL_Window* sdlWindow = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer", mX, mY, mWidth, mHeight, flags);
+	SDL_Window* sdlWindow = SDL_CreateWindow("RmlUi SDL2 with SDL_Renderer", mX, mY, mWidth, mHeight, SDL_WINDOW_RESIZABLE);
 	if (!sdlWindow)
 		printf("SDL_Window* invalid: %s\n", SDL_GetError());
 	mSdlWindow = sdlWindow;
@@ -135,10 +129,10 @@ void App::init()
 		fprintf(stdout, "Document is nullptr\n");
 	}
 	mActive = true;
-#ifndef IOS
+//#ifndef IOS
 	loop();
 	exit();
-#endif
+//#endif
 }
 
 
@@ -256,17 +250,17 @@ void App::exit()
 
 int main(int argc, char** argv)
 {
-#ifdef IOS
-	@autoreleasepool{
-		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
-	}
-#else
+//#ifdef IOS
+//	@autoreleasepool{
+//		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
+//	}
+//#else
 	App app;
 	if (argc > 1)
 	{
 		App::mFile = argv[1];
 	}
 	App::init();
-#endif
+//#endif
 	return 0;
 }
