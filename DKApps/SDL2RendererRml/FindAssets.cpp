@@ -45,7 +45,7 @@
 #endif
 #include <sys/stat.h>
 
-Rml::String FileInterface::FindSamplesRoot(Rml::String& argv_file)
+Rml::String FileInterface::FindAssets(Rml::String& argv_file)
 {
 	if (!argv_file.empty()) {
 		struct stat buff;
@@ -93,7 +93,7 @@ Rml::String FileInterface::FindSamplesRoot(Rml::String& argv_file)
 	basePath = Rml::StringUtilities::Replace(basePath, '\\', '/'); //normalize windows backslashes 
 
 	for (unsigned int i = 0; i < 15; i++) { //Start at the top and go back N levels in search of our assets location
-		Rml::String tryPath = basePath + "Samples";
+		Rml::String tryPath = basePath;
 
 #ifdef RMLUI_PLATFORM_WIN32
 		Rml::String realPath;

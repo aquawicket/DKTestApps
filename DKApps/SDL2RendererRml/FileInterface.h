@@ -44,7 +44,7 @@ public:
 	FileInterface(const Rml::String& root);
 	virtual ~FileInterface();
 
-	static Rml::String FindSamplesRoot(Rml::String& argv_file);
+	static Rml::String FindAssets(Rml::String& argv_file);
 
 	/// Opens a file.		
 	Rml::FileHandle Open(const Rml::String& path) override;

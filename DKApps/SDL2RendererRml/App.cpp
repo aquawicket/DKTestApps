@@ -88,7 +88,7 @@ void App::init()
 	mTitle = Rml::String("SDL_Renderer RmlUi - " + rendererName);
 	SDL_SetWindowTitle(sdlWindow, mTitle.c_str());
 
-    mFileInterface = new FileInterface( FileInterface::FindSamplesRoot(App::mFile) );
+    mFileInterface = new FileInterface( FileInterface::FindAssets(App::mFile) );
     Rml::SetFileInterface(mFileInterface);
     
     mSystemInterface = new SystemInterface;
