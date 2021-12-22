@@ -91,7 +91,6 @@ void App::init()
 	if (!renderer)
 		printf("renderer invalid: %s\n", SDL_GetError());
 	mRenderer = renderer;
-//#endif
     
 	SDL_RendererInfo info;
 	if (SDL_GetRendererInfo(mRenderer, &info) < 0)
@@ -103,12 +102,13 @@ void App::init()
 	mTitle = Rml::String("SDL_Renderer RmlUi - " + renderer_name);
 	SDL_SetWindowTitle(sdl_window, mTitle.c_str());
 
-	RmlUiSDL2Renderer Renderer(mRenderer, mWindow);
+	//RmlUiSDL2Renderer Renderer(mRenderer, mWindow);
+    Renderer = new RmlUiSDL2Renderer(mRenderer, mWindow);
 
 	FileInterfaceSDL2 FileInterface(FileInterfaceSDL2::FindSamplesRoot(App::file));
 	Rml::SetFileInterface(&FileInterface);
 	
-	Rml::SetRenderInterface(&Renderer);
+	Rml::SetRenderInterface(Renderer);
 	Rml::SetSystemInterface(&mSystemInterface);
 
 	if (!Rml::Initialise())
@@ -150,8 +150,10 @@ void App::init()
 		fprintf(stdout, "Document is nullptr\n");
 	}
 	App::active = true;
+//#ifndef IOS
 	App::loop();
 	App::exit();
+//#endif
 }
 
 
@@ -198,7 +200,7 @@ void App::do_frame()
 	}
 	
 	draw_background(mRenderer, window_width, window_height);
-	mContext->Render();
+	App::mContext->Render();
 	SDL_RenderPresent(mRenderer);
 
 	while (SDL_PollEvent(&event))
@@ -269,18 +271,18 @@ void App::exit()
 
 int main(int argc, char** argv)
 {
+/*
 #ifdef IOS
 	@autoreleasepool{
 		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
 	}
 #else
+ */
 	App app();
-
 	if (argc > 1){
 		App::file = argv[1];
 	}
-
 	App::init();
-#endif
+//#endif
 	return 0;
 }

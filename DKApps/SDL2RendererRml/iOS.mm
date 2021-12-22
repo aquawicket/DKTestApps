@@ -22,36 +22,18 @@
 	NSLog(@"Source Path: %@\n Documents Path: %@ \n Folder Path: %@", sourcePath, documentsDirectory, folderPath);
     */
 
-    App app; //argc, argv);
+    App app;
     App::file = exe_path+"/assets/demo.rml";
-    printf("App::file = %s\n", App::file.c_str());
     App::init();
-	App::active = true;
-    
-	//DKStringArray classes;
-	//DKClass::GetClassList(classes);
-	//for(int i=0; i<classes.size(); i++){
-	//	DKINFO(classes[i]+"\n");
-	//}
 
-	//Attempt to preload these
-	//DKClass::DKCreate("DKAssets");
-	//DKClass::DKCreate("DKDuktape");
-
-	//DKObject* app = DKClass::DKCreate("App"); //App.h/App.cpp (user code)
-	//dkapp.Init();
-    
-    //DKApp dkapp(0,0);//argc, argv);
-    //DKApp::Init();
-    //DKApp::Loop();
 		
     [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:@selector(updateScene) userInfo:nil repeats:YES];
 }
 
 - (void)updateScene
 {
-    while(App::active){
-		App::loop();
+    if(App::active){
+        App::do_frame();
 	}
 }
 
