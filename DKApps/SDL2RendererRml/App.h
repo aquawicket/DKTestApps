@@ -43,9 +43,9 @@
 #include <RmlUi/Core/Input.h>
 #include <RmlUi/Debugger/Debugger.h>
 
-#include "FileInterfaceSDL2.h"
-#include "SystemInterfaceSDL2.h"
-#include "RenderInterfaceSDL2.h"
+#include "FileInterface.h"
+#include "SystemInterface.h"
+#include "RenderInterface.h"
 
 #include <string.h>
 
