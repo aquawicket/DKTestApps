@@ -32,20 +32,20 @@
 #ifdef RMLUI_PLATFORM_WIN32
 	#include <windows.h>
 #endif
+/*
 #ifdef IOS
-//	#import <UIKit/UIKit.h>
+	#import <UIKit/UIKit.h>
+	#define SDL_MAIN_HANDLED
 #endif
-//#define SDL_MAIN_HANDLED
+*/
 #include <string.h>
 #include <SDL.h>
 #include <RmlUi/Core.h>
 #include <RmlUi/Core/Input.h>
 #include <RmlUi/Debugger/Debugger.h>
-
 #include "FileInterface.h"
 #include "SystemInterface.h"
 #include "RenderInterface.h"
-
 
 class App
 {
@@ -83,4 +83,5 @@ public:
 @end
 #endif //ISO
 */
+
 #endif //APP_H
