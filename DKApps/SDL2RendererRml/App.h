@@ -33,9 +33,9 @@
 	#include <windows.h>
 #endif
 #ifdef IOS
-	#import <UIKit/UIKit.h>
+//	#import <UIKit/UIKit.h>
 #endif
-#define SDL_MAIN_HANDLED
+//#define SDL_MAIN_HANDLED
 #include <string.h>
 #include <SDL.h>
 #include <RmlUi/Core.h>

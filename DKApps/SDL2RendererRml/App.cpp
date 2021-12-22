@@ -57,7 +57,7 @@ void App::init()
 #ifdef RMLUI_PLATFORM_WIN32
 	//AllocConsole();
 #endif
-    SDL_SetMainReady(); //Bypass SDLmain  //https://wiki.libsdl.org/SDL_SetMainReady
+    //SDL_SetMainReady(); //Bypass SDLmain  //https://wiki.libsdl.org/SDL_SetMainReady
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		printf("ERROR: SDL_Init( SDL_INIT_VIDEO ) failed: %s\n", SDL_GetError());
 
