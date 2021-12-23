@@ -106,6 +106,8 @@ void App::init()
 		{ "NotoEmoji-Regular.ttf",    true  },
 	};
 
+	OnScreenText::Init(mSdlRenderer);
+
 	for (const FontFace& face : font_faces) {
 		Rml::LoadFontFace("assets/" + face.filename, face.fallback_face);
 	}
@@ -127,8 +129,6 @@ void App::init()
 	else {
 		fprintf(stdout, "Document is nullptr\n");
 	}
-
-	OnScreenText* ost = new OnScreenText(mSdlRenderer);
 
 	mActive = true;
 //#ifndef IOS
@@ -182,6 +182,7 @@ void App::do_frame()
 	
 	draw_background(mSdlRenderer, mWidth, mHeight);
 	mRmlContext->Render();
+	OnScreenText::Draw("label", "Test Text", 100, 100);
 	SDL_RenderPresent(mSdlRenderer);
 
 	while (SDL_PollEvent(&event))
