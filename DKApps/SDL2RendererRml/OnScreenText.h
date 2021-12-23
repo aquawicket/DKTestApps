@@ -3,17 +3,21 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <string>
 
 class OnScreenText
 {
-	OnScreenText(SDL_Window* sdlWindow);
+public:
+	OnScreenText(SDL_Renderer* sdlRenderer);
+	~OnScreenText();
 	bool SetText(const std::string& text);
-	
-	SDL_Window* mSdlWindow;
-	TTF_Font* mFont;
-	SDL_Texture* mSdlTexture;
+	void Render();
+
+	SDL_Renderer* mSdlRenderer;
 	SDL_Surface* mSdlSurface;
+	SDL_Texture* mSdlTexture;	
 	SDL_Color mColor;
+	TTF_Font* mFont;
 };
 
 #endif

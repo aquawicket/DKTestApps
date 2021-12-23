@@ -29,7 +29,7 @@
 #include "App.h"
 #include "Framerate.h"
 #include <fstream>
-
+#include "OnScreenText.h"
 
 bool App::mActive;
 Rml::String App::mFile;
@@ -127,6 +127,9 @@ void App::init()
 	else {
 		fprintf(stdout, "Document is nullptr\n");
 	}
+
+	OnScreenText* ost = new OnScreenText(mSdlRenderer);
+
 	mActive = true;
 //#ifndef IOS
 	loop();
@@ -201,7 +204,7 @@ void App::do_frame()
 			break;
 
 		case SDL_MOUSEWHEEL:
-			mRmlContext->ProcessMouseWheel(float(event.wheel.y), mSystemInterface->GetKeyModifiers());
+			mRmlContext->ProcessMouseWheel(float(-event.wheel.y), mSystemInterface->GetKeyModifiers());
 			break;
 
 		case SDL_KEYDOWN:

@@ -1,26 +1,36 @@
 #include "OnScreenText.h"
 #include <FileInterface.h>
 
-OnScreenText::OnScreenText(SDL_Window* sdlWindow)
+OnScreenText::OnScreenText(SDL_Renderer* sdlRenderer)
 {
+	mSdlRenderer = sdlRenderer;
 	TTF_Init();
-	std::string file = FileInterface::root+"arial.ttf";
-	font = TTF_OpenFont(file.c_str(), 20);
-    color.r = 100;
-    color.g = 100;
-    color.b = 255;
+	std::string file = FileInterface::mRoot+"assets/NotoEmoji-Regular.ttf";
+	mFont = TTF_OpenFont(file.c_str(), 20);
+	if (!mFont) {
+		printf("Error: could not load font %s\n", file.c_str());
+		return;
+	}
+    mColor.r = 100;
+    mColor.g = 100;
+    mColor.b = 255;
 	SetText(std::string("Test String"));
+}
+
+OnScreenText::~OnScreenText()
+{
+	//TODO: cleanup
 }
 
 bool OnScreenText::SetText(const std::string& text)
 {
-	SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
-	mSdlTexture = SDL_CreateTextureFromSurface(mSdlWindow->renderer, mSdlSurface);
+	mSdlSurface = TTF_RenderText_Solid(mFont, text.c_str(), mColor);
+	mSdlTexture = SDL_CreateTextureFromSurface(mSdlRenderer, mSdlSurface);
 	SDL_FreeSurface(mSdlSurface);
 	return true;
 }
 
-void DKSDLText::Render()
+void OnScreenText::Render()
 {
 	//DEBUG CODE
 	/*
@@ -41,12 +51,12 @@ void DKSDLText::Render()
 	//DKUtil::GetFps(fps);
 	//DKString fpsString = toString(fps)+"fps";
 	//SetText(fpsString);
-	int texW = 0;
-	int texH = 0;
-	SDL_QueryTexture(mSdlTexture, NULL, NULL, &texW, &texH);
-	int left = 5;
-	int top = mSdlWindow->height - texH;
-	SDL_Rect outRect = {left, top, texW, texH};
-	SDL_RenderCopy(mSdlWindow->renderer, mSdlTexture, NULL, &outRect);
+	int x = 10;
+	int y = 10;
+	int w;
+	int h;
+	SDL_QueryTexture(mSdlTexture, NULL, NULL, &w, &h);
+	SDL_Rect outRect = {x, y, w, h};
+	SDL_RenderCopy(mSdlRenderer, mSdlTexture, NULL, &outRect);
 	//SDL_DestroyTexture(mSdlTexture);
 }
