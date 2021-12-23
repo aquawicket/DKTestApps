@@ -66,7 +66,7 @@ void App::init()
 		printf("SDL_Window* invalid: %s\n", SDL_GetError());
 	mSdlWindow = sdlWindow;
 
-    SDL_Renderer* sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, 0);//SDL_RENDERER_ACCELERATED/* | SDL_RENDERER_PRESENTVSYNC*/);
+    SDL_Renderer* sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED/* | SDL_RENDERER_PRESENTVSYNC*/);
 	if (!sdlRenderer)
 		printf("SDL renderer invalid: %s\n", SDL_GetError());
 	mSdlRenderer = sdlRenderer;
@@ -142,7 +142,7 @@ void App::loop()
 {
 	while (mActive)
 	{
-		Framerate::LimitFramerate(120);
+		Framerate::LimitFramerate(60);
 		do_frame();
 	}
 }
@@ -182,7 +182,18 @@ void App::do_frame()
 	
 	draw_background(mSdlRenderer, mWidth, mHeight);
 	mRmlContext->Render();
-	OnScreenText::Draw("label", "Test Text", 100, 100);
+
+	Uint8 r, g, b, a;
+	SDL_GetRenderDrawColor(mSdlRenderer, &r, &g, &b, &a);
+	SDL_SetRenderDrawColor(mSdlRenderer, 0, 0, 0, 180);
+	SDL_SetRenderDrawBlendMode(mSdlRenderer, SDL_BLENDMODE_BLEND);
+	SDL_Rect rect = { mWidth-100, 3, 80, 30 };
+	SDL_RenderFillRect(mSdlRenderer, &rect);
+	SDL_SetRenderDrawBlendMode(mSdlRenderer, SDL_BLENDMODE_NONE);
+	SDL_SetRenderDrawColor(mSdlRenderer, r, g, b, a);
+	OnScreenText::Draw("label", std::to_string(Framerate::GetFps())+"fps", (mWidth - 90), 5);
+
+
 	SDL_RenderPresent(mSdlRenderer);
 
 	while (SDL_PollEvent(&event))
@@ -236,8 +247,8 @@ void App::do_frame()
 	mRmlContext->Update();
 
 	// update framerate in the window Titlebar
-	Rml::String title = mTitle + " : " + std::to_string(Framerate::GetFps()) + "fps";
-	SDL_SetWindowTitle(mSdlWindow, title.c_str());
+	//Rml::String title = mTitle + " : " + std::to_string(Framerate::GetFps()) + "fps";
+	//SDL_SetWindowTitle(mSdlWindow, title.c_str());
 }
 
 void App::exit() 
