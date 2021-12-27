@@ -1,1 +1,2 @@
+#DKAPP
 DKDEPEND(DK)
