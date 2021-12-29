@@ -8,6 +8,8 @@ else {
 }
 
 android {
+	ndkVersion "22.1.7171670"
+	ndkPath "C:/Users/Administrator/digitalknob/DK/3rdParty/android-sdk/ndk/22.1.7171670"
     compileSdkVersion 26
     defaultConfig {
         if (buildAsApplication) {
