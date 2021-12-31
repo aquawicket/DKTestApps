@@ -8,6 +8,7 @@ else {
 }
 
 android {
+    ndkVersion "22.1.7171670"
     compileSdkVersion 26
     defaultConfig {
         if (buildAsApplication) {
