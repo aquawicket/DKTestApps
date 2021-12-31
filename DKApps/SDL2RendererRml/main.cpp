@@ -10,19 +10,8 @@ int main(int argc, char** argv)
 #ifndef IOS
 	SDL_SetMainReady();
 #endif	
-	
-//#ifdef IOS
-//	@autoreleasepool{
-//		return UIApplicationMain(argc, argv, nil, @"iphoneViewerAppDelegate");
-//	}
-//#else
-	
-	if (argc > 1){
+	if (argc > 1)
 		App::mFile = argv[1];
-	}
 	App::init();
-	
-//#endif
-
 	return 0;
 }

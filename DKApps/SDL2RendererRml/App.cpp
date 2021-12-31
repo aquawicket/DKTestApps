@@ -131,10 +131,8 @@ void App::init()
 	}
 
 	mActive = true;
-//#ifndef IOS
 	loop();
 	exit();
-//#endif
 }
 
 

@@ -65,17 +65,4 @@ public:
 	static bool mActive;
 };
 
-
-/*
-#ifdef IOS
-@interface iphoneViewerAppDelegate : NSObject <UIApplicationDelegate, UIAccelerometerDelegate>{
-	UIAccelerationValue        accel[3];
-}
-
-@property (nonatomic, retain) UIWindow *_window;
-	- (void)updateScene;
-@end
-#endif //ISO
-*/
-
 #endif //APP_H
