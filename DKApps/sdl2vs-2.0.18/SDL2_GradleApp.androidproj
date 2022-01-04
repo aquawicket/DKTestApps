@@ -83,6 +83,7 @@
       <ProjectDirectory>$(ProjectDir)app</ProjectDirectory>
       <GradlePlugin>gradle:4.2.2</GradlePlugin>
       <GradleVersion>6.7.1</GradleVersion>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">--stacktrace</AdditionalOptions>
     </GradlePackage>
   </ItemDefinitionGroup>
   <ImportGroup Label="ExtensionSettings" />
