@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.4.1)
-set(SDL2 C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2-2.0.18)
-set(SDL2_TTF C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2_ttf-2.0.15)
+set(SDL2 C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2-main)
+set(SDL2_TTF C:/Users/Administrator/digitalknob/DK/3rdParty/SDL2_ttf-main)
 set(FREETYPE C:/Users/Administrator/digitalknob/DK/3rdParty/freetype-2.5.5)
 
 include_directories(${SDL2}/include)
