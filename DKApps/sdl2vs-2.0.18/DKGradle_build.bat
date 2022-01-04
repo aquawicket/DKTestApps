@@ -1,17 +1,26 @@
 @echo off
 if not defined in_subprocess (cmd /k set in_subprocess=y ^& %0 %*) & exit )
 
+::kill java.exe if it's running
+taskkill /IM "java.exe" /F
+
 set "DIGITALKNOB=C:\Users\%USERNAME%\digitalknob"
 set "SDKMANAGER=%DIGITALKNOB%\DK\3rdParty\android-sdk\tools\bin\sdkmanager.bat"
 set "JDK=%DIGITALKNOB%\DK\3rdParty\openjdk-9.0.4_windows-x64_bin"
 set "GOOGLE_CERT=%JDK%\google.cer"
 set "MAVEN_CERT=%JDK%\maven.cer"
+set "KEYTOOL_EXE=%JDK%\bin\keytool.exe"
+set "CACERTS=%JDK%\lib\security\cacerts"
+if exist "C:\Windows\System32\openssl.exe" set "OPENSSL_EXE=C:\Windows\System32\openssl.exe"
+if exist "C:\Windows\System32\OpenSSL-win32\bin\openssl.exe" set "OPENSSL_EXE=C:\Windows\System32\OpenSSL-win32\bin\openssl.exe"
+if exist "C:\Program Files (x86)\OpenSSL-win32\bin\openssl.exe" set "OPENSSL_EXE=C:\Program Files (x86)\OpenSSL-win32\bin\openssl.exe"
+if exist "C:\Program Files\OpenSSL-Win64\bin\openssl.exe" set "OPENSSL_EXE=C:\Program Files\OpenSSL-Win64\bin\openssl.exe"
 
-//kill java.exe if it's running
-taskkill /IM "java.exe" /F
 
 :: sign the licenses
-"%SDKMANAGER%" --licenses
+::"%SDKMANAGER%" --licenses
+
+::echo press and key to continue or wait 5 seconds... && timeout /t 5 > nul
 
 :: create and import the google.cer key
 echo -n | "%OPENSSL_EXE%" s_client -connect google.com:443 | "%OPENSSL_EXE%" x509 > "%GOOGLE_CERT%"
