@@ -6,19 +6,16 @@ taskkill /IM "java.exe" /F
 
 set "DIGITALKNOB=C:\Users\%USERNAME%\digitalknob"
 set "SDKMANAGER=%DIGITALKNOB%\DK\3rdParty\android-sdk\tools\bin\sdkmanager.bat"
-set "JDK=%DIGITALKNOB%\DK\3rdParty\openjdk-8u41-b04-windows-i586-14_jan_2020"
-::set "JDK=%DIGITALKNOB%\DK\3rdParty\openjdk-9.0.4_windows-x64_bin"
-set "GOOGLE_CERT=%JDK%\google.cer"
-set "MAVEN_CERT=%JDK%\maven.cer"
-set "KEYTOOL_EXE=%JDK%\bin\keytool.exe"
-set "CACERTS=%JDK%\lib\security\cacerts"
+set "GOOGLE_CERT=%JAVA_HOME%\google.cer"
+set "MAVEN_CERT=%JAVA_HOME%\maven.cer"
+set "KEYTOOL_EXE=%JAVA_HOME%\bin\keytool.exe"
+set "CACERTS=%JAVA_HOME%\lib\security\cacerts"
 if exist "C:\Program Files (x86)\OpenSSL-win32\bin\openssl.exe" set "OPENSSL_EXE=C:\Program Files (x86)\OpenSSL-win32\bin\openssl.exe"
 if exist "C:\Program Files\OpenSSL-Win64\bin\openssl.exe" set "OPENSSL_EXE=C:\Program Files\OpenSSL-Win64\bin\openssl.exe"
 
 if not exist "%DIGITALKNOB%/DK/3rdParty/android-sdk/licenses" (
 	"%SDKMANAGER%" --licenses
 )
-
 
 if not exist "%DIGITALKNOB%/DKTestApps/DKApps/sdl2vs-2.0.18/app/.cxx/cmake" (
 	:: create and import the google.cer key
@@ -31,5 +28,3 @@ if not exist "%DIGITALKNOB%/DKTestApps/DKApps/sdl2vs-2.0.18/app/.cxx/cmake" (
 )
 
 gradlew build --info
-
-echo press and key to continue or wait 5 seconds... && timeout /t 5 > nul
