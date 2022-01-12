@@ -12,8 +12,6 @@ set "GOOGLE_CERT=%JDK%\google.cer"
 set "MAVEN_CERT=%JDK%\maven.cer"
 set "KEYTOOL_EXE=%JDK%\bin\keytool.exe"
 set "CACERTS=%JDK%\lib\security\cacerts"
-if exist "C:\Windows\System32\openssl.exe" set "OPENSSL_EXE=C:\Windows\System32\openssl.exe"
-if exist "C:\Windows\System32\OpenSSL-win32\bin\openssl.exe" set "OPENSSL_EXE=C:\Windows\System32\OpenSSL-win32\bin\openssl.exe"
 if exist "C:\Program Files (x86)\OpenSSL-win32\bin\openssl.exe" set "OPENSSL_EXE=C:\Program Files (x86)\OpenSSL-win32\bin\openssl.exe"
 if exist "C:\Program Files\OpenSSL-Win64\bin\openssl.exe" set "OPENSSL_EXE=C:\Program Files\OpenSSL-Win64\bin\openssl.exe"
 
