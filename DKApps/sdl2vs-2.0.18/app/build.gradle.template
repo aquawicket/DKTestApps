@@ -54,6 +54,7 @@ android {
 				dimension "abi"
 				ndk.abiFilters 'armeabi-v7a'
 			}
+			/*
 			arm8 {
 				dimension "abi"
 				ndk.abiFilters 'arm64-v8a'
@@ -66,6 +67,7 @@ android {
 				dimension "abi"
 				ndk.abiFilters 'x86_64'
 			}
+			*/
 		}
     }
     lintOptions {
