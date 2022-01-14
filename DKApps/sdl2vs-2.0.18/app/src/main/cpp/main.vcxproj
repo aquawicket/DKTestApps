@@ -132,13 +132,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2-2.0.16\include;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15\include;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_image-2.0.5\include;C:\Users\Administrator\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Sysroot)\usr\include;$(StlIncludeDirectories)%(AdditionalIncludeDirectories);$(SDL2)\include;$(SDL2_ttf)\include;$(SDL2_image)\include;$(SDL2_ttf)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ToolchainPrebuiltPath)\lib\gcc\$(ToolchainName)\$(ToolchainFullVersionName)\$(PlatformShortName);$(StlLibraryPath);$(SolutionDir)$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
       <LibraryDependencies>$(StlLibraryName);%(LibraryDependencies);m;dl;GLESv1_CM;GLESv2;OpenSLES;log;android</LibraryDependencies>
-      <AdditionalDependencies>$(USERPROFILE)\digitalknob\DK\3rdParty\SDL2-2.0.16\android32\$(Configuration)\libSDL2.a;$(USERPROFILE)\digitalknob\DK\3rdParty\SDL2_ttf-2.0.15\android32\lib\$(Configuration)\SDL_ttf.a;$(USERPROFILE)\digitalknob\DK\3rdParty\freetype-2.5.5\android32\$(Configuration)\libfreetype.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SDL2)\android32\$(Configuration)\libSDL2.a;$(SDL2_ttf)\android32\lib\$(Configuration)\SDL_ttf.a;$(FREETYPE)\android32\$(Configuration)\libfreetype.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
