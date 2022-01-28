@@ -3,7 +3,7 @@
 #else
 	#include "SDL_main.h"
 #endif
-#include <App.h>
+#include "App.h"
 
 int main(int argc, char** argv)
 {
