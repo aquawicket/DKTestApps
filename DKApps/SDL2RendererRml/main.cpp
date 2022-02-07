@@ -1,4 +1,4 @@
-#ifndef IOS
+#if !IOS && !ANDROID
 	#define SDL_MAIN_HANDLED
 #else
 	#include "SDL_main.h"
@@ -7,11 +7,13 @@
 
 int main(int argc, char** argv)
 {
-#ifndef IOS
+#if !IOS && !ANDROID
 	SDL_SetMainReady();
 #endif	
 	if (argc > 1)
 		App::mFile = argv[1];
+	
+	//App::mFile = "/mnt/sdcard/Android/data/com.package.name/assets/demo.rml";
 	App::init();
 	return 0;
 }
