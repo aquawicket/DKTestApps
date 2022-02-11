@@ -80,8 +80,8 @@ SDL_Texture* GetGifAnimation(const Rml::TextureHandle texture)
         g->delay = g->anim->delays[g->current_frame];
         g->currentTime = SDL_GetTicks();  //FIXME: USE SDL_GetTicks64 if avalable
 
-		// FIXME: imprecise timer arythmatic here. Causing animations to drop to half speed 
-		// on slower systems. The animation should not slow, but appear choppy at the same realative speed.
+		// FIXME: imprecise timer arithmetic here. Causing animations to drop to half speed
+		// on slower systems. The animation should not slow, but appear choppy at the same relative speed.
         if (g->currentTime > g->lastTime + g->delay) 
         {
             g->lastTime = g->currentTime;

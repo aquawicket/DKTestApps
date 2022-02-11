@@ -58,7 +58,7 @@ void OnScreenText::Render(const int& i)
 	SDL_RenderCopy(mSdlRenderer, mOsText[i].mSdlTexture, NULL, &mOsText[i].rect);
 }
 
-//Single funtion to create and draw within a render loop.
+//Single function to create and draw within a render loop.
 void OnScreenText::Draw(const std::string& label, std::string text, const int x, const int y)
 {
 	for (unsigned int i = 0; i < mOsText.size(); ++i) {
@@ -74,6 +74,8 @@ void OnScreenText::Draw(const std::string& label, std::string text, const int x,
 		}
 	}
 	int n = Create(label, text, x, y);
+	if(n < 0)
+		return;
 	if (mOsText[n].mSdlTexture)
 		Render(n);
 }
