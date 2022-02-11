@@ -9,11 +9,10 @@ int main(int argc, char** argv)
 {
 #if !IOS && !ANDROID
 	SDL_SetMainReady();
-#endif	
+#endif
 	if (argc > 1)
 		App::mFile = argv[1];
-	
-	//App::mFile = "/mnt/sdcard/Android/data/com.package.name/assets/demo.rml";
+
 	App::init();
 	return 0;
 }
