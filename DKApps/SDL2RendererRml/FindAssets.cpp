@@ -91,7 +91,7 @@ Rml::String FileInterface::FindAssets(Rml::String& argv_file)
 
 #ifdef ANDROID
 	const char* externalStoragePath = SDL_AndroidGetExternalStoragePath();
-	int externalStorageState = SDL_AndroidGetExternalStorageState();
+	//int externalStorageState = SDL_AndroidGetExternalStorageState();
 	appPath = externalStoragePath;
 	appPath += "/assets/";
 #endif
