@@ -7,7 +7,7 @@
 
 int main(int argc, char** argv)
 {
-#if !IOS && !ANDROID
+#if !IOS
 	SDL_SetMainReady();
 #endif
 	if (argc > 1)
