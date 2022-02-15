@@ -41,7 +41,7 @@ public:
 	/// Called by RmlUi when it wants to render geometry that it does not wish to optimise.
 	void RenderGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rml::TextureHandle texture, const Rml::Vector2f& translation) override;
 
-	/// Called by RmlUi when it wants to compile geometry it believes will be static for the forseeable future.
+	/// Called by RmlUi when it wants to compile geometry it believes will be static for the foreseeable future.
 	Rml::CompiledGeometryHandle CompileGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rml::TextureHandle texture) override;
 
 	/// Called by RmlUi when it wants to render application-compiled geometry.

@@ -1,17 +1,18 @@
-#ifndef IOS
+#if !IOS && !ANDROID
 	#define SDL_MAIN_HANDLED
 #else
 	#include "SDL_main.h"
 #endif
-#include <App.h>
+#include "App.h"
 
 int main(int argc, char** argv)
 {
-#ifndef IOS
+#if !IOS
 	SDL_SetMainReady();
-#endif	
+#endif
 	if (argc > 1)
 		App::mFile = argv[1];
+
 	App::init();
 	return 0;
 }

@@ -74,7 +74,7 @@ void RenderInterface::RenderGeometry(Rml::Vertex* vertices, int num_vertices, in
          num_vertices, indices, num_indices, 4);
 }
 
-// Called by RmlUi when it wants to compile geometry it believes will be static for the forseeable future.
+// Called by RmlUi when it wants to compile geometry it believes will be static for the foreseeable future.
 Rml::CompiledGeometryHandle RenderInterface::CompileGeometry(Rml::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rml::TextureHandle texture)
 {
     return (Rml::CompiledGeometryHandle) nullptr;

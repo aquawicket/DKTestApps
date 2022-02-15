@@ -191,7 +191,6 @@ void App::do_frame()
 	SDL_SetRenderDrawColor(mSdlRenderer, r, g, b, a);
 	OnScreenText::Draw("label", std::to_string(Framerate::GetFps())+"fps", (mWidth - 90), 5);
 
-
 	SDL_RenderPresent(mSdlRenderer);
 
 	while (SDL_PollEvent(&event))

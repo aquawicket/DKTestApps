@@ -43,6 +43,9 @@
 	#include <linux/limits.h> // PATH_MAX
 	#include <unistd.h>
 #endif
+#ifdef ANDROID
+	#include <SDL.h>
+#endif
 #include <sys/stat.h>
 
 Rml::String FileInterface::FindAssets(Rml::String& argv_file)
@@ -85,11 +88,17 @@ Rml::String FileInterface::FindAssets(Rml::String& argv_file)
 		printf("ERROR: could not get appPath from /proc/self/exe \n");
 	appPath = Rml::String(buf);
 #endif
-	
 
+#ifdef ANDROID
+	const char* externalStoragePath = SDL_AndroidGetExternalStoragePath();
+	//int externalStorageState = SDL_AndroidGetExternalStorageState();
+	appPath = externalStoragePath;
+	appPath += "/assets/";
+#endif
+	
 	printf("appPath = %s \n", appPath.c_str());
 	std::size_t found = appPath.find_last_of("/");
-	appPath = appPath.substr(0,found); //point the path to the app folder by removing the executbale from the end
+	appPath = appPath.substr(0,found); //point the path to the app folder by removing the executable from the end
 	
 	Rml::String basePath = appPath + "/";
 	for (unsigned int i = 0; i < 15; i++) { //Start at the top and go back N levels in search of our assets location
