@@ -1,5 +1,5 @@
-DKDEPEND(sdl2)
-DKDEPEND(sdl2_ttf)
+DKDEPEND(sdl)
+DKDEPEND(sdl_ttf)
 DKDEPEND(DK)
 DKDEPEND(DKAssets)
 DKDEPEND(DKDuktape)
