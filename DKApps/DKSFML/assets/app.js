@@ -1,3 +1,4 @@
+CPP_DK_Create("DKDuktapeDom")
 CPP_DK_Create("DKSFMLWindow");
 CPP_DK_Create("DKWindow");
 

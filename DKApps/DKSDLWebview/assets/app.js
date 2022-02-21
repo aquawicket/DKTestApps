@@ -1,3 +1,4 @@
+CPP_DK_Create("DKDuktapeDom")
 if(CPP_DK_GetOS() == "Win32" || CPP_DK_GetOS() == "Win64"  || CPP_DK_GetOS() == "Mac" || CPP_DK_GetOS() == "Linux"){
 	var USE_CEF = 1
 }

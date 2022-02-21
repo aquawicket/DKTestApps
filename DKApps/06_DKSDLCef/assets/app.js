@@ -1,4 +1,5 @@
 var USE_CEF = 1
+CPP_DK_Create("DKDuktapeDom")
 CPP_DK_Create("DKSDLWindow")
 var url = "chrome://gpu";
 //var url = "http://duckduckgo.com"
