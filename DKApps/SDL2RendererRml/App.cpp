@@ -248,6 +248,17 @@ void App::do_frame()
 	//SDL_SetWindowTitle(mSdlWindow, title.c_str());
 }
 
+int App::eventFilter(void* pthis, const SDL_Event *event)
+{
+    if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+    {
+        App* app = (App*)pthis;
+        SDL_RenderSetViewport(app->mSdlRenderer, NULL); // Note: NULL rectangle is the entire window
+        app->do_frame();
+    }
+    return 1;
+}
+
 void App::exit() 
 {
 	mActive = false;

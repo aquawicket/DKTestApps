@@ -44,11 +44,15 @@
 class App
 {
 public:
+	App::App(){ 
+		SDL_SetEventFilter((SDL_EventFilter)App::eventFilter, this);
+	}
 	static void init();
 	static void loop();
 	static void draw_background(SDL_Renderer* sdlRenderer, int width, int height);
 	static void do_frame();
 	static void exit();
+	static int eventFilter(void* pthis, const SDL_Event* event); //https://stackoverflow.com/a/27195881/688352
 	
 	static SDL_Window* mSdlWindow;
 	static SDL_Renderer* mSdlRenderer;

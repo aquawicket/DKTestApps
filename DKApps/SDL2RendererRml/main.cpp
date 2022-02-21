@@ -13,6 +13,7 @@ int main(int argc, char** argv)
 	if (argc > 1)
 		App::mFile = argv[1];
 
-	App::init();
+	App app;
+	app.init();
 	return 0;
 }
