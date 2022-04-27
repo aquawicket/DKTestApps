@@ -19,7 +19,7 @@ if(CPP_DK_GetBrowser() === "RML"){
 var width = CPP_DKWindow_GetWidth()
 var height = CPP_DKWindow_GetHeight()
 
-//location.href = url
+location.href = CPP_DKAssets_LocalAssets()+"index.html"
 
 
 
