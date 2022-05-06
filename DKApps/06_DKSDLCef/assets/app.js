@@ -4,9 +4,8 @@ var width = 800;//CPP_DKWindow_GetWidth()
 var height = 600;//CPP_DKWindow_GetHeight()
 
 CPP_DK_Create("DKDuktapeDom")
-//CPP_DK_Create("DKSDLWindow")    //DO NOT Create DKSDLWindow directly
-CPP_DK_Create("DKWindow")         //create window with DKWindow instead
-//CPP_DK_Create("DKSDLText")
+CPP_DK_Create("DKSDLWindow")
+CPP_DK_Create("DKSDLText")
 CPP_DK_Create("DKCef")//,"CefSDL",0,0,width,height,url)
 CPP_DKCef_NewBrowser("CefSDL",0,0,width,height,url)
 
