@@ -11,8 +11,7 @@ var url = "chrome://gpu";
 ////// RmlUi
 if(CPP_DK_GetBrowser() === "RML"){
 	CPP_DK_Create("DKDuktapeDom")
-	//CPP_DK_Create("DKSDLWindow")    //DO NOT Create DKSDLWindow directly
-	CPP_DK_Create("DKWindow")         //create window with DKWindow instead
+	CPP_DK_Create("DKSDLWindow")    //DO NOT Create DKSDLWindow directly
 	CPP_DK_Create("DKSDLText")
 	CPP_DK_Create("DKRml")
 }
