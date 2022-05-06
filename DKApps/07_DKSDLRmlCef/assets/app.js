@@ -11,9 +11,10 @@ var url = "chrome://gpu";
 ////// RmlUi
 if(CPP_DK_GetBrowser() === "RML"){
 	CPP_DK_Create("DKDuktapeDom")
-	CPP_DK_Create("DKWindow")
+	//CPP_DK_Create("DKSDLWindow")    //DO NOT Create DKSDLWindow directly
+	CPP_DK_Create("DKWindow")         //create window with DKWindow instead
+	CPP_DK_Create("DKSDLText")
 	CPP_DK_Create("DKRml")
-	//CPP_DK_Create("DKSDLText")
 }
 
 var width = CPP_DKWindow_GetWidth()
@@ -24,7 +25,7 @@ location.href = CPP_DKAssets_LocalAssets()+"index.html"
 
 
 ///// CEF 
-CPP_DK_Create("DKCef,Cef,0,0,"+width+","+height+","+url)
+CPP_DK_Create("DKCef") //,Cef,0,0,"+width+","+height+","+url)
 CPP_DKCef_NewBrowser("Cef",0,0,width,height,url)
 //CPP_DKCef_ShowDevTools(0)
 
