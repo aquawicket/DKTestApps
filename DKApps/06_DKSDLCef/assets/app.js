@@ -2,13 +2,11 @@ var USE_CEF = 1
 var url = "chrome://gpu";
 
 CPP_DK_Create("DKDuktapeDom")
-
 CPP_DK_Create("DKSDLWindow")
-var width = CPP_DKWindow_GetWidth()
-var height = CPP_DKWindow_GetHeight()
-
 CPP_DK_Create("DKSDLText")
 CPP_DK_Create("DKCef") //,"CefSDL",0,0,width,height,url)
+var width = CPP_DKWindow_GetWidth()
+var height = CPP_DKWindow_GetHeight()
 CPP_DKCef_NewBrowser("CefSDL", 0, 0, width, height, url)
 
 //var currentBrowser = CPP_DKCef_GetCurrentBrowser("CefSDL")
