@@ -15,10 +15,8 @@ CPP_DKCef_NewBrowser("CefSDL", 0, 0, width, height, url)
 
 //CPP_DK_Create("DKDebug/DKDebug.js")
 
-//DKAddEvent("window", "resize", User_OnEvent)
+
 window.addEventListener("resize", User_OnEvent)
-
-
 
 function User_OnEvent(event){
 	if(event.type == "resize"){

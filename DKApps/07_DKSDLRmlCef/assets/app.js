@@ -12,15 +12,25 @@ var url = "chrome://gpu";
 var width = CPP_DKWindow_GetWidth()
 var height = CPP_DKWindow_GetHeight()
 
-//location.href = CPP_DKAssets_LocalAssets()+"index.html"
-
-
 
 ///// CEF 
-CPP_DK_Create("DKCef") //,Cef,0,0,"+width+","+height+","+url)
-CPP_DKCef_NewBrowser("Cef",0,0,width,height,url)
-//CPP_DKCef_ShowDevTools(0)
+var iframe = document.createElement("iframe")
+iframe.id = dk.getAvailableId("CefBrowserTab")
+iframe.setAttribute("src", url)
+iframe.style["position"] = "absolute"
+iframe.style["top"] = "0rem"
+iframe.style["left"] = "0rem"
+iframe.style["width"] = "100%"
+iframe.style["height"] = "100%"
+iframe.style["background-color"] = "white"
+document.body.appendChild(iframe)
+CPP_DKRml_PostProcess()
 
+
+	
+//CPP_DK_Create("DKCef") 
+//CPP_DKCef_NewBrowser("Cef",0,0,width,height,url)
+//CPP_DKCef_ShowDevTools(0)
 
 /*
 window.addEventListener("keydown", function mykeydown(event){
