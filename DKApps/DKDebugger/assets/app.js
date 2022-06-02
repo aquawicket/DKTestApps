@@ -1,3 +1,5 @@
+CPP_DK_Create("DKDuktapeDom")
+
 var USE_CEF = 1;
 var url = "http://127.0.0.1:2393";
 var width = 800;

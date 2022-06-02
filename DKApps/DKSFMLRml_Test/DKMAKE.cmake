@@ -4,6 +4,7 @@
 # DKDEPEND(DKDebug)
 DKDEPEND(DKDom)
 # DKDEPEND(DKDuktape)
+# DKDEPEND(DKDuktapeDom)
 # DKDEPEND(DKRmlIframe)
 # DKDEPEND(DKRmlVideo)
 # DKDEPEND(rmlui)

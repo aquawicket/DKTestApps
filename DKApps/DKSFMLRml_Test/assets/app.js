@@ -1,3 +1,4 @@
+CPP_DK_Create("DKDuktapeDom")
 //const url = CPP_DKAssets_LocalAssets()+"index.html"
 const url = CPP_DKAssets_LocalAssets()+"DKWebTest/index.html"
 

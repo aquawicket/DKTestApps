@@ -1,2 +1,0 @@
-#DKAPP
-DKDEPEND(DK)
